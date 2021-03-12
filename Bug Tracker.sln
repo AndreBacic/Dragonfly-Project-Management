@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bug Tracker Front End (MVC + Razor)", "Bug Tracker Front End (MVC + Razor)\Bug Tracker Front End (MVC + Razor).csproj", "{3B040429-8404-40DE-998C-EE8AAF8FF6CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bug Tracker Library", "Bug Tracker Library\Bug Tracker Library.csproj", "{E9564363-E637-4413-876B-ED6955A27747}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B040429-8404-40DE-998C-EE8AAF8FF6CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B040429-8404-40DE-998C-EE8AAF8FF6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B040429-8404-40DE-998C-EE8AAF8FF6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B040429-8404-40DE-998C-EE8AAF8FF6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9564363-E637-4413-876B-ED6955A27747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9564363-E637-4413-876B-ED6955A27747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9564363-E637-4413-876B-ED6955A27747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9564363-E637-4413-876B-ED6955A27747}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6EADE03-9F71-4E7A-9B03-1D1661D7ED93}
+	EndGlobalSection
+EndGlobal
