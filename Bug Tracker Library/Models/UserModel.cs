@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A User of the Bug Tracker application. 
     /// </summary>
-    class User
+    class UserModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -18,6 +18,6 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// Tasks assigned to the User.
         /// </summary>
-        public List<Assignment> Assignments { get; set; }
+        public List<AssignmentModel> Assignments { get; set; }
     }
 }

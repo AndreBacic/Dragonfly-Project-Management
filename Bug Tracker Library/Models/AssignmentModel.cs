@@ -7,17 +7,17 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A link between a User and a Project.
     /// </summary>
-    class Assignment
+    class AssignmentModel
     {
         public int Id { get; set; }
         /// <summary>
         /// The User this is assigned to.
         /// </summary>
-        public User Assignee { get; set; }
+        public UserModel Assignee { get; set; }
         /// <summary>
         /// The Project that Assignee is assigned to.
         /// </summary>
-        public Project Project { get; set; }
+        public ProjectModel Project { get; set; }
         /// <summary>
         /// Position (level of access) Assignee has to Project.
         /// </summary>

@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A Project to be tracked and managed by the appliction.
     /// </summary>
-    class Project
+    class ProjectModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,15 +15,15 @@ namespace Bug_Tracker_Library.Models
         /// If this is a sub-project of a larger one, the larger one is ParentProject.
         /// If this is at the top of a project heirarchy, then ParentProject will just remain null.
         /// </summary>
-        public Project ParentProject { get; set; }
+        public ProjectModel ParentProject { get; set; }
         /// <summary>
         /// Lesser projects under the umbrella of this.
         /// </summary>
-        public List<Project> SubProjects { get; set; }
+        public List<ProjectModel> SubProjects { get; set; }
         /// <summary>
         /// The Users assigned to work on this.
         /// </summary>
-        public List<User> Workers { get; set; }
+        public List<UserModel> Workers { get; set; }
         /// <summary>
         /// The description of this, which may be just a short statement or a very long list of instructions to Workers.
         /// </summary>
@@ -31,7 +31,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// All comments that the Workers have posted to this.
         /// </summary>
-        public List<Comment> Comments { get; set; }
+        public List<CommentModel> Comments { get; set; }
         /// <summary>
         /// The date that all work on this must be done.
         /// </summary>
