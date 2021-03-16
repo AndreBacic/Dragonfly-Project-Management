@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A comment posted by a User to a Project.
     /// </summary>
-    class CommentModel
+    public class CommentModel
     {
         public int Id { get; set; }
         /// <summary>

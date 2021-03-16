@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bug Tracker Front End (MVC + Razor)", "Bug Tracker Front End (MVC + Razor)\Bug Tracker Front End (MVC + Razor).csproj", "{3B040429-8404-40DE-998C-EE8AAF8FF6CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bug Tracker Front End (MVC + Razor)", "Bug Tracker Front End (MVC + Razor)\Bug Tracker Front End (MVC + Razor).csproj", "{3B040429-8404-40DE-998C-EE8AAF8FF6CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bug Tracker Library", "Bug Tracker Library\Bug Tracker Library.csproj", "{E9564363-E637-4413-876B-ED6955A27747}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bug Tracker Library", "Bug Tracker Library\Bug Tracker Library.csproj", "{E9564363-E637-4413-876B-ED6955A27747}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

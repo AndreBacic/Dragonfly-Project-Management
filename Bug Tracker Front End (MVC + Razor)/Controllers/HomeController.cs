@@ -23,7 +23,7 @@ namespace Bug_Tracker_Front_End__MVC___Razor_.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult CreateOrganization()
         {
             return View();
         }

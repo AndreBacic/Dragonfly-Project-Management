@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A User of the Bug Tracker application. 
     /// </summary>
-    class UserModel
+    public class UserModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

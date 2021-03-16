@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A Project to be tracked and managed by the appliction.
     /// </summary>
-    class ProjectModel
+    public class ProjectModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

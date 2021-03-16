@@ -7,7 +7,7 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A link between a User and a Project.
     /// </summary>
-    class AssignmentModel
+    public class AssignmentModel
     {
         public int Id { get; set; }
         /// <summary>
