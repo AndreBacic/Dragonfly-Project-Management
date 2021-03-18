@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_
+namespace Bug_Tracker_Front_End__MVC_plus_Razor
 {
     public class Program
     {

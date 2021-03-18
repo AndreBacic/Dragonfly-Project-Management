@@ -1,6 +1,6 @@
 using System;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_.Models
+namespace Bug_Tracker_Front_End__MVC_plus_Razor.Models
 {
     public class ErrorViewModel
     {

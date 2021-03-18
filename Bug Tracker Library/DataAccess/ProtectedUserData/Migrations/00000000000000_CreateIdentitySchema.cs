@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_.Data.Migrations
+namespace Bug_Tracker_Library.DataAccess.ProtectedUserData.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

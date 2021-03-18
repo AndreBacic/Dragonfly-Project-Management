@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_.Data
+namespace Bug_Tracker_Library.DataAccess.ProtectedUserData
 {
     public class ApplicationDbContext : IdentityDbContext
     {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Bug_Tracker_Front_End__MVC___Razor_.Models;
+using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_.Controllers
+namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
     public class HomeController : Controller
     {

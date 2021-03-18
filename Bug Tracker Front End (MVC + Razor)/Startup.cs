@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Bug_Tracker_Front_End__MVC___Razor_.Data;
+using Bug_Tracker_Library.DataAccess.ProtectedUserData;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_
+namespace Bug_Tracker_Front_End__MVC_plus_Razor
 {
     public class Startup
     {

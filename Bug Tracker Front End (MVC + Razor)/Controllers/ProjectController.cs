@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bug_Tracker_Front_End__MVC___Razor_.Controllers
+namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
     public class ProjectController : Controller
     {
