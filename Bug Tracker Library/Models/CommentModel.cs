@@ -21,7 +21,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// When this was posted.
         /// </summary>
-        public string DatePosted { get; set; }
+        public DateTime DatePosted { get; set; }
         /// <summary>
         /// The actual text that the comment is.
         /// </summary>

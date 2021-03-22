@@ -35,8 +35,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The date that all work on this must be done.
         /// </summary>
-        //[DataType(DataType.Date)] // I don't know if this is needed, but in SQL Deadline is saved as DATETIME.
-        public string Deadline { get; set; }
+        public DateTime Deadline { get; set; }
         public ProjectStatus Status { get; set; }
         public ProjectPriority Priority { get; set; }
     }

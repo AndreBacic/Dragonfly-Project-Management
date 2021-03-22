@@ -19,5 +19,12 @@ namespace Bug_Tracker_Library.Models
         /// Tasks assigned to the User.
         /// </summary>
         public List<AssignmentModel> Assignments { get; set; }
+
+        public string Name 
+        { get
+            {
+                return this.FirstName + " " + this.LastName;
+            } 
+        }
     }
 }
