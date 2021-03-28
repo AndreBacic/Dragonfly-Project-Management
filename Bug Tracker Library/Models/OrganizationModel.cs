@@ -30,7 +30,8 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public string Description { get; set; }
 
-        // TODO - SOMEHOW STORE A PASSWORD FOR ACCESSING THIS.
+        // TODO - FIGURE OUT HOW TO HASH THE PASSWORD FOR ACCESSING THIS.
+        public string PasswordHash { get; set; }
 
     }
 }
