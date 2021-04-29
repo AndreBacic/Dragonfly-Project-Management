@@ -18,16 +18,47 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             _logger = logger;
         }
 
+        // GET: Index (user login page)
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult CreateOrganization()
+        // POST: Home/Index (validates login) TODO: Learn if this is a POST protocol or some other one.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(string username, string password)
+        {
+            try
+            {
+                // TODO: validate user login. redirect to organization home if correct username/password, redirect back to Index or to LoginFailed if incorrect.
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public IActionResult LoginFailed()
         {
             return View();
         }
 
+        /// <summary>
+        /// Tells user that he/she has been successfully logged out.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult LoggedOut()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This just handles the error message page
+        /// </summary>
+        /// <returns>A web page displaying an error message</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
