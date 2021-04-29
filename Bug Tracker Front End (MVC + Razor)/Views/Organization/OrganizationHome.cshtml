@@ -2,12 +2,14 @@
 @model Bug_Tracker_Front_End__MVC_plus_Razor.Models.ProjectsListViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "OrganizationHome";
 }
 
+<h1>OrganizationHome</h1>
 <h1>All projects belonging to @Model.User.Name</h1>
 
-@if (Model.UserPosition == UserPosition.ADMIN) { 
+@if (Model.UserPosition == UserPosition.ADMIN)
+{
     <a class="text-info" asp-controller="Project" asp-action="CreateProject">Create new project</a>
 }
 
@@ -16,7 +18,7 @@
         Search: <input type="text" name="searchString" />
         <input type="submit" value="🔍" />
     </p>
-</form> 
+</form>
 <table class="table-success">
     <thead>
         <tr>
@@ -27,7 +29,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Bug_Tracker_Library.Models.ProjectModel project in Model.Projects) {
+        @foreach (Bug_Tracker_Library.Models.ProjectModel project in Model.Projects)
+        {
             <tr>
                 <td><a class="text-success" asp-action="ProjectHome" asp-route-id="@project.Id">@project.Name</a></td>
                 <td>@project.Status</td>

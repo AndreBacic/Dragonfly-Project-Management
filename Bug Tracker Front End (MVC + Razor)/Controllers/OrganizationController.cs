@@ -88,16 +88,16 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             }
         }
 
-        // GET: Organization/CreateNewOrganization
-        public IActionResult CreateNewOrganization()
+        // GET: Organization/CreateOrganization
+        public IActionResult CreateOrganization()
         {
             return View();
         }
 
-        // POST: Organization/CreateNewOrganization
+        // POST: Organization/CreateOrganization
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateNewOrganization(IFormCollection collection)
+        public IActionResult CreateOrganization(IFormCollection collection)
         {
             try
             {

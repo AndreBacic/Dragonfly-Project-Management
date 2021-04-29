@@ -56,6 +56,15 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         }
 
         /// <summary>
+        /// Allows user to login to an existing org or link to create a new one
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult OrganizationLogin()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// This just handles the error message page
         /// </summary>
         /// <returns>A web page displaying an error message</returns>
