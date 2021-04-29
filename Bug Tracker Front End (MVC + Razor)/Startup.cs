@@ -28,6 +28,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddSingleton<IDataAccessor, MongoDBDataAccessor>(); // Just change the implementation to a different DataAccessor as needed.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
