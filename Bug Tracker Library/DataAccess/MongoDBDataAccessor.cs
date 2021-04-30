@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Library.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,12 @@ namespace Bug_Tracker_Library.DataAccess
 {
     public class MongoDBDataAccessor : IDataAccessor
     {
+        private IMongoDatabase db;
+        public void MongoDBDataAccessor(string database)
+        {
+            var client = new MongoClient();
+            db = client.GetDatabase(database);
+        }
         public void CreasteAssignment(AssignmentModel model)
         {
             throw new NotImplementedException();
