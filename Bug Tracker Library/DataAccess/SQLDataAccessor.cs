@@ -19,14 +19,18 @@ namespace Bug_Tracker_Library.DataAccess
             throw new NotImplementedException();
         }
 
-        public void CreateOrganization(OrganizationModel model)
+        public bool CreateOrganization(OrganizationModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void CreateProject(ProjectModel model)
+        public void CreateProject(ProjectModel model, int organizationId)
         {
             throw new NotImplementedException();
+        }
+        public void CreateProject(ProjectModel model, Guid organizationId)
+        {
+            throw new NotImplementedException("This overload does not work for SQL data access. Use CreateProject(..., int organizationId).");
         }
 
         public void CreateUser(UserModel model)
@@ -34,14 +38,19 @@ namespace Bug_Tracker_Library.DataAccess
             throw new NotImplementedException();
         }
 
-        public OrganizationModel GetOrganization(string organizationName, string password)
+        public OrganizationModel GetOrganization(string organizationName, string passwordHash)
         {
             throw new NotImplementedException();
         }
 
-        public UserModel GetUser(string userName, string password)
+        public UserModel GetUser(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public UserModel GetUser(Guid id)
+        {
+            throw new NotImplementedException("This overload does not work for SQL data access. Use GetUser(int id).");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,8 @@ namespace Bug_Tracker_Library.Models
     public class OrganizationModel
     {
         public int Id { get; set; }
-
+        [BsonId]
+        public Guid GuidId { get; set; }
         public string Name { get; set; }
         /// <summary>
         /// Projects under the umbrella of this, not including these project's sub-projects.

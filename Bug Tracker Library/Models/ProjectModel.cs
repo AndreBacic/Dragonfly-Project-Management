@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,11 +12,8 @@ namespace Bug_Tracker_Library.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        /// <summary>
-        /// If this is a sub-project of a larger one, the larger one is ParentProject.
-        /// If this is at the top of a project heirarchy, then ParentProject will just remain null.
-        /// </summary>
-        public ProjectModel ParentProject { get; set; }
+        
+        public int ParentProjectId { get; set; }
         /// <summary>
         /// Lesser projects under the umbrella of this.
         /// </summary>

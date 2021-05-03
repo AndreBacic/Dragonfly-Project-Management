@@ -4,6 +4,7 @@ using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Bug_Tracker_Library.DataAccess
 {
@@ -13,6 +14,8 @@ namespace Bug_Tracker_Library.DataAccess
 
         private const string OrganizationCollection = "Organizations";
         private const string UserCollection = "Users";
+
+        private const string ModelIdName = "GuidId";
 
         /// <summary>
         /// Initialize database using the configuration supplied by DependencyInjection.
@@ -35,6 +38,9 @@ namespace Bug_Tracker_Library.DataAccess
             db = client.GetDatabase(database);
         }
 
+
+        //####################################### BASIC MONGOBD METHODS ##########################################
+
         public void InsertRecord<T>(string table, T record)
         {
             var collection = db.GetCollection<T>(table);
@@ -51,7 +57,7 @@ namespace Bug_Tracker_Library.DataAccess
         public T LoadRecordById<T>(string table, Guid id)
         {
             var collection = db.GetCollection<T>(table);
-            var filter = Builders<T>.Filter.Eq("Id", id); // Eq id for equals, ctrl+J to see other comparisons
+            var filter = Builders<T>.Filter.Eq(ModelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
 
             return collection.Find(filter).First();
         }
@@ -69,9 +75,12 @@ namespace Bug_Tracker_Library.DataAccess
         public void DeleteRecord<T>(string table, Guid id)
         {
             var collection = db.GetCollection<T>(table);
-            var filter = Builders<T>.Filter.Eq("Id", id); // Eq id for equals, ctrl+J to see other comparisons
+            var filter = Builders<T>.Filter.Eq(ModelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
             collection.DeleteOne(filter);
         }
+
+
+        //####################################### INTERFACE IMPLEMENTATION ##########################################
 
         public void CreasteAssignment(AssignmentModel model)
         {
@@ -83,29 +92,62 @@ namespace Bug_Tracker_Library.DataAccess
             throw new NotImplementedException();
         }
 
-        public void CreateOrganization(OrganizationModel model)
+        public bool CreateOrganization(OrganizationModel model)
         {
+            List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(OrganizationCollection);
+            
+            // Ensure that no organizations with that name or password already exist
+            if (organizations.Where(x => x.GuidId == model.GuidId).Any()) { return false; }
+            if (organizations.Where(x => x.PasswordHash == model.PasswordHash).Any()) { return false; }
+
+            // No conflicts, so the record can be inserted.
             InsertRecord(OrganizationCollection, model);
+            return true;
         }
 
-        public void CreateProject(ProjectModel model)
+        public void CreateProject(ProjectModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            OrganizationModel org = LoadRecordById<OrganizationModel>(OrganizationCollection, organizationId);
+
+            // TODO: Figure out how to sensibly insert a project into a layred hirearchy.
+            org.Projects.Add(model);
+
+            UpsertRecord(OrganizationCollection, organizationId, org);
         }
+        public void CreateProject(ProjectModel model, int organizationId)
+        {
+            throw new NotImplementedException("This overload does not work for MongoDB data access. Use CreateProject(..., Guid organizationId).");
+        }
+
 
         public void CreateUser(UserModel model)
         {
             InsertRecord(UserCollection, model);
         }
 
-        public OrganizationModel GetOrganization(string organizationName, string password)
+        public OrganizationModel GetOrganization(string organizationName, string passwordHash)
         {
-            throw new NotImplementedException();
-        }
+            var collection = db.GetCollection<OrganizationModel>(OrganizationCollection);
+            var filter = Builders<OrganizationModel>.Filter.Eq("Name", organizationName);
 
-        public UserModel GetUser(string userName, string password)
+            OrganizationModel model = collection.Find(filter).First();
+            if (model.PasswordHash == passwordHash)
+            {
+                return model;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
+        public UserModel GetUser(int id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("This overload does not work for MongoDB data access. Use GetUser(Guid id).");
+        }
+        public UserModel GetUser(Guid id)
+        {
+            return LoadRecordById<UserModel>(UserCollection, id);
         }
     }
 }
