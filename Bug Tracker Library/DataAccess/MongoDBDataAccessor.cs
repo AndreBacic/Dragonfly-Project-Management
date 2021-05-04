@@ -110,6 +110,12 @@ namespace Bug_Tracker_Library.DataAccess
             OrganizationModel org = LoadRecordById<OrganizationModel>(OrganizationCollection, organizationId);
 
             // TODO: Figure out how to sensibly insert a project into a layred hirearchy.
+            // Ok I figured it out:
+            // - Use int Ids for projects
+            // - Have a mongo collection that records what the highest id for those Ids is
+            // - Each time a project is added, it's given an the highest id + 1 and then the highest id is incremented
+            // - When adding an project/assignment/comment to a project, a loop goes through the project hirearchy back to the base project and saves the id chain in a list
+            // - Then, that id chain is used to go through the organization's project hirearchy and add the project/assignment/comment in the right place
             org.Projects.Add(model);
 
             UpsertRecord(OrganizationCollection, organizationId, org);
