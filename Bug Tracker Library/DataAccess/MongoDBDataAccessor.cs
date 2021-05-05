@@ -12,7 +12,13 @@ namespace Bug_Tracker_Library.DataAccess
     {
         private IMongoDatabase db;
 
+        /// <summary>
+        /// Stores organizations, with their projects and comments
+        /// </summary>
         private const string OrganizationCollection = "Organizations";
+        /// <summary>
+        /// Stores users and their assignments
+        /// </summary>
         private const string UserCollection = "Users";
 
         private const string ModelIdName = "GuidId";
@@ -84,12 +90,15 @@ namespace Bug_Tracker_Library.DataAccess
 
         public void CreasteAssignment(AssignmentModel model)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("This doesn't work in mongo. Use UpdateUser");
         }
-
         public void CreateComment(CommentModel model)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
+        }
+        public void CreateProject(ProjectModel model)
+        {
+            throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
         }
 
         public bool CreateOrganization(OrganizationModel model)
@@ -104,27 +113,6 @@ namespace Bug_Tracker_Library.DataAccess
             InsertRecord(OrganizationCollection, model);
             return true;
         }
-
-        public void CreateProject(ProjectModel model, Guid organizationId)
-        {
-            OrganizationModel org = LoadRecordById<OrganizationModel>(OrganizationCollection, organizationId);
-
-            // TODO: Figure out how to sensibly insert a project into a layred hirearchy.
-            // Ok I figured it out:
-            // - Use int Ids for projects
-            // - Have a mongo collection that records what the highest id for those Ids is
-            // - Each time a project is added, it's given an the highest id + 1 and then the highest id is incremented
-            // - When adding an project/assignment/comment to a project, a loop goes through the project hirearchy back to the base project and saves the id chain in a list
-            // - Then, that id chain is used to go through the organization's project hirearchy and add the project/assignment/comment in the right place
-            org.Projects.Add(model);
-
-            UpsertRecord(OrganizationCollection, organizationId, org);
-        }
-        public void CreateProject(ProjectModel model, int organizationId)
-        {
-            throw new NotImplementedException("This overload does not work for MongoDB data access. Use CreateProject(..., Guid organizationId).");
-        }
-
 
         public void CreateUser(UserModel model)
         {
@@ -154,6 +142,16 @@ namespace Bug_Tracker_Library.DataAccess
         public UserModel GetUser(Guid id)
         {
             return LoadRecordById<UserModel>(UserCollection, id);
+        }
+
+        public void UpdateOrganization(OrganizationModel model)
+        {
+            UpsertRecord(OrganizationCollection, model.GuidId, model);
+        }
+
+        public void UpdateUser(UserModel model)
+        {
+            UpsertRecord(UserCollection, model.GuidId, model);
         }
     }
 }

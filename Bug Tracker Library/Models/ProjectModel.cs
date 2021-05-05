@@ -12,8 +12,11 @@ namespace Bug_Tracker_Library.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        
-        public int ParentProjectId { get; set; }
+
+        /// <summary>
+        /// If this is a subproject, ParentProjectId is the id of the parent project. If this is a top-level project, then Id is -1.
+        /// </summary>
+        public int ParentProjectId { get; set; } = -1;
         /// <summary>
         /// Lesser projects under the umbrella of this.
         /// </summary>

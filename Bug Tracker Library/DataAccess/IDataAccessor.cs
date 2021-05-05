@@ -7,8 +7,7 @@ namespace Bug_Tracker_Library.DataAccess
 {
     public interface IDataAccessor
     {
-        void CreateProject(ProjectModel model, int organizationId);
-        void CreateProject(ProjectModel model, Guid organizationId);
+        void CreateProject(ProjectModel model);
         void CreateUser(UserModel model);
         void CreateComment(CommentModel model);
         /// <summary>
@@ -39,5 +38,11 @@ namespace Bug_Tracker_Library.DataAccess
         /// <param name="id"></param>
         /// <returns></returns>
         UserModel GetUser(Guid id);
+        /// <summary>
+        /// Updates model in the database.
+        /// </summary>
+        /// <param name="model"></param>
+        void UpdateOrganization(OrganizationModel model);
+        void UpdateUser(UserModel model);
     }
 }

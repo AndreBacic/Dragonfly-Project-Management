@@ -12,9 +12,9 @@ namespace Bug_Tracker_Library.Models
     {
         public int Id { get; set; }
         /// <summary>
-        /// The User this is assigned to.
+        /// The id of the user this is assigned to.
         /// </summary>
-        public UserModel Assignee { get; set; }
+        public int AssigneeId { get; set; }
         /// <summary>
         /// The Project that Assignee is assigned to.
         /// </summary>
