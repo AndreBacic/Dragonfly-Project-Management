@@ -114,9 +114,16 @@ namespace Bug_Tracker_Library.DataAccess
             return true;
         }
 
-        public void CreateUser(UserModel model)
+        public bool CreateUser(UserModel model)
         {
+            List<UserModel> users = LoadRecords<UserModel>(UserCollection);
+
+            // do not insert record if password already used.
+            if (users.Any(x => x.PasswordHash == model.PasswordHash)) { return false; }
+
+            // valid password; insert
             InsertRecord(UserCollection, model);
+            return true;
         }
 
         public OrganizationModel GetOrganization(string organizationName, string passwordHash)

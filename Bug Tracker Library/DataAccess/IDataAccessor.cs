@@ -8,7 +8,12 @@ namespace Bug_Tracker_Library.DataAccess
     public interface IDataAccessor
     {
         void CreateProject(ProjectModel model);
-        void CreateUser(UserModel model);
+        /// <summary>
+        /// Inserts model into the database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Whether model could be successfully entered. It cannot be successfully entered if the password of the user is not unique.</returns>
+        bool CreateUser(UserModel model);
         void CreateComment(CommentModel model);
         /// <summary>
         /// Inserts model into the database

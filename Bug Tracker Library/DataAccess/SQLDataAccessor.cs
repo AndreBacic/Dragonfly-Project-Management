@@ -29,7 +29,7 @@ namespace Bug_Tracker_Library.DataAccess
             throw new NotImplementedException();
         }
 
-        public void CreateUser(UserModel model)
+        public bool CreateUser(UserModel model)
         {
             throw new NotImplementedException();
         }

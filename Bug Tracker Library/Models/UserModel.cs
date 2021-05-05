@@ -17,6 +17,7 @@ namespace Bug_Tracker_Library.Models
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
+        public string PasswordHash { get; set; }
 
         /// <summary>
         /// Tasks assigned to the User.
