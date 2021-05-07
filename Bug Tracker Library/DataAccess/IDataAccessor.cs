@@ -5,8 +5,15 @@ using System.Text;
 
 namespace Bug_Tracker_Library.DataAccess
 {
+    /// <summary>
+    /// Interface for a data access class (ex. SQL data access)
+    /// NOTE: implementations should have a constructor with parameters (IConfiguration configuration, UserModel user, OrganizationModel organization)
+    /// configuration is for grabbing connection string, and user and organization are for the data accessor to track the current global user and organization
+    /// </summary>
     public interface IDataAccessor
     {
+        void SetGlobalUser(UserModel user);
+        void SetGlobalOrganization(OrganizationModel organization);
         void CreateProject(ProjectModel model);
         /// <summary>
         /// Inserts model into the database

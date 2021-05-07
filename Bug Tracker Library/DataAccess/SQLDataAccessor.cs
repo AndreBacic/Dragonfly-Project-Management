@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Library.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,26 @@ namespace Bug_Tracker_Library.DataAccess
 {
     public class SQLDataAccessor : IDataAccessor
     {
+        private UserModel _user;
+        private OrganizationModel _organization;
+
+        public SQLDataAccessor(IConfiguration configuration, UserModel user, OrganizationModel organization)
+        {
+            // TODO: Actually have this whole class do something
+            
+            // _user and _organization are passed by reference so this can track their changes and save them easily
+            _user = user;
+            _organization = organization;
+        }
+        public void SetGlobalUser(UserModel user)
+        {
+            this._user = user;
+        }
+
+        public void SetGlobalOrganization(OrganizationModel organization)
+        {
+            this._organization = organization;
+        }
         public void CreasteAssignment(AssignmentModel model)
         {
             throw new NotImplementedException();

@@ -12,6 +12,8 @@ namespace Bug_Tracker_Library.DataAccess
     {
         private IMongoDatabase db;
 
+        private UserModel _user;
+        private OrganizationModel _organization;
         /// <summary>
         /// Stores organizations, with their projects and comments
         /// </summary>
@@ -27,11 +29,15 @@ namespace Bug_Tracker_Library.DataAccess
         /// Initialize database using the configuration supplied by DependencyInjection.
         /// </summary>
         /// <param name="configuration"></param>
-        public MongoDBDataAccessor(IConfiguration configuration)
+        public MongoDBDataAccessor(IConfiguration configuration, UserModel user, OrganizationModel organization)
         {
             var client = new MongoClient();
             string database = configuration.GetConnectionString("MongoDB");
             db = client.GetDatabase(database);
+
+            // _user and _organization are passed by reference so this can track their changes and save them easily
+            _user = user;
+            _organization = organization;
         }
 
         /// <summary>
@@ -87,6 +93,16 @@ namespace Bug_Tracker_Library.DataAccess
 
 
         //####################################### INTERFACE IMPLEMENTATION ##########################################
+
+        public void SetGlobalUser(UserModel user)
+        {
+            this._user = user;
+        }
+
+        public void SetGlobalOrganization(OrganizationModel organization)
+        {
+            this._organization = organization;
+        }
 
         public void CreasteAssignment(AssignmentModel model)
         {
