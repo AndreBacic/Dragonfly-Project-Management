@@ -24,6 +24,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             _dataAccessor = dataAccessor;
             _globalUser = globalUser;
             _globalOrganization = globalOrganization;
+
+            globalUser = new UserModel { FirstName = "Andre", LastName = "Bacic" };
         }
 
         // GET: Index (user login page)

@@ -34,10 +34,12 @@ namespace Bug_Tracker_Library.DataAccess
             var client = new MongoClient();
             string database = configuration.GetConnectionString("MongoDB");
             db = client.GetDatabase(database);
-
+         
             // _user and _organization are passed by reference so this can track their changes and save them easily
             _user = user;
             _organization = organization;
+
+            _user = new UserModel { FirstName = "Andre", LastName = "Bacic" };
         }
 
         /// <summary>
@@ -160,7 +162,8 @@ namespace Bug_Tracker_Library.DataAccess
         
         public UserModel GetUser(int id)
         {
-            throw new NotImplementedException("This overload does not work for MongoDB data access. Use GetUser(Guid id).");
+            //throw new NotImplementedException("This overload does not work for MongoDB data access. Use GetUser(Guid id).");
+            return this._user;
         }
         public UserModel GetUser(Guid id)
         {

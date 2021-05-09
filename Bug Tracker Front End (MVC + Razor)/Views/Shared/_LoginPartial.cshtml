@@ -1,5 +1,6 @@
 ﻿@using Bug_Tracker_Library.Models;
-@inject UserModel globalUser // maybe DI sorts this?
+<!-- maybe DI sorts this-->
+@inject UserModel globalUser
 <!--inject UserManager<IdentityUser> UserManager-->
 <ul class="navbar-nav">
     @if (globalUser != null)// TODO: put actual user data check here

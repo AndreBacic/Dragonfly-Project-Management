@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
 using Bug_Tracker_Library;
+using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,17 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
     public class OrganizationController : Controller
     {
+        private readonly IDataAccessor _dataAccessor;
+        private UserModel _globalUser;
+        private OrganizationModel _globalOrganization;
+
+        public OrganizationController(IDataAccessor dataAccessor, UserModel globalUser, OrganizationModel globalOrganization)
+        {
+            _dataAccessor = dataAccessor;
+            _globalUser = globalUser;
+            _globalOrganization = globalOrganization;
+        }
+
         // GET: Organization/OrganizationHome page, including a search for projects by name
         public IActionResult OrganizationHome(string searchString)
         {
@@ -38,8 +50,6 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             projectsUnfiltered.Add(p1);
             projectsUnfiltered.Add(p2);
 
-            UserModel u1 = new UserModel { FirstName = "Andre", LastName = "Bacic" };
-
             // Take the unfiltered projects and filter them by searched name
             List<ProjectModel> projects = new List<ProjectModel>();
 
@@ -60,7 +70,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             projects.OrderBy(x => x.Deadline); // order projects by deadline date
 
-            ProjectsListViewModel model = new ProjectsListViewModel { Projects = projects, User = u1, UserPosition = UserPosition.WORKER };
+            ProjectsListViewModel model = new ProjectsListViewModel { Projects = projects, User = _dataAccessor.GetUser(1), UserPosition = UserPosition.WORKER };
 
             return View(model);
         }
