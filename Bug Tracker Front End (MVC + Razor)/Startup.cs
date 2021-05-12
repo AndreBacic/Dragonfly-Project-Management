@@ -31,8 +31,6 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
             services.AddRazorPages();
 
             // Adds globally used usermodel for user info and organization model for organization data.
-            services.AddSingleton<UserModel>((provider) => new UserModel { FirstName = "Andre", LastName = "Test"});
-            services.AddSingleton<OrganizationModel>();
             services.AddSingleton<IDataAccessor, MongoDBDataAccessor>(); // Just change the implementation to a different DataAccessor as needed.
         }
 

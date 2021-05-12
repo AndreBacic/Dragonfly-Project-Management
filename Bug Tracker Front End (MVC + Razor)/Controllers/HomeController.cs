@@ -15,17 +15,11 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IDataAccessor _dataAccessor;
-        private UserModel _globalUser;
-        private OrganizationModel _globalOrganization;
 
-        public HomeController(ILogger<HomeController> logger, IDataAccessor dataAccessor, UserModel globalUser, OrganizationModel globalOrganization)
+        public HomeController(ILogger<HomeController> logger, IDataAccessor dataAccessor)
         {
             _logger = logger;
             _dataAccessor = dataAccessor;
-            _globalUser = globalUser;
-            _globalOrganization = globalOrganization;
-
-            globalUser = new UserModel { FirstName = "Andre", LastName = "Bacic" };
         }
 
         // GET: Index (user login page)

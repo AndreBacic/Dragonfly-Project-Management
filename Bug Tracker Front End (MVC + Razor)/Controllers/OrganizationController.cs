@@ -13,14 +13,10 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
     public class OrganizationController : Controller
     {
         private readonly IDataAccessor _dataAccessor;
-        private UserModel _globalUser;
-        private OrganizationModel _globalOrganization;
 
-        public OrganizationController(IDataAccessor dataAccessor, UserModel globalUser, OrganizationModel globalOrganization)
+        public OrganizationController(IDataAccessor dataAccessor)
         {
             _dataAccessor = dataAccessor;
-            _globalUser = globalUser;
-            _globalOrganization = globalOrganization;
         }
 
         // GET: Organization/OrganizationHome page, including a search for projects by name
@@ -70,7 +66,10 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             projects.OrderBy(x => x.Deadline); // order projects by deadline date
 
-            ProjectsListViewModel model = new ProjectsListViewModel { Projects = projects, User = _dataAccessor.GetUser(1), UserPosition = UserPosition.WORKER };
+            ProjectsListViewModel model = new ProjectsListViewModel { 
+                Projects = projects, 
+                User = new UserModel { FirstName = "Andre", LastName = "Test" }, 
+                UserPosition = UserPosition.WORKER };
 
             return View(model);
         }
