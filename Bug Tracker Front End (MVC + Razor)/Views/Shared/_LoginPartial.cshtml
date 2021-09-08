@@ -1,12 +1,10 @@
 ﻿@using Bug_Tracker_Library.Models;
-<!-- maybe DI sorts this-->
-@inject UserModel globalUser
 <!--inject UserManager<IdentityUser> UserManager-->
 <ul class="navbar-nav">
-    @if (globalUser != null)// TODO: put actual user data check here
+    @if (User != null)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @globalUser.Name!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
