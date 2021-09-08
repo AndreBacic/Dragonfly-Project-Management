@@ -1,0 +1,46 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h1>Register</h1>
+@{string message = ViewData["RegisterMessage"].ToString();}
+@if (String.IsNullOrWhiteSpace(message) == false)
+{
+    <h3 class="warning-text" style="text-align: center;">@ViewData["RegisterMessage"]</h3>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register" asp-controller="Account" method="post">
+            <div asp-validation-summary="ModelOnly" class="warning-text"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class=""></label>
+                <input asp-for="FirstName" class="todo-text-input" contenteditable="true" />
+                <span asp-validation-for="FirstName" class="warning-text"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class=""></label>
+                <input asp-for="LastName" class="todo-text-input" contenteditable="true" />
+                <span asp-validation-for="LastName" class="warning-text"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class=""></label>
+                <input asp-for="EmailAddress" type="email" class="todo-text-input" contenteditable="true" />
+                <span asp-validation-for="EmailAddress" class="warning-text"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class=""></label>
+                <input asp-for="Password" type="password" class="todo-text-input" contenteditable="true" />
+                <span asp-validation-for="Password" class="warning-text"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="todo-button" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>Already registered? <a asp-area="" asp-controller="Account" asp-action="Login" class="todo-button">Log in</a></div>
+

@@ -1,9 +1,11 @@
 using Bug_Tracker_Library.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor
 {
@@ -19,6 +21,29 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("BugTrackerAuth").AddCookie("BugTrackerAuth", cookieConfig =>
+            {
+                cookieConfig.LoginPath = "/Account/Login";
+                cookieConfig.Cookie.Name = "BugTrackerAuth.cookie";
+                cookieConfig.AccessDeniedPath = "/Account/Login";
+            });
+
+            services.AddAuthorization(authConfig =>
+            {
+                authConfig.AddPolicy("Logged_in_user_policy", policyBuilder =>
+                {
+                    policyBuilder.RequireClaim(ClaimTypes.Email);
+                    policyBuilder.RequireClaim(ClaimTypes.Name);
+                });
+                authConfig.AddPolicy("Logged_into_organization_policy", policyBuilder =>
+                {
+                    policyBuilder.RequireClaim(ClaimTypes.Email);
+                    policyBuilder.RequireClaim(ClaimTypes.Name);
+                    policyBuilder.RequireClaim(ClaimTypes.Role);
+                });
+                authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_into_organization_policy");
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -35,7 +60,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Organization/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -51,7 +76,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
