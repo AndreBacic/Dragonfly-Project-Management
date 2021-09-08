@@ -1,7 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Bug_Tracker_Library.Models
 {
@@ -10,7 +8,7 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class ProjectModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // todo: delete if unnecessary?
         public string Name { get; set; }
 
         /// <summary>

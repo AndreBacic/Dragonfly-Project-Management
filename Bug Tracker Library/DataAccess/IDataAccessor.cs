@@ -1,25 +1,23 @@
 ﻿using Bug_Tracker_Library.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bug_Tracker_Library.DataAccess
 {
     /// <summary>
-    /// Interface for a data access class (ex. SQL data access)
+    /// Interface for a data access class
     /// NOTE: implementations should have a constructor with parameter (IConfiguration configuration)
     ///                         where configuration is for grabbing connection string
     /// </summary>
     public interface IDataAccessor
     {
-        void CreateProject(ProjectModel model);
+        void CreateProject(ProjectModel model, Guid organizationId, int parentIndex);
         /// <summary>
         /// Inserts model into the database
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Whether model could be successfully entered. It cannot be successfully entered if the password of the user is not unique.</returns>
         bool CreateUser(UserModel model);
-        void CreateComment(CommentModel model);
+        void CreateComment(CommentModel model, );
         /// <summary>
         /// Inserts model into the database
         /// </summary>

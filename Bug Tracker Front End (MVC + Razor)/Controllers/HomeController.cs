@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library.DataAccess;
+using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
-using Bug_Tracker_Library.Models;
-using Bug_Tracker_Library.DataAccess;
+using System.Diagnostics;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -27,7 +23,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             return View();
         }
-        // POST: Home/Index (validates login) TODO: Learn if this is a POST protocol or some other one.
+        // POST: Home/Index (validates login)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(string username, string password)

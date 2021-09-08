@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Bug_Tracker_Library.Models
 {
@@ -10,9 +9,8 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class UserModel
     {
-        public int Id { get; set; }
         [BsonId]
-        public Guid GuidId { get; set; }
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
@@ -24,11 +22,12 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public List<AssignmentModel> Assignments { get; set; }
 
-        public string Name 
-        { get
+        public string Name
+        {
+            get
             {
                 return this.FirstName + " " + this.LastName;
-            } 
+            }
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bug_Tracker_Library.Models;
-using Bug_Tracker_Library;
-using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {

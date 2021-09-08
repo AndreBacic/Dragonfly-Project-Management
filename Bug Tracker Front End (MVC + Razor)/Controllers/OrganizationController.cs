@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
 using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -66,10 +66,12 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             projects.OrderBy(x => x.Deadline); // order projects by deadline date
 
-            ProjectsListViewModel model = new ProjectsListViewModel { 
-                Projects = projects, 
-                User = new UserModel { FirstName = "Andre", LastName = "Test" }, 
-                UserPosition = UserPosition.WORKER };
+            ProjectsListViewModel model = new ProjectsListViewModel
+            {
+                Projects = projects,
+                User = new UserModel { FirstName = "Andre", LastName = "Test" },
+                UserPosition = UserPosition.WORKER
+            };
 
             return View(model);
         }

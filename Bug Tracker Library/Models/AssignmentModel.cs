@@ -1,9 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bug_Tracker_Library.Models
+﻿namespace Bug_Tracker_Library.Models
 {
     /// <summary>
     /// A link between a User and a Project.

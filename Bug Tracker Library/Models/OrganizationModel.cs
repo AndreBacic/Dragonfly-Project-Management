@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Bug_Tracker_Library.Models
 {
@@ -10,9 +9,8 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class OrganizationModel
     {
-        public int Id { get; set; }
         [BsonId]
-        public Guid GuidId { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         /// <summary>
         /// Projects under the umbrella of this, not including these project's sub-projects.
@@ -21,7 +19,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The Admin over this.
         /// </summary>
-        public UserModel Admin { get; set; }
+        public UserModel Admin { get; set; } // todo: delete because admin is assigned that role and stroed in Workers?
         /// <summary>
         /// The Users assigned to work on this including the admin.
         /// </summary>

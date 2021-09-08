@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bug_Tracker_Library
+﻿namespace Bug_Tracker_Library
 {
     public enum UserPosition
     {
