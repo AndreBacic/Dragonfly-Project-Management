@@ -8,13 +8,13 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class ProjectModel
     {
-        public int Id { get; set; } // todo: delete if unnecessary?
         public string Name { get; set; }
 
         /// <summary>
-        /// If this is a subproject, ParentProjectId is the id of the parent project. If this is a top-level project, then Id is -1.
+        /// If this is a subproject, ParentProjectIndex is the index of the parent project in a ProjecctModel List.
+        /// If this is a top-level project, then ParentProjectIndex is -1.
         /// </summary>
-        public int ParentProjectId { get; set; } = -1;
+        public int ParentProjectIndex { get; set; } = -1;
         /// <summary>
         /// Lesser projects under the umbrella of this.
         /// </summary>

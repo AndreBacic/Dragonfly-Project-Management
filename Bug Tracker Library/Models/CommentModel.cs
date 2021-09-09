@@ -7,7 +7,6 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class CommentModel
     {
-        public int Id { get; set; }
         /// <summary>
         /// The User who posted this.
         /// </summary>

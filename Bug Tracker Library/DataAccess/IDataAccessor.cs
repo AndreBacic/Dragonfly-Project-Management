@@ -1,5 +1,6 @@
 ﻿using Bug_Tracker_Library.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Bug_Tracker_Library.DataAccess
 {
@@ -10,14 +11,20 @@ namespace Bug_Tracker_Library.DataAccess
     /// </summary>
     public interface IDataAccessor
     {
-        void CreateProject(ProjectModel model, Guid organizationId, int parentIndex);
+        void CreateProject(ProjectModel model, Guid organizationId, List<int> indexTree);
         /// <summary>
         /// Inserts model into the database
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Whether model could be successfully entered. It cannot be successfully entered if the password of the user is not unique.</returns>
         bool CreateUser(UserModel model);
-        void CreateComment(CommentModel model, );
+        /// <summary>
+        /// Adds model to the database.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="organizationId"></param>
+        /// <param name="indexTree">ProjectModel indecies for navigating the subproject tree</param>
+        void CreateComment(CommentModel model, Guid organizationId, List<int> indexTree);
         /// <summary>
         /// Inserts model into the database
         /// </summary>

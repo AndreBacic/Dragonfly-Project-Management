@@ -9,20 +9,19 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class UserModel
     {
-        [BsonId]
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string PhoneNumber { get; set; }
-        public string PasswordHash { get; set; }
+        public virtual Guid Id { get; set; }
+        public virtual string FirstName { get; set; }
+        public virtual string LastName { get; set; }
+        public virtual string EmailAddress { get; set; }
+        public virtual string PhoneNumber { get; set; }
+        public virtual string PasswordHash { get; set; }
 
         /// <summary>
         /// Tasks assigned to the User.
         /// </summary>
-        public List<AssignmentModel> Assignments { get; set; }
+        public virtual List<AssignmentModel> Assignments { get; set; }
 
-        public string Name
+        public virtual string Name
         {
             get
             {

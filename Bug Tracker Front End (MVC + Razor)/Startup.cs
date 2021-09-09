@@ -39,7 +39,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
                 {
                     policyBuilder.RequireClaim(ClaimTypes.Email);
                     policyBuilder.RequireClaim(ClaimTypes.Name);
-                    policyBuilder.RequireClaim(ClaimTypes.Role);
+                    policyBuilder.RequireClaim(ClaimTypes.Role); // TODO: Add cookie/omething to verify user is logged in to organization
                 });
                 authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_into_organization_policy");
             });
