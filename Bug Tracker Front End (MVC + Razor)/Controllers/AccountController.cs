@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library.DataAccess;
+using Bug_Tracker_Library.Models;
+using Bug_Tracker_Library.Security;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Bug_Tracker_Library.DataAccess;
-using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
-using Bug_Tracker_Library.Security;
-using Bug_Tracker_Library.Models;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {

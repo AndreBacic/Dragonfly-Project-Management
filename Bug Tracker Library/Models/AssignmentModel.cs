@@ -14,7 +14,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The Project that Assignee is assigned to.
         /// </summary>
-        public ProjectModel Project { get; set; }
+        public virtual ProjectModel Project { get; set; }
         /// <summary>
         /// Position (level of access) Assignee has to Project.
         /// </summary>

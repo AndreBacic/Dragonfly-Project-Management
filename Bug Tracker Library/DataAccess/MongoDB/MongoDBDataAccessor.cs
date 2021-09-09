@@ -91,11 +91,11 @@ namespace Bug_Tracker_Library.DataAccess
         {
             throw new NotImplementedException("This doesn't work in mongo. Use UpdateUser");
         }
-        public void CreateComment(CommentModel model)
+        public void CreateComment(CommentModel model, Guid organizationId, List<int> indexTree)
         {
             throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
         }
-        public void CreateProject(ProjectModel model)
+        public void CreateProject(ProjectModel model, Guid organizationId, List<int> indexTree)
         {
             throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
         }
@@ -105,7 +105,7 @@ namespace Bug_Tracker_Library.DataAccess
             List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(OrganizationCollection);
 
             // Ensure that no organizations with that name or password already exist
-            if (organizations.Where(x => x.GuidId == model.GuidId).Any())
+            if (organizations.Where(x => x.Id == model.Id).Any())
             { return false; }
             if (organizations.Where(x => x.PasswordHash == model.PasswordHash).Any())
             { return false; }
@@ -144,10 +144,6 @@ namespace Bug_Tracker_Library.DataAccess
             }
         }
 
-        public UserModel GetUser(int id)
-        {
-            throw new NotImplementedException("This overload does not work for MongoDB data access. Use GetUser(Guid id).");
-        }
         public UserModel GetUser(Guid id)
         {
             return LoadRecordById<UserModel>(UserCollection, id);
@@ -155,12 +151,12 @@ namespace Bug_Tracker_Library.DataAccess
 
         public void UpdateOrganization(OrganizationModel model)
         {
-            UpsertRecord(OrganizationCollection, model.GuidId, model);
+            UpsertRecord(OrganizationCollection, model.Id, model);
         }
 
         public void UpdateUser(UserModel model)
         {
-            UpsertRecord(UserCollection, model.GuidId, model);
+            UpsertRecord(UserCollection, model.Id, model);
         }
     }
 }

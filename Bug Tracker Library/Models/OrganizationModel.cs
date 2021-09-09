@@ -46,6 +46,6 @@ namespace Bug_Tracker_Library.Models
                 project = project.SubProjects[i];
             }
             return project;
-        } 
+        }
     }
 }

@@ -10,11 +10,11 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The User who posted this.
         /// </summary>
-        public UserModel Poster { get; set; }
+        public virtual UserModel Poster { get; set; }
         /// <summary>
         /// Project this is posted to.
         /// </summary>
-        public ProjectModel Project { get; set; }
+        public virtual ProjectModel Project { get; set; }
         /// <summary>
         /// When this was posted.
         /// </summary>

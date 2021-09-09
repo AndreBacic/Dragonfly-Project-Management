@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Bug_Tracker_Library
 {
@@ -21,9 +19,9 @@ namespace Bug_Tracker_Library
 
         public static (long, long) ToLongs(this Guid guid)
         {
-            var bytes = guid.ToByteArray();
-            var long1 = BitConverter.ToInt64(bytes, 0);
-            var long2 = BitConverter.ToInt64(bytes, 8);
+            byte[] bytes = guid.ToByteArray();
+            long long1 = BitConverter.ToInt64(bytes, 0);
+            long long2 = BitConverter.ToInt64(bytes, 8);
             return (long1, long2);
         }
 
@@ -37,9 +35,9 @@ namespace Bug_Tracker_Library
 
         public static (ulong, ulong) ToULongs(this Guid guid)
         {
-            var bytes = guid.ToByteArray();
-            var ulong1 = BitConverter.ToUInt64(bytes, 0);
-            var ulong2 = BitConverter.ToUInt64(bytes, 8);
+            byte[] bytes = guid.ToByteArray();
+            ulong ulong1 = BitConverter.ToUInt64(bytes, 0);
+            ulong ulong2 = BitConverter.ToUInt64(bytes, 8);
             return (ulong1, ulong2);
         }
 
@@ -55,11 +53,11 @@ namespace Bug_Tracker_Library
 
         public static (int, int, int, int) ToInts(this Guid guid)
         {
-            var bytes = guid.ToByteArray();
-            var a = BitConverter.ToInt32(bytes, 0);
-            var b = BitConverter.ToInt32(bytes, 4);
-            var c = BitConverter.ToInt32(bytes, 8);
-            var d = BitConverter.ToInt32(bytes, 12);
+            byte[] bytes = guid.ToByteArray();
+            int a = BitConverter.ToInt32(bytes, 0);
+            int b = BitConverter.ToInt32(bytes, 4);
+            int c = BitConverter.ToInt32(bytes, 8);
+            int d = BitConverter.ToInt32(bytes, 12);
             return (a, b, c, d);
         }
 
@@ -75,17 +73,17 @@ namespace Bug_Tracker_Library
 
         public static (uint, uint, uint, uint) ToUInts(this Guid guid)
         {
-            var bytes = guid.ToByteArray();
-            var a = BitConverter.ToUInt32(bytes, 0);
-            var b = BitConverter.ToUInt32(bytes, 4);
-            var c = BitConverter.ToUInt32(bytes, 8);
-            var d = BitConverter.ToUInt32(bytes, 12);
+            byte[] bytes = guid.ToByteArray();
+            uint a = BitConverter.ToUInt32(bytes, 0);
+            uint b = BitConverter.ToUInt32(bytes, 4);
+            uint c = BitConverter.ToUInt32(bytes, 8);
+            uint d = BitConverter.ToUInt32(bytes, 12);
             return (a, b, c, d);
         }
 
 
         [StructLayout(LayoutKind.Explicit)]
-        struct GuidConverter
+        private struct GuidConverter
         {
             [FieldOffset(0)]
             public decimal Decimal;
