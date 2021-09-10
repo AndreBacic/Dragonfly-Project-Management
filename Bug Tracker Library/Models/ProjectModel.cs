@@ -8,16 +8,25 @@ namespace Bug_Tracker_Library.Models
     /// </summary>
     public class ProjectModel
     {
+        /// <summary>
+        /// Unique identifier for the project.
+        /// </summary>
+        public virtual Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
 
         /// <summary>
-        /// If this is a subproject, ParentIndexTree is a list of the indecies to navigate the project tree to this
-        /// (the last index is the index of this)
+        /// If this is a subproject, ParentIdTreePath is a list of the IDs to navigate the project tree to this's parent project.
+        /// (this.Id is not included in the path)
+        /// <br></br>
+        /// If this is a top level project, then ParentIdTreePath is null.
         /// </summary>
-        public List<int> ParentIndexTree { get; set; }
+        public virtual List<Guid> ParentIdTreePath { get; set; } = null;
 
         /// <summary>
         /// Lesser projects under the umbrella of this.
+        /// <br/>
+        /// Do not directly add projects to this list; use AddSubProject() so that
+        /// the ParentIdTreePath is automatically maintained.
         /// </summary>
         public virtual List<ProjectModel> SubProjects { get; private set; } = new List<ProjectModel>();
         /// <summary>
@@ -45,11 +54,11 @@ namespace Bug_Tracker_Library.Models
             {
                 return;
             }
-            List<int> treeWithSub = new List<int>(this.ParentIndexTree)
+            List<Guid> treeWithSub = new List<Guid>(this.ParentIdTreePath)
             {
-                this.SubProjects.Count
+                this.Id
             };
-            newProject.ParentIndexTree = treeWithSub;
+            newProject.ParentIdTreePath = treeWithSub;
             this.SubProjects.Add(newProject);
         }
     }

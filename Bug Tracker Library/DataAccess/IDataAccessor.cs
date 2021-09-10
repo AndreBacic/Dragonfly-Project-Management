@@ -41,12 +41,7 @@ namespace Bug_Tracker_Library.DataAccess
         /// <returns>The fully filled out organization</returns>
         OrganizationModel GetOrganization(string organizationName, string passwordHash);
 
-        /// <summary>
-        /// Gets the user with Id of id. This overload is for sql/other database types.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        UserModel GetUser(int id);
+        List<UserModel> GetAllUsers();
         /// <summary>
         /// Gets the user with Id of id. This overload is for MongoDB or similar database types that use Guid ids.
         /// </summary>

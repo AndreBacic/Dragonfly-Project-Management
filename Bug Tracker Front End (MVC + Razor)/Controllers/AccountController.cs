@@ -30,7 +30,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             try
             {
-                UserModel dbUser = _db.LoadRecords<UserModel>()
+                UserModel dbUser = _db.GetAllUsers()
                     .Where(u => u.EmailAddress == user.EmailAddress).First();
 
                 PasswordHashModel passwordHash = new PasswordHashModel();
@@ -79,7 +79,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 return View(newUser);
             }
 
-            List<UserModel> allUsers = _db.LoadRecords<UserModel>();
+            List<UserModel> allUsers = _db.GetAllUsers();
             if (allUsers.Any(x => x.EmailAddress == newUser.EmailAddress))
             {
                 ViewData["RegisterMessage"] = "That email address is taken";
@@ -92,7 +92,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 EmailAddress = newUser.EmailAddress,
                 PasswordHash = HashAndSalter.HashAndSalt(newUser.Password).ToDbString()
             };
-            _db.InsertRecord(newDbUser);
+            _db.CreateUser(newDbUser);
 
             LogInUser(newDbUser);
 
@@ -112,13 +112,13 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         public IActionResult EditAccount(EditUserViewModel updatedUser)
         {
             // 1) Make sure email isn't taken
-            List<UserModel> allUsers = _db.LoadRecords<UserModel>();
+            List<UserModel> allUsers = _db.GetAllUsers();
             UserModel loggedInUser = GetLoggedInUserByEmail();
 
             if (IsValidEmailAddress(updatedUser.EmailAddress) == false ||
                 allUsers.Any(x => x.EmailAddress == updatedUser.EmailAddress && updatedUser.EmailAddress != loggedInUser.EmailAddress))
             {
-                ViewData["EditMessage"] = "That email address is taken";
+                ViewData["EditMessage"] = "That email address is taken"; // todo: refactor this viewdata message system
                 return View(DbUserToEditView(loggedInUser));
             }
 
@@ -136,7 +136,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                     loggedInUser.LastName = updatedUser.LastName;
                     loggedInUser.EmailAddress = updatedUser.EmailAddress;
                     loggedInUser.PasswordHash = HashAndSalter.HashAndSalt(updatedUser.NewPassword).ToDbString();
-                    _db.UpsertRecord(loggedInUser.Id, loggedInUser);
+                    _db.UpdateUser(loggedInUser);
 
                     LogInUser(loggedInUser);
 
@@ -155,7 +155,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 loggedInUser.FirstName = updatedUser.FirstName;
                 loggedInUser.LastName = updatedUser.LastName;
                 loggedInUser.EmailAddress = updatedUser.EmailAddress;
-                _db.UpsertRecord(loggedInUser.Id, loggedInUser);
+                _db.UpdateUser(loggedInUser);
 
                 LogInUser(loggedInUser);
 
@@ -182,7 +182,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         private UserModel GetLoggedInUserByEmail()
         {
             string email = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Email).First().Value;
-            return _db.LoadRecords<UserModel>().Where(x => x.EmailAddress == email).First();
+            return _db.GetAllUsers().Where(x => x.EmailAddress == email).First();
         }
         private bool IsValidEmailAddress(string emailAddress)
         {

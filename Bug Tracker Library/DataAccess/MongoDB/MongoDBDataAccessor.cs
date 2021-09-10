@@ -158,5 +158,10 @@ namespace Bug_Tracker_Library.DataAccess
         {
             UpsertRecord(UserCollection, model.Id, model);
         }
+
+        public List<UserModel> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
