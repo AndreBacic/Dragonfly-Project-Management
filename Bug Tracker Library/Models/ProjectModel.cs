@@ -18,9 +18,9 @@ namespace Bug_Tracker_Library.Models
         /// If this is a subproject, ParentIdTreePath is a list of the IDs to navigate the project tree to this's parent project.
         /// (this.Id is not included in the path)
         /// <br></br>
-        /// If this is a top level project, then ParentIdTreePath is null.
+        /// If this is a top level project, then ParentIdTreePath is empty.
         /// </summary>
-        public virtual List<Guid> ParentIdTreePath { get; set; } = null;
+        public virtual List<Guid> ParentIdTreePath { get; set; } = new List<Guid>();
 
         /// <summary>
         /// Lesser projects under the umbrella of this.
@@ -39,6 +39,9 @@ namespace Bug_Tracker_Library.Models
         public string Description { get; set; }
         /// <summary>
         /// All comments that the Workers have posted to this.
+        /// <br />
+        /// Do not directly add comments to this list; use AddComment() so that
+        /// the ParentIdTreePath is automatically added to the comment.
         /// </summary>
         public virtual List<CommentModel> Comments { get; set; }
         /// <summary>
@@ -54,12 +57,24 @@ namespace Bug_Tracker_Library.Models
             {
                 return;
             }
-            List<Guid> treeWithSub = new List<Guid>(this.ParentIdTreePath)
-            {
-                this.Id
-            };
-            newProject.ParentIdTreePath = treeWithSub;
+            newProject.ParentIdTreePath = new List<Guid>(this.ParentIdTreePath)
+                {
+                    this.Id
+                };
             this.SubProjects.Add(newProject);
+        }
+
+        public void AddComment(CommentModel model)
+        {
+            if (model == null)
+            {
+                return;
+            }
+            model.ParentProjectIdTreePath = new List<Guid>(this.ParentIdTreePath)
+                {
+                    this.Id
+                };
+            this.Comments.Add(model);
         }
     }
 }

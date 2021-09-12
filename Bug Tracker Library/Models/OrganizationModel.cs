@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bug_Tracker_Library.Models
 {
@@ -13,37 +14,35 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// Projects under the umbrella of this, not including these project's sub-projects.
         /// </summary>
-        public virtual List<ProjectModel> Projects { get; set; }
-        /// <summary>
-        /// The Admin over this.
-        /// </summary>
-        //public UserModel Admin { get; set; } // todo: delete because admin is assigned that role and stroed in Workers?
+        public virtual List<ProjectModel> Projects { get; set; } = new List<ProjectModel>();
         /// <summary>
         /// The Users assigned to work on this including the admin.
         /// </summary>
-        public virtual List<UserModel> Workers { get; set; }
+        public virtual List<UserModel> Workers { get; set; } = new List<UserModel>();
 
         /// <summary>
         /// The description of this.
         /// </summary>
         public virtual string Description { get; set; }
-
+        /// <summary>
+        /// Hashed password user must enter to access this.
+        /// </summary>
         public virtual string PasswordHash { get; set; }
 
-        public ProjectModel GetProjectByIndexTree(List<int> indexTree) // todo: have projects and comments reference their parents' indexTree
+        public virtual ProjectModel GetProjectByIdTree(List<Guid> idTree) // todo: have projects and comments reference their parents' indexTree
         {
-            if (indexTree == null || indexTree.Count == 0)
+            if (idTree == null || idTree.Count == 0)
             {
                 return null;
             }
-            ProjectModel project = this.Projects[indexTree[0]];
-            for (int i = 1; i < indexTree.Count; i++)
+            ProjectModel project = this.Projects.FirstOrDefault(p => p.Id == idTree[0]);
+            for (int i = 1; i < idTree.Count; i++)
             {
-                if (indexTree[i] >= project.SubProjects.Count)
+                if (project == null)
                 {
                     return null;
                 }
-                project = project.SubProjects[i];
+                project = project.SubProjects.FirstOrDefault(p => p.Id == idTree[i]);                
             }
             return project;
         }

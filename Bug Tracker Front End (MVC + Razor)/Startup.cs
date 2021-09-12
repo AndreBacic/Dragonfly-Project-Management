@@ -75,7 +75,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}");
+                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}"); // todo: refactor default route.
                 endpoints.MapRazorPages();
             });
         }

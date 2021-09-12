@@ -6,8 +6,9 @@ namespace Bug_Tracker_Library.DataAccess
 {
     /// <summary>
     /// Interface for a data access class
+    /// <br></br>
     /// NOTE: implementations should have a constructor with parameter (IConfiguration configuration)
-    ///                         where configuration is for grabbing connection string
+    /// where configuration is for grabbing connection string
     /// </summary>
     public interface IDataAccessor
     {
