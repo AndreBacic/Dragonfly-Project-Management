@@ -6,6 +6,8 @@ namespace Bug_Tracker_Library.Models
 {
     /// <summary>
     /// An organization that serves as an umbrella for a specific group of users working on their projects.
+    /// <br />
+    /// NOTE: OrganizationModel.Name must be unique.
     /// </summary>
     public class OrganizationModel
     {

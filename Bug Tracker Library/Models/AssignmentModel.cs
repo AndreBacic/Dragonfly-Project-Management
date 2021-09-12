@@ -8,9 +8,9 @@ namespace Bug_Tracker_Library.Models
     public class AssignmentModel
     {
         /// <summary>
-        /// The id of the user this is assigned to.
+        /// The Id of the user this is assigned to.
         /// </summary>
-        public Guid AssigneeId { get; set; }
+        public virtual Guid AssigneeId { get; set; }
         /// <summary>
         /// The Project that Assignee is assigned to.
         /// </summary>

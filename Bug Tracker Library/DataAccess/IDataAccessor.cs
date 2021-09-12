@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Library.Models;
+using Bug_Tracker_Library.Security;
 using System;
 using System.Collections.Generic;
 
@@ -12,12 +13,12 @@ namespace Bug_Tracker_Library.DataAccess
     /// </summary>
     public interface IDataAccessor
     {
-        void CreateProject(ProjectModel model, Guid organizationId, List<int> indexTree);
+        void CreateProject(ProjectModel model, Guid organizationId);
         /// <summary>
-        /// Inserts model into the database
+        /// Inserts model into the database if model.EmailAddress is unique.
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>Whether model could be successfully entered. It cannot be successfully entered if the password of the user is not unique.</returns>
+        /// <returns>Whether model could be successfully entered.</returns>
         bool CreateUser(UserModel model);
         /// <summary>
         /// Adds model to the database.
@@ -25,35 +26,59 @@ namespace Bug_Tracker_Library.DataAccess
         /// <param name="model"></param>
         /// <param name="organizationId"></param>
         /// <param name="indexTree">ProjectModel indecies for navigating the subproject tree</param>
-        void CreateComment(CommentModel model, Guid organizationId, List<int> indexTree);
+        void CreateComment(CommentModel model, Guid organizationId);
         /// <summary>
-        /// Inserts model into the database
+        /// Inserts model into the database if model.Name is unique.
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>Whether model could be successfully entered. It cannot be successfully entered if the name and password of the organization are not unique.</returns>
+        /// <returns>Whether model could be successfully entered. </returns>
         bool CreateOrganization(OrganizationModel model);
         void CreasteAssignment(AssignmentModel model);
         /// <summary>
-        /// Gets an organizationModel by its name and password
-        /// This method also gets all the projects, users, assignments, and comments in the organization
+        /// Gets an OrganizationModel by its id,
+        /// with all of the projects, users, assignments, and comments in the organization.
         /// </summary>
         /// <param name="organizationName">User must enter the name of the organization to gain access</param>
         /// <param name="passwordHash">User must also enter the organization password to gain access. Password must already be properly hashed.</param>
         /// <returns>The fully filled out organization</returns>
-        OrganizationModel GetOrganization(string organizationName, string passwordHash);
+        OrganizationModel GetOrganization(Guid id);
+        /// <summary>
+        /// Gets an OrganizationModel by its unique name and password,
+        /// with all of the projects, users, assignments, and comments in the organization.
+        /// </summary>
+        /// <param name="organizationName">User must enter the name of the organization to gain access</param>
+        /// <param name="passwordHash">User must also enter the organization password to gain access. Password must already be properly hashed.</param>
+        /// <returns>The fully filled out organization</returns>
+        OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash);
 
         List<UserModel> GetAllUsers();
         /// <summary>
-        /// Gets the user with Id of id. This overload is for MongoDB or similar database types that use Guid ids.
+        /// Gets the user with Id of id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         UserModel GetUser(Guid id);
+        /// <summary>
+        /// Gets the user with unique EmailAddress of parameter emailAddress.
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        UserModel GetUser(string emailAddress, PasswordHashModel passwordHash);
+
         /// <summary>
         /// Updates model in the database.
         /// </summary>
         /// <param name="model"></param>
         void UpdateOrganization(OrganizationModel model);
         void UpdateUser(UserModel model);
+        void UpdateProject(ProjectModel model, Guid organizationId);
+        void UpdateComment(CommentModel model, Guid organizationId);
+        void UpdateAssignment(AssignmentModel model);
+
+        void DeleteOrganization(OrganizationModel model);
+        void DeleteUser(UserModel model);
+        void DeleteProject(ProjectModel model, Guid organizationId);
+        void DeleteComment(CommentModel model, Guid organizationId);
+        void DeleteAssignment(AssignmentModel model);
     }
 }

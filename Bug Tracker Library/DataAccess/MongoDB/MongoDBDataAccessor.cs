@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Library.Models;
+using Bug_Tracker_Library.Security;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -128,13 +129,13 @@ namespace Bug_Tracker_Library.DataAccess
             return true;
         }
 
-        public OrganizationModel GetOrganization(string organizationName, string passwordHash)
+        public OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash)
         {
             IMongoCollection<OrganizationModel> collection = db.GetCollection<OrganizationModel>(OrganizationCollection);
             FilterDefinition<OrganizationModel> filter = Builders<OrganizationModel>.Filter.Eq("Name", organizationName);
 
             OrganizationModel model = collection.Find(filter).First();
-            if (model.PasswordHash == passwordHash)
+            if (model.PasswordHash == passwordHash.ToDbString())
             {
                 return model;
             }

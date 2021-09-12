@@ -5,6 +5,8 @@ namespace Bug_Tracker_Library.Models
 {
     /// <summary>
     /// A User of the Bug Tracker application. 
+    /// <br/>
+    /// NOTE: User.EmailAddress must be unique.
     /// </summary>
     public class UserModel
     {
