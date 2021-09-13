@@ -11,10 +11,10 @@ namespace Bug_Tracker.Library.Models.Tests
         public void NewProjectModel_ShouldMakeRandomGuidId()
         {
             // Arrange
-            var emptyGuid = new Guid();
+            Guid emptyGuid = new Guid();
             // Act
-            var model1 = new ProjectModel();
-            var model2 = new ProjectModel()
+            ProjectModel model1 = new ProjectModel();
+            ProjectModel model2 = new ProjectModel()
             {
                 Name = "Model2"
             };
@@ -28,13 +28,13 @@ namespace Bug_Tracker.Library.Models.Tests
         [Fact]
         public void AddSubProject_ShouldWork()
         {
-            var mainProject = new ProjectModel()
+            ProjectModel mainProject = new ProjectModel()
             {
                 Name = "Main",
                 Priority = ProjectPriority.TOP,
                 Status = ProjectStatus.IN_PROGRESS
             };
-            var subProject = new ProjectModel()
+            ProjectModel subProject = new ProjectModel()
             {
                 Name = "sub",
                 Priority = ProjectPriority.MEDIUM,

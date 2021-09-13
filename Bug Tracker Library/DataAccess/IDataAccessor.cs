@@ -16,6 +16,8 @@ namespace Bug_Tracker_Library.DataAccess
         void CreateProject(ProjectModel model, Guid organizationId);
         /// <summary>
         /// Inserts model into the database if model.EmailAddress is unique.
+        /// <br/>
+        /// Assumes model.PasswordHash has been hashed properly.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Whether model could be successfully entered.</returns>
@@ -29,11 +31,13 @@ namespace Bug_Tracker_Library.DataAccess
         void CreateComment(CommentModel model, Guid organizationId);
         /// <summary>
         /// Inserts model into the database if model.Name is unique.
+        /// <br/>
+        /// Assumes model.PasswordHash has been hashed properly.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Whether model could be successfully entered. </returns>
         bool CreateOrganization(OrganizationModel model);
-        void CreasteAssignment(AssignmentModel model);
+        void CreateAssignment(AssignmentModel model);
         /// <summary>
         /// Gets an OrganizationModel by its id,
         /// with all of the projects, users, assignments, and comments in the organization.

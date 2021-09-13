@@ -1,4 +1,5 @@
 using Bug_Tracker_Library.DataAccess;
+using Bug_Tracker_Library.DataAccess.MongoDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

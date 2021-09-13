@@ -7,21 +7,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Bug_Tracker_Library.DataAccess
+namespace Bug_Tracker_Library.DataAccess.MongoDB
 {
     public class MongoDBDataAccessor : IDataAccessor
     {
-        private IMongoDatabase db;
+        private IMongoDatabase _db;
         /// <summary>
         /// Stores organizations, with their projects and comments
         /// </summary>
-        private const string OrganizationCollection = "Organizations";
+        private const string _organizationCollection = "Organizations";
         /// <summary>
         /// Stores users and their assignments
         /// </summary>
-        private const string UserCollection = "Users";
+        private const string _userCollection = "Users";
 
-        private const string ModelIdName = "GuidId";
+        private const string _modelIdName = "Id";
 
         /// <summary>
         /// Initialize database using the configuration supplied by DependencyInjection.
@@ -31,7 +31,7 @@ namespace Bug_Tracker_Library.DataAccess
         {
             MongoClient client = new MongoClient();
             string database = configuration.GetConnectionString("MongoDB");
-            db = client.GetDatabase(database);
+            _db = client.GetDatabase(database);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Bug_Tracker_Library.DataAccess
         public MongoDBDataAccessor(string database)
         {
             MongoClient client = new MongoClient();
-            db = client.GetDatabase(database);
+            _db = client.GetDatabase(database);
         }
 
 
@@ -49,30 +49,30 @@ namespace Bug_Tracker_Library.DataAccess
 
         public void InsertRecord<T>(string table, T record)
         {
-            IMongoCollection<T> collection = db.GetCollection<T>(table);
+            IMongoCollection<T> collection = _db.GetCollection<T>(table);
             collection.InsertOne(record);
         }
 
         public List<T> LoadRecords<T>(string table)
         {
-            IMongoCollection<T> collection = db.GetCollection<T>(table);
+            IMongoCollection<T> collection = _db.GetCollection<T>(table);
 
             return collection.Find(new BsonDocument()).ToList();
         }
 
         public T LoadRecordById<T>(string table, Guid id)
         {
-            IMongoCollection<T> collection = db.GetCollection<T>(table);
-            FilterDefinition<T> filter = Builders<T>.Filter.Eq(ModelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
+            IMongoCollection<T> collection = _db.GetCollection<T>(table);
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
 
             return collection.Find(filter).First();
         }
 
         public void UpsertRecord<T>(string table, Guid id, T record)
         {
-            IMongoCollection<T> collection = db.GetCollection<T>(table);
+            IMongoCollection<T> collection = _db.GetCollection<T>(table);
 
-            ReplaceOneResult result = collection.ReplaceOne(
+            collection.ReplaceOne(
                 new BsonDocument("_id", new BsonBinaryData(id, GuidRepresentation.Standard)), // the BsonBinaryData with GuidRep is the not obsolete way
                 record,
                 new ReplaceOptions { IsUpsert = true });
@@ -80,58 +80,58 @@ namespace Bug_Tracker_Library.DataAccess
 
         public void DeleteRecord<T>(string table, Guid id)
         {
-            IMongoCollection<T> collection = db.GetCollection<T>(table);
-            FilterDefinition<T> filter = Builders<T>.Filter.Eq(ModelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
+            IMongoCollection<T> collection = _db.GetCollection<T>(table);
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
             collection.DeleteOne(filter);
         }
 
 
         //####################################### INTERFACE IMPLEMENTATION ##########################################
 
-        public void CreasteAssignment(AssignmentModel model)
+        public void CreateAssignment(AssignmentModel model)
         {
-            throw new NotImplementedException("This doesn't work in mongo. Use UpdateUser");
-        }
-        public void CreateComment(CommentModel model, Guid organizationId, List<int> indexTree)
-        {
-            throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
-        }
-        public void CreateProject(ProjectModel model, Guid organizationId, List<int> indexTree)
-        {
-            throw new NotImplementedException("This doesn't work in mongo. Use UpdateOrganization");
+            throw new NotImplementedException();
         }
 
         public bool CreateOrganization(OrganizationModel model)
         {
-            List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(OrganizationCollection);
+            List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(_organizationCollection);
 
-            // Ensure that no organizations with that name or password already exist
+            // Ensure that no organizations with that name already exist
             if (organizations.Where(x => x.Id == model.Id).Any())
-            { return false; }
-            if (organizations.Where(x => x.PasswordHash == model.PasswordHash).Any())
             { return false; }
 
             // No conflicts, so the record can be inserted.
-            InsertRecord(OrganizationCollection, model);
+            InsertRecord(_organizationCollection, model);
             return true;
         }
 
         public bool CreateUser(UserModel model)
         {
-            List<UserModel> users = LoadRecords<UserModel>(UserCollection);
+            List<UserModel> users = GetAllUsers();
 
-            // do not insert record if password already used.
-            if (users.Any(x => x.PasswordHash == model.PasswordHash))
+            // do not insert record if email already used.
+            if (users.Any(x => x.EmailAddress == model.EmailAddress))
             { return false; }
 
             // valid password; insert
-            InsertRecord(UserCollection, model);
+            InsertRecord(_userCollection, model);
             return true;
+        }
+
+        public void CreateProject(ProjectModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateComment(CommentModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
         }
 
         public OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash)
         {
-            IMongoCollection<OrganizationModel> collection = db.GetCollection<OrganizationModel>(OrganizationCollection);
+            IMongoCollection<OrganizationModel> collection = _db.GetCollection<OrganizationModel>(_organizationCollection);
             FilterDefinition<OrganizationModel> filter = Builders<OrganizationModel>.Filter.Eq("Name", organizationName);
 
             OrganizationModel model = collection.Find(filter).First();
@@ -145,22 +145,72 @@ namespace Bug_Tracker_Library.DataAccess
             }
         }
 
+        public OrganizationModel GetOrganization(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserModel> GetAllUsers()
+        {
+            return this.LoadRecords<UserModel>(_userCollection);
+        }
+
         public UserModel GetUser(Guid id)
         {
-            return LoadRecordById<UserModel>(UserCollection, id);
+            return LoadRecordById<UserModel>(_userCollection, id);
+        }
+
+        public UserModel GetUser(string emailAddress, PasswordHashModel passwordHash)
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateOrganization(OrganizationModel model)
         {
-            UpsertRecord(OrganizationCollection, model.Id, model);
+            UpsertRecord(_organizationCollection, model.Id, model);
         }
 
         public void UpdateUser(UserModel model)
         {
-            UpsertRecord(UserCollection, model.Id, model);
+            UpsertRecord(_userCollection, model.Id, model);
         }
 
-        public List<UserModel> GetAllUsers()
+        public void UpdateProject(ProjectModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateComment(CommentModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAssignment(AssignmentModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteOrganization(OrganizationModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteUser(UserModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteProject(ProjectModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteComment(CommentModel model, Guid organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAssignment(AssignmentModel model)
         {
             throw new NotImplementedException();
         }

@@ -44,7 +44,7 @@ namespace Bug_Tracker_Library.Models
                 {
                     return null;
                 }
-                project = project.SubProjects.FirstOrDefault(p => p.Id == idTree[i]);                
+                project = project.SubProjects.FirstOrDefault(p => p.Id == idTree[i]);
             }
             return project;
         }
