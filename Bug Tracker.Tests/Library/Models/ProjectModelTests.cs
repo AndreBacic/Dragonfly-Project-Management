@@ -1,6 +1,7 @@
 using Bug_Tracker_Library;
 using Bug_Tracker_Library.Models;
 using System;
+using System.Numerics;
 using Xunit;
 
 namespace Bug_Tracker.Library.Models.Tests
@@ -45,6 +46,31 @@ namespace Bug_Tracker.Library.Models.Tests
 
             Assert.Contains(subProject, mainProject.SubProjects);
             Assert.Contains(mainProject.Id, subProject.ParentIdTreePath);
+        }
+
+        [Theory]
+        [InlineData(10)]
+        [InlineData(1000)]
+        [InlineData(100000)]
+        public void ProjectIds_ShouldntCollide(int numProjects)
+        {
+            var guidPossibilities = decimal.MaxValue;
+            var actualGuidPossibilities = BigInteger.Pow(2, 128);
+            // factorOff == 4294967296 == 2 ** 32
+            var factorOff = BigInteger.Divide(actualGuidPossibilities, (BigInteger)guidPossibilities);
+            decimal odds = 1.0m;
+            for (int i = 0; i < numProjects; i++)
+            {
+                var b = Decimal.Subtract(guidPossibilities, i);
+                var a = Decimal.Divide(b, guidPossibilities);
+                odds = Decimal.Multiply(odds, a);
+            }
+
+            var oddsCollision = Decimal.Subtract(1.0m, odds);
+            var actualOdds = Decimal.Divide(oddsCollision, (decimal)factorOff);
+
+            Assert.True(odds > 0.9999_9999_9999m);
+            Assert.True(actualOdds == 0.0m);
         }
     }
 }

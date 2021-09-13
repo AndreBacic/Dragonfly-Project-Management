@@ -131,8 +131,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash)
         {
-            IMongoCollection<OrganizationModel> collection = _db.GetCollection<OrganizationModel>(_organizationCollection);
-            FilterDefinition<OrganizationModel> filter = Builders<OrganizationModel>.Filter.Eq("Name", organizationName);
+            IMongoCollection<MongoOrganizationModel> collection = _db.
+                GetCollection<MongoOrganizationModel>(_organizationCollection);
+            FilterDefinition<MongoOrganizationModel> filter = Builders<MongoOrganizationModel>.Filter.Eq("Name", organizationName);
 
             OrganizationModel model = collection.Find(filter).First();
             if (model.PasswordHash == passwordHash.ToDbString())
@@ -147,7 +148,15 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public OrganizationModel GetOrganization(Guid id)
         {
-            throw new NotImplementedException();
+            IMongoCollection<MongoOrganizationModel> collection = _db.
+                GetCollection<MongoOrganizationModel>(_organizationCollection);
+
+            FilterDefinition<MongoOrganizationModel> filter = Builders<MongoOrganizationModel>
+                .Filter.Eq(_modelIdName, id);
+
+            //var org = collection.Aggregate()
+            //    .Match(filter).Lookup(_userCollection, "")
+            throw new NotImplementedException(); // TODO: Learn how to aggregate multiple foreign fields in lookup. 
         }
 
         public List<UserModel> GetAllUsers()
@@ -157,7 +166,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public UserModel GetUser(Guid id)
         {
-            return LoadRecordById<UserModel>(_userCollection, id);
+            return LoadRecordById<MongoUserModel>(_userCollection, id);
         }
 
         public UserModel GetUser(string emailAddress, PasswordHashModel passwordHash)
