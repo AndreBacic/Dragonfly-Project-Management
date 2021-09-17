@@ -98,7 +98,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(_organizationCollection);
 
             // Ensure that no organizations with that name already exist
-            if (organizations.Where(x => x.Id == model.Id).Any())
+            if (organizations.Where(x => x.Name == model.Name).Any())
             { return false; }
 
             // No conflicts, so the record can be inserted.
@@ -135,28 +135,67 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
                 GetCollection<MongoOrganizationModel>(_organizationCollection);
             FilterDefinition<MongoOrganizationModel> filter = Builders<MongoOrganizationModel>.Filter.Eq("Name", organizationName);
 
-            OrganizationModel model = collection.Find(filter).First();
-            if (model.PasswordHash == passwordHash.ToDbString())
-            {
-                return model;
-            }
-            else
+            MongoOrganizationModel org = collection.Find(filter).First();
+
+            if (org == null || org.PasswordHash != passwordHash.ToDbString())
             {
                 return null;
             }
+            return GetOrgDbData(org);
         }
 
         public OrganizationModel GetOrganization(Guid id)
         {
-            IMongoCollection<MongoOrganizationModel> collection = _db.
-                GetCollection<MongoOrganizationModel>(_organizationCollection);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, id);
 
-            FilterDefinition<MongoOrganizationModel> filter = Builders<MongoOrganizationModel>
-                .Filter.Eq(_modelIdName, id);
+            return GetOrgDbData(org);
+        }
 
-            //var org = collection.Aggregate()
-            //    .Match(filter).Lookup(_userCollection, "")
-            throw new NotImplementedException(); // TODO: Learn how to aggregate multiple foreign fields in lookup. 
+        /// <summary>
+        /// All of the workers in org and all of its subproject's workers are found by id and added.
+        /// </summary>
+        /// <param name="org"></param>
+        private OrganizationModel GetOrgDbData(MongoOrganizationModel org)
+        {
+            Dictionary<Guid, UserModel> users = GetAllUsers().ToDictionary(u => u.Id);
+
+            foreach (Guid userId in org.DbWorkerIds)
+            {
+                if (users.ContainsKey(userId) == false)
+                {
+                    continue;
+                }
+                org.Workers.Add(users[userId]);
+            }
+
+            foreach (MongoProjectModel p in org.DbProjects)
+            {
+                org.Projects.Add(GetProjectDbData(p, users));
+            }
+
+            return org;
+        }
+
+        private ProjectModel GetProjectDbData(MongoProjectModel p, Dictionary<Guid, UserModel> users)
+        {
+            foreach (Guid id in p.DbWorkerIds)
+            {
+                if (users.ContainsKey(id) == false)
+                {
+                    continue;
+                }
+                p.Workers.Add(users[id]);
+            }
+            foreach (MongoCommentModel c in p.DbComments)
+            {
+                p.AddComment(c);
+            }
+            foreach (MongoProjectModel sp in p.DbSubProjects)
+            {
+                p.AddSubProject(GetProjectDbData(sp, users));
+            }
+
+            return p;
         }
 
         public List<UserModel> GetAllUsers()

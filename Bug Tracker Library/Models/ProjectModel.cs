@@ -28,7 +28,7 @@ namespace Bug_Tracker_Library.Models
         /// Do not directly add projects to this list; use AddSubProject() so that
         /// the ParentIdTreePath is automatically maintained.
         /// </summary>
-        public virtual List<ProjectModel> SubProjects { get; private set; } = new List<ProjectModel>();
+        public virtual List<ProjectModel> SubProjects { get; protected set; } = new List<ProjectModel>();
         /// <summary>
         /// The Users assigned to work on this.
         /// </summary>

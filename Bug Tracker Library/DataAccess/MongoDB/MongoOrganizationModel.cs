@@ -13,8 +13,11 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         /// <summary>
         /// The Ids for each user in the organization.
         /// </summary>
-        public List<Guid> DbWorkerIds { get; set; }
+        public List<Guid> DbWorkerIds { get; set; } = new List<Guid>();
+        public List<MongoProjectModel> DbProjects { get; set; }
         [BsonIgnore]
-        public override List<UserModel> Workers { get => base.Workers; set => base.Workers = value; }
+        public override List<UserModel> Workers => base.Workers = new List<UserModel>();
+        [BsonIgnore]
+        public override List<ProjectModel> Projects => base.Projects = new List<ProjectModel>();
     }
 }

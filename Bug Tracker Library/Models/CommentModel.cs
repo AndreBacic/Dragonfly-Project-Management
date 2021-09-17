@@ -13,10 +13,6 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public virtual UserModel Poster { get; set; }
         /// <summary>
-        /// Project this is posted to.
-        /// </summary>
-        public virtual ProjectModel Project { get; set; }
-        /// <summary>
         /// When this was posted.
         /// </summary>
         public DateTime DatePosted { get; set; }

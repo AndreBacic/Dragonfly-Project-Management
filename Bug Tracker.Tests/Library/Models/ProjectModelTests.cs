@@ -54,20 +54,20 @@ namespace Bug_Tracker.Library.Models.Tests
         [InlineData(100000)]
         public void ProjectIds_ShouldntCollide(int numProjects)
         {
-            var guidPossibilities = decimal.MaxValue;
-            var actualGuidPossibilities = BigInteger.Pow(2, 128);
+            decimal guidPossibilities = decimal.MaxValue;
+            BigInteger actualGuidPossibilities = BigInteger.Pow(2, 128);
             // factorOff == 4294967296 == 2 ** 32
-            var factorOff = BigInteger.Divide(actualGuidPossibilities, (BigInteger)guidPossibilities);
+            BigInteger factorOff = BigInteger.Divide(actualGuidPossibilities, (BigInteger)guidPossibilities);
             decimal odds = 1.0m;
             for (int i = 0; i < numProjects; i++)
             {
-                var b = Decimal.Subtract(guidPossibilities, i);
-                var a = Decimal.Divide(b, guidPossibilities);
+                decimal b = Decimal.Subtract(guidPossibilities, i);
+                decimal a = Decimal.Divide(b, guidPossibilities);
                 odds = Decimal.Multiply(odds, a);
             }
 
-            var oddsCollision = Decimal.Subtract(1.0m, odds);
-            var actualOdds = Decimal.Divide(oddsCollision, (decimal)factorOff);
+            decimal oddsCollision = Decimal.Subtract(1.0m, odds);
+            decimal actualOdds = Decimal.Divide(oddsCollision, (decimal)factorOff);
 
             Assert.True(odds > 0.9999_9999_9999m);
             Assert.True(actualOdds == 0.0m);
