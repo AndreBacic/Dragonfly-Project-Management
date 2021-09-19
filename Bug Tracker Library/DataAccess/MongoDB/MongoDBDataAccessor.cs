@@ -101,8 +101,15 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             if (organizations.Where(x => x.Name == model.Name).Any())
             { return false; }
 
+            MongoOrganizationModel dbModel = (MongoOrganizationModel)model;
+
+            dbModel.DbWorkerIds = dbModel.Workers.Select(u => u.Id).ToList();
+
+            // dbModel.DbProjects = dbModel.Projects.Select(p => ) // TODO: cast all projects as mongoprojects to save them.
+
             // No conflicts, so the record can be inserted.
-            InsertRecord(_organizationCollection, model);
+            InsertRecord(_organizationCollection, dbModel);
+            model.Id = dbModel.Id; // todo: see if casting model to dbModel actually didn't create a new object.
             return true;
         }
 
@@ -115,7 +122,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             { return false; }
 
             // valid password; insert
-            InsertRecord(_userCollection, model);
+            InsertRecord(_userCollection, (MongoUserModel)model);
             return true;
         }
 
@@ -200,7 +207,20 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public List<UserModel> GetAllUsers()
         {
-            return this.LoadRecords<UserModel>(_userCollection);
+            return this.LoadRecords<MongoUserModel>(_userCollection)
+               .Select(u =>
+               {
+                   return new UserModel()
+                   {
+                       Id = u.Id,
+                       Assignments = u.Assignments,
+                       EmailAddress = u.EmailAddress,
+                       FirstName = u.FirstName,
+                       LastName = u.LastName,
+                       PhoneNumber = u.PhoneNumber,
+                       PasswordHash = u.PasswordHash
+                   };
+               }).ToList();
         }
 
         public UserModel GetUser(Guid id)
