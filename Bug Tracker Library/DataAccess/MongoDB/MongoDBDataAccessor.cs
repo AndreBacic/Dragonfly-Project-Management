@@ -88,9 +88,15 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         //####################################### INTERFACE IMPLEMENTATION ##########################################
 
-        public void CreateAssignment(AssignmentModel model)
+        public bool CreateAssignment(AssignmentModel model)
         {
-            throw new NotImplementedException();
+            var u = GetUser(model.AssigneeId);
+            if (u.Assignments.Any(a => a.Project.Id == model.Project.Id))
+            { return false; }
+
+            u.Assignments.Add(model);
+            UpdateUser(u);
+            return true;
         }
 
         public bool CreateOrganization(OrganizationModel model)
@@ -101,16 +107,50 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             if (organizations.Where(x => x.Name == model.Name).Any())
             { return false; }
 
-            MongoOrganizationModel dbModel = (MongoOrganizationModel)model;
-
-            dbModel.DbWorkerIds = dbModel.Workers.Select(u => u.Id).ToList();
-
-            // dbModel.DbProjects = dbModel.Projects.Select(p => ) // TODO: cast all projects as mongoprojects to save them.
+            MongoOrganizationModel dbModel = ToOrgDbData(model);
 
             // No conflicts, so the record can be inserted.
             InsertRecord(_organizationCollection, dbModel);
             model.Id = dbModel.Id; // todo: see if casting model to dbModel actually didn't create a new object.
             return true;
+        }
+
+        private MongoOrganizationModel ToOrgDbData(OrganizationModel model)
+        {
+            MongoOrganizationModel dbModel = (MongoOrganizationModel)model;
+
+            dbModel.DbWorkerIds = dbModel.Workers.Select(u => u.Id).ToList();
+
+            dbModel.DbProjects = dbModel.Projects.Select(p => ToProjectDbData(p)).ToList();
+            return dbModel;
+        }
+
+        private MongoProjectModel ToProjectDbData(ProjectModel model)
+        {
+            return new MongoProjectModel()
+            {
+                Id = model.Id,
+                DbComments = model.Comments.Select(c => ToCommentDbData(c)).ToList(),
+                DbWorkerIds = model.Workers.Select(u => u.Id).ToList(),
+                DbSubProjects = model.SubProjects.Select(p => ToProjectDbData(p)).ToList(),
+                Deadline = model.Deadline,
+                Description = model.Description,
+                Name = model.Name,
+                ParentIdTreePath = model.ParentIdTreePath,
+                Priority = model.Priority,
+                Status = model.Status
+            };
+        }
+
+        private MongoCommentModel ToCommentDbData(CommentModel c)
+        {
+            return new MongoCommentModel
+            {
+                ParentProjectIdTreePath = c.ParentProjectIdTreePath,
+                DatePosted = c.DatePosted,
+                PosterId = c.Poster.Id,
+                Text = c.Text
+            };
         }
 
         public bool CreateUser(UserModel model)
@@ -195,6 +235,10 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             }
             foreach (MongoCommentModel c in p.DbComments)
             {
+                if (users.ContainsKey(c.PosterId) == true)
+                {
+                    c.Poster = users[c.PosterId];
+                }
                 p.AddComment(c);
             }
             foreach (MongoProjectModel sp in p.DbSubProjects)
@@ -207,20 +251,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public List<UserModel> GetAllUsers()
         {
-            return this.LoadRecords<MongoUserModel>(_userCollection)
-               .Select(u =>
-               {
-                   return new UserModel()
-                   {
-                       Id = u.Id,
-                       Assignments = u.Assignments,
-                       EmailAddress = u.EmailAddress,
-                       FirstName = u.FirstName,
-                       LastName = u.LastName,
-                       PhoneNumber = u.PhoneNumber,
-                       PasswordHash = u.PasswordHash
-                   };
-               }).ToList();
+            return LoadRecords<MongoUserModel>(_userCollection).Select(u => (UserModel)u).ToList();
         }
 
         public UserModel GetUser(Guid id)
@@ -235,12 +266,12 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void UpdateOrganization(OrganizationModel model)
         {
-            UpsertRecord(_organizationCollection, model.Id, model);
+            UpsertRecord(_organizationCollection, model.Id, ToOrgDbData(model));
         }
 
         public void UpdateUser(UserModel model)
         {
-            UpsertRecord(_userCollection, model.Id, model);
+            UpsertRecord(_userCollection, model.Id, (MongoUserModel)model);
         }
 
         public void UpdateProject(ProjectModel model, Guid organizationId)
@@ -255,17 +286,28 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void UpdateAssignment(AssignmentModel model)
         {
-            throw new NotImplementedException();
+            var u = GetUser(model.AssigneeId);
+            int count = 0;
+            foreach (var a in u.Assignments)
+            {
+                if (a.Project.Id == model.Project.Id)
+                {
+                    u.Assignments[count] = model;
+                    UpdateUser(u);
+                    return;
+                }
+                count++;
+            }
         }
 
         public void DeleteOrganization(OrganizationModel model)
         {
-            throw new NotImplementedException();
+            DeleteRecord<MongoOrganizationModel>(_organizationCollection, model.Id);
         }
 
         public void DeleteUser(UserModel model)
         {
-            throw new NotImplementedException();
+            DeleteRecord<MongoUserModel>(_userCollection, model.Id);
         }
 
         public void DeleteProject(ProjectModel model, Guid organizationId)
@@ -280,7 +322,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void DeleteAssignment(AssignmentModel model)
         {
-            throw new NotImplementedException();
+            var u = GetUser(model.AssigneeId);
+            u.Assignments.Remove(model); // todo: return whether or not model was successfully removed?
+            UpdateUser(u);
         }
     }
 }

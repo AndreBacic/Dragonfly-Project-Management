@@ -37,7 +37,13 @@ namespace Bug_Tracker_Library.DataAccess
         /// <param name="model"></param>
         /// <returns>Whether model could be successfully entered. </returns>
         bool CreateOrganization(OrganizationModel model);
-        void CreateAssignment(AssignmentModel model);
+        /// <summary>
+        /// Adds model to the database.
+        /// two assignments may not point to the same project.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        bool CreateAssignment(AssignmentModel model);
         /// <summary>
         /// Gets an OrganizationModel by its id,
         /// with all of the projects, users, assignments, and comments in the organization.

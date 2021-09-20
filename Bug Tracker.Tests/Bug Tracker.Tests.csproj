@@ -5,6 +5,8 @@
     <RootNamespace>Bug_Tracker.Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
