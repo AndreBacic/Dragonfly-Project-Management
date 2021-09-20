@@ -1,5 +1,4 @@
 ﻿using Bug_Tracker_Library.Models;
-using Bug_Tracker_Library.Security;
 using System;
 using System.Collections.Generic;
 
@@ -57,9 +56,9 @@ namespace Bug_Tracker_Library.DataAccess
         /// with all of the projects, users, assignments, and comments in the organization.
         /// </summary>
         /// <param name="organizationName">User must enter the name of the organization to gain access</param>
-        /// <param name="passwordHash">User must also enter the organization password to gain access. Password must already be properly hashed.</param>
+        /// <param name="password">User must also enter the organization password to gain access. password is plaintext.</param>
         /// <returns>The fully filled out organization</returns>
-        OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash);
+        OrganizationModel GetOrganization(string organizationName, string password);
 
         List<UserModel> GetAllUsers();
         /// <summary>
@@ -72,8 +71,9 @@ namespace Bug_Tracker_Library.DataAccess
         /// Gets the user with unique EmailAddress of parameter emailAddress.
         /// </summary>
         /// <param name="emailAddress"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
-        UserModel GetUser(string emailAddress, PasswordHashModel passwordHash);
+        UserModel GetUser(string emailAddress, string password);
 
         /// <summary>
         /// Updates model in the database.

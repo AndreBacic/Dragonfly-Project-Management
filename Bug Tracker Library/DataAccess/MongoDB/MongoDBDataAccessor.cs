@@ -90,8 +90,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public bool CreateAssignment(AssignmentModel model)
         {
-            var u = GetUser(model.AssigneeId);
-            if (u.Assignments.Any(a => a.Project.Id == model.Project.Id))
+            UserModel u = GetUser(model.AssigneeId);
+            if (u.Assignments.Any(a => a.OrganizationId == model.OrganizationId &&
+                                  a.ProjectIdTreePath.Last() == model.ProjectIdTreePath.Last()))
             { return false; }
 
             u.Assignments.Add(model);
@@ -176,7 +177,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             throw new NotImplementedException();
         }
 
-        public OrganizationModel GetOrganization(string organizationName, PasswordHashModel passwordHash)
+        public OrganizationModel GetOrganization(string organizationName, string password)
         {
             IMongoCollection<MongoOrganizationModel> collection = _db.
                 GetCollection<MongoOrganizationModel>(_organizationCollection);
@@ -184,7 +185,11 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
             MongoOrganizationModel org = collection.Find(filter).First();
 
-            if (org == null || org.PasswordHash != passwordHash.ToDbString())
+            PasswordHashModel passwordHash = new PasswordHashModel();
+            passwordHash.FromDbString(org.PasswordHash);
+            (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(password, passwordHash);
+
+            if (org == null || IsPasswordCorrect == false)
             {
                 return null;
             }
@@ -259,9 +264,22 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return LoadRecordById<MongoUserModel>(_userCollection, id);
         }
 
-        public UserModel GetUser(string emailAddress, PasswordHashModel passwordHash)
+        public UserModel GetUser(string emailAddress, string password)
         {
-            throw new NotImplementedException();
+            IMongoCollection<MongoUserModel> collection = _db.GetCollection<MongoUserModel>(_userCollection);
+            FilterDefinition<MongoUserModel> filter = Builders<MongoUserModel>.Filter.Eq("EmailAddress", emailAddress);
+
+            MongoUserModel user = collection.Find(filter).First();
+
+            PasswordHashModel passwordHash = new PasswordHashModel();
+            passwordHash.FromDbString(user.PasswordHash);
+            (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(password, passwordHash);
+
+            if (user == null || IsPasswordCorrect == false)
+            {
+                return null;
+            }
+            return user;
         }
 
         public void UpdateOrganization(OrganizationModel model)
@@ -286,11 +304,12 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void UpdateAssignment(AssignmentModel model)
         {
-            var u = GetUser(model.AssigneeId);
+            UserModel u = GetUser(model.AssigneeId);
             int count = 0;
-            foreach (var a in u.Assignments)
+            foreach (AssignmentModel a in u.Assignments)
             {
-                if (a.Project.Id == model.Project.Id)
+                if (a.OrganizationId == model.OrganizationId &&
+                    a.ProjectIdTreePath.Last() == model.ProjectIdTreePath.Last())
                 {
                     u.Assignments[count] = model;
                     UpdateUser(u);
@@ -322,7 +341,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void DeleteAssignment(AssignmentModel model)
         {
-            var u = GetUser(model.AssigneeId);
+            UserModel u = GetUser(model.AssigneeId);
             u.Assignments.Remove(model); // todo: return whether or not model was successfully removed?
             UpdateUser(u);
         }

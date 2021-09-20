@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bug_Tracker_Library.Models
 {
@@ -11,10 +12,11 @@ namespace Bug_Tracker_Library.Models
         /// The Id of the user this is assigned to.
         /// </summary>
         public virtual Guid AssigneeId { get; set; }
+        public virtual Guid OrganizationId { get; set; }
         /// <summary>
-        /// The Project that Assignee is assigned to.
+        /// The Id path to the Project that Assignee is assigned to. The last id is that of the project.
         /// </summary>
-        public virtual ProjectModel Project { get; set; }
+        public virtual List<Guid> ProjectIdTreePath { get; set; } = new List<Guid>();
         /// <summary>
         /// Position (level of access) Assignee has to Project.
         /// </summary>
