@@ -27,7 +27,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             {
                 return null;
             }
-            var project = this.DbProjects.FirstOrDefault(p => p.Id == idTree[0]);
+            MongoProjectModel project = this.DbProjects.FirstOrDefault(p => p.Id == idTree[0]);
             for (int i = 1; i < idTree.Count; i++)
             {
                 if (project == null)

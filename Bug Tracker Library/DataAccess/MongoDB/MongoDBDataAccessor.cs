@@ -169,16 +169,18 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void CreateProject(ProjectModel model, Guid organizationId)
         {
-            var org = GetOrganization(organizationId);
-            org.GetProjectByIdTree(model.ParentIdTreePath).AddSubProject(model);
-            UpdateOrganization(org);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            // this is ok because model.ParentIdTreePath is already filled out.
+            org.GetDbProjectByIdTree(model.ParentIdTreePath).DbSubProjects.Add(ToProjectDbData(model));
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void CreateComment(CommentModel model, Guid organizationId)
         {
-            var org = GetOrganization(organizationId);
-            org.GetProjectByIdTree(model.ParentProjectIdTreePath).AddComment(model);
-            UpdateOrganization(org);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            // this is ok because model.ParentProjectIdTreePath is already filled out.
+            org.GetDbProjectByIdTree(model.ParentProjectIdTreePath).Comments.Add(ToCommentDbData(model));
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public OrganizationModel GetOrganization(string organizationName, string password)
@@ -298,43 +300,40 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void UpdateProject(ProjectModel model, Guid organizationId)
         {
-            var org = GetOrganization(organizationId); // todo: make this operation more efficient by keeping the organization a mongo model
-            var parent = org.GetProjectByIdTree(model.ParentIdTreePath);
-            int i = parent.SubProjects.FindIndex(p => p.Id == model.Id);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            MongoProjectModel parent = org.GetDbProjectByIdTree(model.ParentIdTreePath);
+
+            int i = parent.DbSubProjects.FindIndex(p => p.Id == model.Id);
             if (i < 0)
             { return; }
 
-            parent.SubProjects[i] = model;
-            UpdateOrganization(org);
+            parent.DbSubProjects[i] = ToProjectDbData(model);
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void UpdateComment(CommentModel model, Guid organizationId)
         {
-            var org = GetOrganization(organizationId); // todo: make this operation more efficient by keeping the organization a mongo model
-            var parent = org.GetProjectByIdTree(model.ParentProjectIdTreePath);
-            int i = parent.Comments.FindIndex(c => DateTime.Equals(c.DatePosted, model.DatePosted)); // todo: decide if dateposted is a valid unique id for comments.
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            MongoProjectModel parent = org.GetDbProjectByIdTree(model.ParentProjectIdTreePath);
+
+            int i = parent.DbComments.FindIndex(c => DateTime.Equals(c.DatePosted, model.DatePosted)); // todo: decide if dateposted is a valid unique id for comments.
             if (i < 0)
             { return; }
 
-            parent.Comments[i] = model;
-            UpdateOrganization(org);
+            parent.DbComments[i] = ToCommentDbData(model);
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void UpdateAssignment(AssignmentModel model)
         {
-            UserModel u = GetUser(model.AssigneeId);
-            int count = 0;
-            foreach (AssignmentModel a in u.Assignments)
-            {
-                if (a.OrganizationId == model.OrganizationId &&
-                    a.ProjectIdTreePath.Last() == model.ProjectIdTreePath.Last())
-                {
-                    u.Assignments[count] = model;
-                    UpdateUser(u);
-                    return;
-                }
-                count++;
-            }
+            MongoUserModel u = LoadRecordById<MongoUserModel>(_userCollection, model.AssigneeId);
+            int i = u.Assignments.FindIndex(a => a.OrganizationId == model.OrganizationId &&
+                                  a.ProjectIdTreePath.Last() == model.ProjectIdTreePath.Last());
+            if (i < 0)
+            { return; }
+
+            u.Assignments[i] = model;
+            UpsertRecord(_userCollection, u.Id, u);
         }
 
         public void DeleteOrganization(OrganizationModel model)
@@ -349,14 +348,14 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void DeleteProject(ProjectModel model, Guid organizationId)
         {
-            var org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
             org.GetDbProjectByIdTree(model.ParentIdTreePath).DbSubProjects.Remove(ToProjectDbData(model));
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void DeleteComment(CommentModel model, Guid organizationId)
         {
-            var org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
             org.GetDbProjectByIdTree(model.ParentProjectIdTreePath).Comments.Remove(ToCommentDbData(model));
             UpsertRecord(_organizationCollection, organizationId, org);
         }
