@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bug_Tracker_Library.DataAccess.MongoDB
 {
@@ -19,5 +20,23 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         public override List<UserModel> Workers => base.Workers = new List<UserModel>();
         [BsonIgnore]
         public override List<ProjectModel> Projects => base.Projects = new List<ProjectModel>();
+
+        public MongoProjectModel GetDbProjectByIdTree(List<Guid> idTree)
+        {
+            if (idTree == null || idTree.Count == 0)
+            {
+                return null;
+            }
+            var project = this.DbProjects.FirstOrDefault(p => p.Id == idTree[0]);
+            for (int i = 1; i < idTree.Count; i++)
+            {
+                if (project == null)
+                {
+                    return null;
+                }
+                project = project.DbSubProjects.FirstOrDefault(p => p.Id == idTree[i]);
+            }
+            return project;
+        }
     }
 }

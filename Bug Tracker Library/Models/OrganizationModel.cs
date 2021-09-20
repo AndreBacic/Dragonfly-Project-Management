@@ -31,7 +31,7 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public virtual string PasswordHash { get; set; }
 
-        public virtual ProjectModel GetProjectByIdTree(List<Guid> idTree) // todo: have projects and comments reference their parents' indexTree
+        public virtual ProjectModel GetProjectByIdTree(List<Guid> idTree)
         {
             if (idTree == null || idTree.Count == 0)
             {

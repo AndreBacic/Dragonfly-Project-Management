@@ -169,12 +169,16 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void CreateProject(ProjectModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = GetOrganization(organizationId);
+            org.GetProjectByIdTree(model.ParentIdTreePath).AddSubProject(model);
+            UpdateOrganization(org);
         }
 
         public void CreateComment(CommentModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = GetOrganization(organizationId);
+            org.GetProjectByIdTree(model.ParentProjectIdTreePath).AddComment(model);
+            UpdateOrganization(org);
         }
 
         public OrganizationModel GetOrganization(string organizationName, string password)
@@ -294,12 +298,26 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void UpdateProject(ProjectModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = GetOrganization(organizationId); // todo: make this operation more efficient by keeping the organization a mongo model
+            var parent = org.GetProjectByIdTree(model.ParentIdTreePath);
+            int i = parent.SubProjects.FindIndex(p => p.Id == model.Id);
+            if (i < 0)
+            { return; }
+
+            parent.SubProjects[i] = model;
+            UpdateOrganization(org);
         }
 
         public void UpdateComment(CommentModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = GetOrganization(organizationId); // todo: make this operation more efficient by keeping the organization a mongo model
+            var parent = org.GetProjectByIdTree(model.ParentProjectIdTreePath);
+            int i = parent.Comments.FindIndex(c => DateTime.Equals(c.DatePosted, model.DatePosted)); // todo: decide if dateposted is a valid unique id for comments.
+            if (i < 0)
+            { return; }
+
+            parent.Comments[i] = model;
+            UpdateOrganization(org);
         }
 
         public void UpdateAssignment(AssignmentModel model)
@@ -331,12 +349,16 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public void DeleteProject(ProjectModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            org.GetDbProjectByIdTree(model.ParentIdTreePath).DbSubProjects.Remove(ToProjectDbData(model));
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void DeleteComment(CommentModel model, Guid organizationId)
         {
-            throw new NotImplementedException();
+            var org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
+            org.GetDbProjectByIdTree(model.ParentProjectIdTreePath).Comments.Remove(ToCommentDbData(model));
+            UpsertRecord(_organizationCollection, organizationId, org);
         }
 
         public void DeleteAssignment(AssignmentModel model)
