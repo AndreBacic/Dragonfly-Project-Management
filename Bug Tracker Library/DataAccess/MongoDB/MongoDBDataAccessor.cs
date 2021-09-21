@@ -163,7 +163,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             { return false; }
 
             // valid password; insert
-            InsertRecord(_userCollection, (MongoUserModel)model);
+            InsertRecord(_userCollection, model);
             return true;
         }
 
