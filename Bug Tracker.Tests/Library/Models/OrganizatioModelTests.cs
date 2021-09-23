@@ -10,15 +10,15 @@ namespace Bug_Tracker.Library.Models.Tests
         [Fact]
         public void GetGetProjectByIdTree_ShouldWork()
         {
-            OrganizationModel org = new OrganizationModel();
-            org.Projects.Add(new ProjectModel() { Name = "George" });
-            org.Projects[0].AddSubProject(new ProjectModel() { Name = "John" });
-            ProjectModel p = new ProjectModel() { Name = "Fred" };
+            IOrganizationModel org = new IOrganizationModel();
+            org.Projects.Add(new IProjectModel() { Name = "George" });
+            org.Projects[0].AddSubProject(new IProjectModel() { Name = "John" });
+            IProjectModel p = new IProjectModel() { Name = "Fred" };
             org.Projects[0].SubProjects[0].AddSubProject(p);
 
             List<Guid> path = new List<Guid>(p.ParentIdTreePath) { p.Id };
 
-            ProjectModel p2 = org.GetProjectByIdTree(path);
+            IProjectModel p2 = org.GetProjectByIdTree(path);
 
             Assert.Equal(p, p2);
             Assert.Equal(org.Projects[0].SubProjects[0], org.GetProjectByIdTree(p.ParentIdTreePath));

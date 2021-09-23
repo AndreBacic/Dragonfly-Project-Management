@@ -20,7 +20,7 @@ namespace Bug_Tracker.Tests.Library.DataAccess
 
         private void CRUDUserModel(MongoDBDataAccessor mongodb)
         {
-            var user = new UserModel()
+            var user = new IUserModel()
             {
                 EmailAddress = "dre@dre.net",
                 FirstName = "Dre",
@@ -28,7 +28,7 @@ namespace Bug_Tracker.Tests.Library.DataAccess
                 PhoneNumber = "123-456-7890",
                 PasswordHash = HashAndSalter.HashAndSalt("123Dre!").ToDbString()
             };
-            UserModel u2 = (UserModel)user;
+            IUserModel u2 = (IUserModel)user;
 
             mongodb.CreateUser(user);
             Console.WriteLine("User's Id: ", user.Id);

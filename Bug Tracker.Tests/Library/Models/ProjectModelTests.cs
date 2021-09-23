@@ -6,16 +6,16 @@ using Xunit;
 
 namespace Bug_Tracker.Library.Models.Tests
 {
-    public class ProjectModelTests
+    public class IProjectModelTests
     {
         [Fact]
-        public void NewProjectModel_ShouldMakeRandomGuidId()
+        public void NewIProjectModel_ShouldMakeRandomGuidId()
         {
             // Arrange
             Guid emptyGuid = new Guid();
             // Act
-            ProjectModel model1 = new ProjectModel();
-            ProjectModel model2 = new ProjectModel()
+            IProjectModel model1 = new IProjectModel();
+            IProjectModel model2 = new IProjectModel()
             {
                 Name = "Model2"
             };
@@ -29,13 +29,13 @@ namespace Bug_Tracker.Library.Models.Tests
         [Fact]
         public void AddSubProject_ShouldWork()
         {
-            ProjectModel mainProject = new ProjectModel()
+            IProjectModel mainProject = new IProjectModel()
             {
                 Name = "Main",
                 Priority = ProjectPriority.TOP,
                 Status = ProjectStatus.IN_PROGRESS
             };
-            ProjectModel subProject = new ProjectModel()
+            IProjectModel subProject = new IProjectModel()
             {
                 Name = "sub",
                 Priority = ProjectPriority.MEDIUM,

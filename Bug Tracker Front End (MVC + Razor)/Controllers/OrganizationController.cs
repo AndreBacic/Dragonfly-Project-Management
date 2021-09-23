@@ -26,17 +26,17 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 searchString = searchString.ToLower(); // so comparisaons aren't case-sensitive
             }
-            List<ProjectModel> projectsUnfiltered = new List<ProjectModel>();
+            List<IProjectModel> projectsUnfiltered = new List<IProjectModel>();
 
             // TODO: Add data access logic here
-            ProjectModel p1 = new ProjectModel
+            IProjectModel p1 = new IProjectModel
             {
                 Name = "JavaScript project",
                 Priority = ProjectPriority.MEDIUM,
                 Status = ProjectStatus.TODO,
                 Deadline = Convert.ToDateTime("6/5/2021")
             };
-            ProjectModel p2 = new ProjectModel
+            IProjectModel p2 = new IProjectModel
             {
                 Name = "Video Game",
                 Priority = ProjectPriority.HIGH,
@@ -47,11 +47,11 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             projectsUnfiltered.Add(p2);
 
             // Take the unfiltered projects and filter them by searched name
-            List<ProjectModel> projects = new List<ProjectModel>();
+            List<IProjectModel> projects = new List<IProjectModel>();
 
             if (searchString != null)
             {
-                foreach (ProjectModel p in projectsUnfiltered)
+                foreach (IProjectModel p in projectsUnfiltered)
                 {
                     if (p.Name.ToLower().Contains(searchString))
                     {
@@ -69,7 +69,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             ProjectsListViewModel model = new ProjectsListViewModel
             {
                 Projects = projects,
-                User = new UserModel { FirstName = "Andre", LastName = "Test" },
+                User = new IUserModel { FirstName = "Andre", LastName = "Test" },
                 UserPosition = UserPosition.WORKER
             };
 

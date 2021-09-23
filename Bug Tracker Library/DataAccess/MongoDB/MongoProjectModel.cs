@@ -6,18 +6,19 @@ using System.Collections.Generic;
 namespace Bug_Tracker_Library.DataAccess.MongoDB
 {
     [BsonIgnoreExtraElements]
-    public class MongoProjectModel : ProjectModel
+    public class MongoProjectModel : IProjectModel
     {
-        public List<Guid> DbWorkerIds { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public List<Guid> ParentIdTreePath { get; set; }
+        public List<IProjectModel> SubProjects { get; set; }
+        public List<Guid> WorkerIds { get; set; }
         [BsonIgnore]
-        public override List<UserModel> Workers => base.Workers = new List<UserModel>();
-
-        public List<MongoProjectModel> DbSubProjects { get; set; } = new List<MongoProjectModel>();
-        [BsonIgnore]
-        public override List<ProjectModel> SubProjects => base.SubProjects = new List<ProjectModel>();
-
-        public List<MongoCommentModel> DbComments { get; set; }
-        [BsonIgnore]
-        public override List<CommentModel> Comments => base.Comments = new List<CommentModel>();
+        public List<IUserModel> Workers { get; set; }
+        public string Description { get; set; }
+        public List<ICommentModel> Comments { get; set; }
+        public DateTime Deadline { get; set; }
+        public ProjectStatus Status { get; set; }
+        public ProjectPriority Priority { get; set; }
     }
 }

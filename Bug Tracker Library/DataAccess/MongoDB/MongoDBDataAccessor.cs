@@ -88,9 +88,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         //####################################### INTERFACE IMPLEMENTATION ##########################################
 
-        public bool CreateAssignment(AssignmentModel model)
+        public bool CreateAssignment(IAssignmentModel model)
         {
-            UserModel u = GetUser(model.AssigneeId);
+            IUserModel u = GetUser(model.AssigneeId);
             if (u.Assignments.Any(a => a.OrganizationId == model.OrganizationId &&
                                   a.ProjectIdTreePath.Last() == model.ProjectIdTreePath.Last()))
             { return false; }
@@ -100,9 +100,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return true;
         }
 
-        public bool CreateOrganization(OrganizationModel model)
+        public bool CreateOrganization(IOrganizationModel model)
         {
-            List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(_organizationCollection);
+            List<MongoOrganizationModel> organizations = LoadRecords<MongoOrganizationModel>(_organizationCollection);
 
             // Ensure that no organizations with that name already exist
             if (organizations.Where(x => x.Name == model.Name).Any())
@@ -116,24 +116,24 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return true;
         }
 
-        private MongoOrganizationModel ToOrgDbData(OrganizationModel model)
+        private MongoOrganizationModel ToOrgDbData(IOrganizationModel model)
         {
             MongoOrganizationModel dbModel = (MongoOrganizationModel)model;
 
-            dbModel.DbWorkerIds = dbModel.Workers.Select(u => u.Id).ToList();
+            dbModel.WorkerIds = dbModel.Workers.Select(u => u.Id).ToList();
 
-            dbModel.DbProjects = dbModel.Projects.Select(p => ToProjectDbData(p)).ToList();
+            dbModel.Projects = dbModel.Projects.Select(p => ToProjectDbData(p)).ToList();
             return dbModel;
         }
 
-        private MongoProjectModel ToProjectDbData(ProjectModel model)
+        private MongoProjectModel ToProjectDbData(IProjectModel model)
         {
             return new MongoProjectModel()
             {
                 Id = model.Id,
-                DbComments = model.Comments.Select(c => ToCommentDbData(c)).ToList(),
-                DbWorkerIds = model.Workers.Select(u => u.Id).ToList(),
-                DbSubProjects = model.SubProjects.Select(p => ToProjectDbData(p)).ToList(),
+                Comments = model.Comments.Select(c => ToCommentDbData(c)).ToList(),
+                WorkerIds = model.Workers.Select(u => u.Id).ToList(),
+                SubProjects = model.SubProjects.Select(p => ToProjectDbData(p)).ToList(),
                 Deadline = model.Deadline,
                 Description = model.Description,
                 Name = model.Name,
@@ -143,7 +143,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             };
         }
 
-        private MongoCommentModel ToCommentDbData(CommentModel c)
+        private MongoCommentModel ToCommentDbData(ICommentModel c)
         {
             return new MongoCommentModel
             {
@@ -154,9 +154,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             };
         }
 
-        public bool CreateUser(UserModel model)
+        public bool CreateUser(IUserModel model)
         {
-            List<UserModel> users = GetAllUsers();
+            List<IUserModel> users = GetAllUsers();
 
             // do not insert record if email already used.
             if (users.Any(x => x.EmailAddress == model.EmailAddress))
@@ -167,7 +167,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return true;
         }
 
-        public void CreateProject(ProjectModel model, Guid organizationId)
+        public void CreateProject(IProjectModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
             // this is ok because model.ParentIdTreePath is already filled out.
@@ -175,7 +175,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public void CreateComment(CommentModel model, Guid organizationId)
+        public void CreateComment(ICommentModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
             // this is ok because model.ParentProjectIdTreePath is already filled out.
@@ -183,7 +183,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public OrganizationModel GetOrganization(string organizationName, string password)
+        public IOrganizationModel GetOrganization(string organizationName, string password)
         {
             IMongoCollection<MongoOrganizationModel> collection = _db.
                 GetCollection<MongoOrganizationModel>(_organizationCollection);
@@ -202,7 +202,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return GetOrgDbData(org);
         }
 
-        public OrganizationModel GetOrganization(Guid id)
+        public IOrganizationModel GetOrganization(Guid id)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, id);
 
@@ -213,11 +213,11 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         /// All of the workers in org and all of its subproject's workers are found by id and added.
         /// </summary>
         /// <param name="org"></param>
-        private OrganizationModel GetOrgDbData(MongoOrganizationModel org)
+        private IOrganizationModel GetOrgDbData(MongoOrganizationModel org)
         {
-            Dictionary<Guid, UserModel> users = GetAllUsers().ToDictionary(u => u.Id);
+            Dictionary<Guid, IUserModel> users = GetAllUsers().ToDictionary(u => u.Id);
 
-            foreach (Guid userId in org.DbWorkerIds)
+            foreach (Guid userId in org.WorkerIds)
             {
                 if (users.ContainsKey(userId) == false)
                 {
@@ -226,7 +226,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
                 org.Workers.Add(users[userId]);
             }
 
-            foreach (MongoProjectModel p in org.DbProjects)
+            foreach (MongoProjectModel p in org.Projects)
             {
                 org.Projects.Add(GetProjectDbData(p, users));
             }
@@ -234,9 +234,9 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return org;
         }
 
-        private ProjectModel GetProjectDbData(MongoProjectModel p, Dictionary<Guid, UserModel> users)
+        private IProjectModel GetProjectDbData(MongoProjectModel p, Dictionary<Guid, IUserModel> users)
         {
-            foreach (Guid id in p.DbWorkerIds)
+            foreach (Guid id in p.WorkerIds)
             {
                 if (users.ContainsKey(id) == false)
                 {
@@ -244,7 +244,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
                 }
                 p.Workers.Add(users[id]);
             }
-            foreach (MongoCommentModel c in p.DbComments)
+            foreach (MongoCommentModel c in p.Comments)
             {
                 if (users.ContainsKey(c.PosterId) == true)
                 {
@@ -252,7 +252,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
                 }
                 p.AddComment(c);
             }
-            foreach (MongoProjectModel sp in p.DbSubProjects)
+            foreach (MongoProjectModel sp in p.SubProjects)
             {
                 p.AddSubProject(GetProjectDbData(sp, users));
             }
@@ -260,17 +260,17 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return p;
         }
 
-        public List<UserModel> GetAllUsers()
+        public List<IUserModel> GetAllUsers()
         {
-            return LoadRecords<MongoUserModel>(_userCollection).Select(u => (UserModel)u).ToList();
+            return LoadRecords<MongoUserModel>(_userCollection).Select(u => (IUserModel)u).ToList();
         }
 
-        public UserModel GetUser(Guid id)
+        public IUserModel GetUser(Guid id)
         {
             return LoadRecordById<MongoUserModel>(_userCollection, id);
         }
 
-        public UserModel GetUser(string emailAddress, string password)
+        public IUserModel GetUser(string emailAddress, string password)
         {
             IMongoCollection<MongoUserModel> collection = _db.GetCollection<MongoUserModel>(_userCollection);
             FilterDefinition<MongoUserModel> filter = Builders<MongoUserModel>.Filter.Eq("EmailAddress", emailAddress);
@@ -288,43 +288,43 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return user;
         }
 
-        public void UpdateOrganization(OrganizationModel model)
+        public void UpdateOrganization(IOrganizationModel model)
         {
             UpsertRecord(_organizationCollection, model.Id, ToOrgDbData(model));
         }
 
-        public void UpdateUser(UserModel model)
+        public void UpdateUser(IUserModel model)
         {
             UpsertRecord(_userCollection, model.Id, (MongoUserModel)model);
         }
 
-        public void UpdateProject(ProjectModel model, Guid organizationId)
+        public void UpdateProject(IProjectModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
-            MongoProjectModel parent = org.GetDbProjectByIdTree(model.ParentIdTreePath);
+            MongoProjectModel parent = org.GetProjectByIdTree(model.ParentIdTreePath);
 
-            int i = parent.DbSubProjects.FindIndex(p => p.Id == model.Id);
+            int i = parent.SubProjects.FindIndex(p => p.Id == model.Id);
             if (i < 0)
             { return; }
 
-            parent.DbSubProjects[i] = ToProjectDbData(model);
+            parent.SubProjects[i] = ToProjectDbData(model);
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public void UpdateComment(CommentModel model, Guid organizationId)
+        public void UpdateComment(ICommentModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
-            MongoProjectModel parent = org.GetDbProjectByIdTree(model.ParentProjectIdTreePath);
+            MongoProjectModel parent = org.GetProjectByIdTree(model.ParentProjectIdTreePath);
 
-            int i = parent.DbComments.FindIndex(c => DateTime.Equals(c.DatePosted, model.DatePosted)); // todo: decide if dateposted is a valid unique id for comments.
+            int i = parent.Comments.FindIndex(c => DateTime.Equals(c.DatePosted, model.DatePosted)); // todo: decide if dateposted is a valid unique id for comments.
             if (i < 0)
             { return; }
 
-            parent.DbComments[i] = ToCommentDbData(model);
+            parent.Comments[i] = ToCommentDbData(model);
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public void UpdateAssignment(AssignmentModel model)
+        public void UpdateAssignment(IAssignmentModel model)
         {
             MongoUserModel u = LoadRecordById<MongoUserModel>(_userCollection, model.AssigneeId);
             int i = u.Assignments.FindIndex(a => a.OrganizationId == model.OrganizationId &&
@@ -336,33 +336,33 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             UpsertRecord(_userCollection, u.Id, u);
         }
 
-        public void DeleteOrganization(OrganizationModel model)
+        public void DeleteOrganization(IOrganizationModel model)
         {
             DeleteRecord<MongoOrganizationModel>(_organizationCollection, model.Id);
         }
 
-        public void DeleteUser(UserModel model)
+        public void DeleteUser(IUserModel model)
         {
             DeleteRecord<MongoUserModel>(_userCollection, model.Id);
         }
 
-        public void DeleteProject(ProjectModel model, Guid organizationId)
+        public void DeleteProject(IProjectModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
-            org.GetDbProjectByIdTree(model.ParentIdTreePath).DbSubProjects.Remove(ToProjectDbData(model));
+            org.GetProjectByIdTree(model.ParentIdTreePath).SubProjects.Remove(ToProjectDbData(model));
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public void DeleteComment(CommentModel model, Guid organizationId)
+        public void DeleteComment(ICommentModel model, Guid organizationId)
         {
             MongoOrganizationModel org = LoadRecordById<MongoOrganizationModel>(_organizationCollection, organizationId);
-            org.GetDbProjectByIdTree(model.ParentProjectIdTreePath).Comments.Remove(ToCommentDbData(model));
+            org.GetProjectByIdTree(model.ParentProjectIdTreePath).Comments.Remove(ToCommentDbData(model));
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
-        public void DeleteAssignment(AssignmentModel model)
+        public void DeleteAssignment(IAssignmentModel model)
         {
-            UserModel u = GetUser(model.AssigneeId);
+            IUserModel u = GetUser(model.AssigneeId);
             u.Assignments.Remove(model); // todo: return whether or not model was successfully removed?
             UpdateUser(u);
         }

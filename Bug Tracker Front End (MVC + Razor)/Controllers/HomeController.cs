@@ -56,7 +56,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 // TODO: Hash the password before storing it.
                 string hashedPassword = model.Password;
 
-                UserModel newUser = new UserModel
+                IUserModel newUser = new IUserModel
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
