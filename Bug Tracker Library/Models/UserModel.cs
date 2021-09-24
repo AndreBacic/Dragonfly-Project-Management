@@ -1,12 +1,16 @@
-﻿using Bug_Tracker_Library.Models;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
-namespace Bug_Tracker_Library.DataAccess.MongoDB
+namespace Bug_Tracker_Library.Models
 {
+    /// <summary>
+    /// A User of the Bug Tracker application. 
+    /// <br/>
+    /// NOTE: User.EmailAddress must be unique.
+    /// </summary>
     [BsonIgnoreExtraElements]
-    public class MongoUserModel : IUserModel
+    public class UserModel
     {
         [BsonId]
         public Guid Id { get; set; }
@@ -15,7 +19,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }
-        public List<IAssignmentModel> Assignments { get; set; }
+        public List<AssignmentModel> Assignments { get; set; }
         [BsonIgnore]
         public string Name
         {

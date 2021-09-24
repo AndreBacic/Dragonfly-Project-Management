@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-Bug_Tracker_Front_End__MVC_plus_Razor-9B60DAB1-0F4C-4578-B528-75265905D179</UserSecretsId>
     <RootNamespace>Bug_Tracker_Front_End__MVC_plus_Razor</RootNamespace>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
 

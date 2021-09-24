@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Bug_Tracker_Library.Models
@@ -6,24 +7,25 @@ namespace Bug_Tracker_Library.Models
     /// <summary>
     /// A comment posted by a User to a Project.
     /// </summary>
-    public interface ICommentModel
+    [BsonIgnoreExtraElements]
+    public class CommentModel
     {
         /// <summary>
-        /// The User who posted this.
+        /// The id of the User who posted this.
         /// </summary>
-        IUserModel Poster { get; set; }
+        public Guid PosterId { get; set; }
         /// <summary>
         /// When this was posted.
         /// </summary>
-        DateTime DatePosted { get; set; }
+        public DateTime DatePosted { get; set; }
         /// <summary>
         /// The actual text that the comment is.
         /// </summary>
-        string Text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// List of the IDs to navigate the project tree to this's parent project.
         /// </summary>
-        List<Guid> ParentProjectIdTreePath { get; set; }
+        public List<Guid> ParentProjectIdTreePath { get; set; } = new();
     }
 }

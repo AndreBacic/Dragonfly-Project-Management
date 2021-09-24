@@ -30,7 +30,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             try
             {
-                IUserModel dbUser = _db.GetAllUsers()
+                UserModel dbUser = _db.GetAllUsers()
                     .Where(u => u.EmailAddress == user.EmailAddress).First();
 
                 PasswordHashModel passwordHash = new PasswordHashModel();
@@ -79,13 +79,13 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 return View(newUser);
             }
 
-            List<IUserModel> allUsers = _db.GetAllUsers();
+            List<UserModel> allUsers = _db.GetAllUsers();
             if (allUsers.Any(x => x.EmailAddress == newUser.EmailAddress))
             {
                 ViewData["RegisterMessage"] = "That email address is taken";
                 return View();
             }
-            IUserModel newDbUser = new IUserModel
+            UserModel newDbUser = new UserModel
             {
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
@@ -102,7 +102,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [Authorize("Auth_Policy")]
         public IActionResult EditAccount()
         {
-            IUserModel user = GetLoggedInUserByEmail();
+            UserModel user = GetLoggedInUserByEmail();
 
             return View(DbUserToEditView(user));
         }
@@ -112,8 +112,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         public IActionResult EditAccount(EditUserViewModel updatedUser)
         {
             // 1) Make sure email isn't taken
-            List<IUserModel> allUsers = _db.GetAllUsers();
-            IUserModel loggedInUser = GetLoggedInUserByEmail();
+            List<UserModel> allUsers = _db.GetAllUsers();
+            UserModel loggedInUser = GetLoggedInUserByEmail();
 
             if (IsValidEmailAddress(updatedUser.EmailAddress) == false ||
                 allUsers.Any(x => x.EmailAddress == updatedUser.EmailAddress && updatedUser.EmailAddress != loggedInUser.EmailAddress))
@@ -163,7 +163,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             }
         }
 
-        private async void LogInUser(IUserModel user)
+        private async void LogInUser(UserModel user)
         {
             List<Claim> personClaims = new List<Claim>()
                 {
@@ -179,7 +179,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentities));
         }
 
-        private IUserModel GetLoggedInUserByEmail()
+        private UserModel GetLoggedInUserByEmail()
         {
             string email = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Email).First().Value;
             return _db.GetAllUsers().Where(x => x.EmailAddress == email).First();
@@ -197,7 +197,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             }
         }
 
-        private EditUserViewModel DbUserToEditView(IUserModel user)
+        private EditUserViewModel DbUserToEditView(UserModel user)
         {
             return new EditUserViewModel
             {
