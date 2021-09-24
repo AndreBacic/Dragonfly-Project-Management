@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bug Tracker Front End (MVC 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bug Tracker Library", "Bug Tracker Library\Bug Tracker Library.csproj", "{E9564363-E637-4413-876B-ED6955A27747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bug Tracker.Tests", "Bug Tracker.Tests\Bug Tracker.Tests.csproj", "{8389B6A1-035B-4C15-908A-F28FD58DB709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bug Tracker.Tests", "Bug Tracker.Tests\Bug Tracker.Tests.csproj", "{8389B6A1-035B-4C15-908A-F28FD58DB709}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbSeederAndTester", "DbSeederAndTester\DbSeederAndTester.csproj", "{ABE3F91B-7A26-4367-9612-600B13F5D12F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8389B6A1-035B-4C15-908A-F28FD58DB709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8389B6A1-035B-4C15-908A-F28FD58DB709}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8389B6A1-035B-4C15-908A-F28FD58DB709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABE3F91B-7A26-4367-9612-600B13F5D12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABE3F91B-7A26-4367-9612-600B13F5D12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABE3F91B-7A26-4367-9612-600B13F5D12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABE3F91B-7A26-4367-9612-600B13F5D12F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,7 +15,7 @@ namespace Bug_Tracker.Tests.Library.DataAccess
         {
             var mongodb = new MongoDBDataAccessor("BugTracker");
 
-            CRUDUserModel(mongodb);
+            //CRUDUserModel(mongodb);
         }
 
         private void CRUDUserModel(MongoDBDataAccessor mongodb)
@@ -34,9 +34,8 @@ namespace Bug_Tracker.Tests.Library.DataAccess
 
             var users = mongodb.GetAllUsers();
 
-            //user = users[0];
             user.LastName = "Dr.";
-            mongodb.UpdateUser(user);
+            mongodb.UpdateUser(user); // todo: fix db so that the id is updated in the code and not left blank?
 
             var user1 = mongodb.GetUser(user.Id);
 

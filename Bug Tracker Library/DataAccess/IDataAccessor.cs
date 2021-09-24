@@ -47,6 +47,7 @@ namespace Bug_Tracker_Library.DataAccess
         OrganizationModel GetOrganization(Guid id);
 
         List<UserModel> GetAllUsers();
+        Dictionary<Guid, UserModel> GetAllOrganizationUsers(Guid organizationId);
         UserModel GetUser(Guid id);
         /// <summary>
         /// Gets the user with unique EmailAddress of parameter emailAddress.

@@ -152,6 +152,25 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return LoadRecords<UserModel>(_userCollection);
         }
 
+        public Dictionary<Guid, UserModel> GetAllOrganizationUsers(Guid organizationId)
+        {
+            Dictionary<Guid, UserModel> users = GetAllUsers().ToDictionary(u => u.Id);
+            var org = GetOrganization(organizationId);
+
+            Dictionary<Guid, UserModel> output = new();
+
+            foreach (var id in org.WorkerIds)
+            {
+                if (users.ContainsKey(id) == false)
+                {
+                    continue;
+                }
+                output.Add(id, users[id]);
+            }
+
+            return output;
+        }
+
         public UserModel GetUser(Guid id)
         {
             return LoadRecordById<UserModel>(_userCollection, id);
