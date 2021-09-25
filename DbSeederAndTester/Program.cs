@@ -15,6 +15,9 @@ namespace DbSeederAndTester
             //CreateUserModel(mongodb);
 
             //CreateOrgWithAFewUsers(mongodb);
+
+            var o = mongodb.GetAllOrganizationUsers(
+                mongodb.LoadRecords<OrganizationModel>("Organizations")[0].Id);
         }
 
         private static void CreateOrgWithAFewUsers(MongoDBDataAccessor mongodb)

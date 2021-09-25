@@ -168,7 +168,39 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
                 output.Add(id, users[id]);
             }
 
-            return output;
+            //return output;
+
+            var collection = _db.GetCollection<OrganizationModel>(_organizationCollection);
+            var filter = Builders<OrganizationModel>.Filter.Eq("Id", organizationId);
+
+            BsonDocument let = new BsonDocument("ids", "$WorkerIds");
+
+            BsonArray subPipeline = new BsonArray();
+
+            subPipeline.Add(
+                new BsonDocument("$match", new BsonDocument(
+                    "$expr", new BsonDocument(
+                    "$in", new BsonArray { "$_id", "$$ids"} ))
+                )
+            );
+
+            BsonDocument lookup = new BsonDocument("$lookup",
+                             new BsonDocument("from", _userCollection)
+                                         .Add("let", let)
+                                         .Add("pipeline", subPipeline)
+                                         .Add("as", "users")
+            );
+
+            BsonDocument group = new BsonDocument("$group", new BsonDocument("_id", "$users"));
+
+            var d = collection.Aggregate()
+                .Match(filter)
+                .AppendStage<BsonDocument>(lookup)
+                .AppendStage<BsonDocument>(group)
+                .Unwind("_id")
+                .As<MongoUserAggregateUnwindModel>().ToList();
+            Dictionary<Guid, UserModel> D = d.ToDictionary(u => u._id.Id, u => u._id);
+            return D;
         }
 
         public UserModel GetUser(Guid id)
