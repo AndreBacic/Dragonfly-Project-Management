@@ -154,24 +154,8 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public Dictionary<Guid, UserModel> GetAllOrganizationUsers(Guid organizationId)
         {
-            Dictionary<Guid, UserModel> users = GetAllUsers().ToDictionary(u => u.Id);
-            var org = GetOrganization(organizationId);
-
-            Dictionary<Guid, UserModel> output = new();
-
-            foreach (var id in org.WorkerIds)
-            {
-                if (users.ContainsKey(id) == false)
-                {
-                    continue;
-                }
-                output.Add(id, users[id]);
-            }
-
-            //return output;
-
-            var collection = _db.GetCollection<OrganizationModel>(_organizationCollection);
-            var filter = Builders<OrganizationModel>.Filter.Eq("Id", organizationId);
+            IMongoCollection<OrganizationModel> collection = _db.GetCollection<OrganizationModel>(_organizationCollection);
+            FilterDefinition<OrganizationModel> filter = Builders<OrganizationModel>.Filter.Eq("Id", organizationId);
 
             BsonDocument let = new BsonDocument("ids", "$WorkerIds");
 
@@ -193,12 +177,12 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
             BsonDocument group = new BsonDocument("$group", new BsonDocument("_id", "$users"));
 
-            var d = collection.Aggregate()
+            List<MongoAggregateOrgUserContainerModel> d = collection.Aggregate()
                 .Match(filter)
                 .AppendStage<BsonDocument>(lookup)
                 .AppendStage<BsonDocument>(group)
                 .Unwind("_id")
-                .As<MongoUserAggregateUnwindModel>().ToList();
+                .As<MongoAggregateOrgUserContainerModel>().ToList();
             Dictionary<Guid, UserModel> D = d.ToDictionary(u => u._id.Id, u => u._id);
             return D;
         }

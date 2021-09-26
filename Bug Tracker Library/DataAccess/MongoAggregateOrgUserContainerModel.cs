@@ -2,7 +2,7 @@
 
 namespace Bug_Tracker_Library.DataAccess.MongoDB
 {
-    class MongoUserAggregateUnwindModel
+    internal class MongoAggregateOrgUserContainerModel
     {
         public UserModel _id { get; set; }
     }

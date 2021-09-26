@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace DbSeederAndTester
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var mongodb = new MongoDBDataAccessor("BugTracker");
+            MongoDBDataAccessor mongodb = new MongoDBDataAccessor("BugTracker");
 
             //CreateUserModel(mongodb);
 
             //CreateOrgWithAFewUsers(mongodb);
 
-            var o = mongodb.GetAllOrganizationUsers(
+            System.Collections.Generic.Dictionary<Guid, UserModel> o = mongodb.GetAllOrganizationUsers(
                 mongodb.LoadRecords<OrganizationModel>("Organizations")[0].Id);
         }
 
         private static void CreateOrgWithAFewUsers(MongoDBDataAccessor mongodb)
         {
-            var ids = mongodb.GetAllUsers().Select(x => x.Id).ToList();
+            System.Collections.Generic.List<Guid> ids = mongodb.GetAllUsers().Select(x => x.Id).ToList();
 
             ids.RemoveAt(4);
             ids.RemoveAt(1);
@@ -37,7 +37,7 @@ namespace DbSeederAndTester
 
         private static void CreateUserModel(MongoDBDataAccessor mongodb)
         {
-            var user = new UserModel()
+            UserModel user = new UserModel()
             {
                 EmailAddress = "jane@jane.com",
                 FirstName = "Jane",
