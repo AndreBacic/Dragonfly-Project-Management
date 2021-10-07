@@ -6,9 +6,9 @@ namespace Bug_Tracker_Library.DataAccess
 {
     /// <summary>
     /// Interface for a data access class
-    /// <br></br>
+    /// <br/>
     /// NOTE: implementations should have a constructor with parameter (IConfiguration configuration)
-    /// where configuration is for grabbing connection string
+    /// where configuration is for grabbing a connection string
     /// </summary>
     public interface IDataAccessor
     {
@@ -51,6 +51,15 @@ namespace Bug_Tracker_Library.DataAccess
         UserModel GetUser(Guid id);
         /// <summary>
         /// Gets the user with unique EmailAddress of parameter emailAddress.
+        /// </summary>
+        /// <param name="emailAddress"></param>
+        /// <returns></returns>
+        UserModel GetUser(string emailAddress);
+        /// <summary>
+        /// Gets the user with unique EmailAddress of parameter emailAddress,
+        /// and checks if the plaintext password is the correct password.
+        /// <br/>
+        /// If the password is correct, the user data will be returned as normal. Otherwise, null.
         /// </summary>
         /// <param name="emailAddress"></param>
         /// <param name="password"></param>

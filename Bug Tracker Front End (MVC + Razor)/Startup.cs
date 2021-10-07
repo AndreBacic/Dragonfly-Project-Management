@@ -1,3 +1,4 @@
+using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.DataAccess.MongoDB;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +40,14 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
                 {
                     policyBuilder.RequireClaim(ClaimTypes.Email);
                     policyBuilder.RequireClaim(ClaimTypes.Name);
-                    policyBuilder.RequireClaim(ClaimTypes.Role); // TODO: Add cookie/omething to verify user is logged in to organization
+                    policyBuilder.RequireClaim(ClaimTypes.Role); // TODO: Add cookie/something to verify user is logged in to organization
+                });
+                authConfig.AddPolicy("Organization_ADMIN_policy", policyBuilder =>
+                {
+                    policyBuilder.RequireClaim(ClaimTypes.Email);
+                    policyBuilder.RequireClaim(ClaimTypes.Name);
+                    string[] roles = { UserPosition.ADMIN.ToString() };
+                    policyBuilder.RequireRole(roles); // TODO: Add cookie/something to verify user is logged in to organization as an admin
                 });
                 authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_into_organization_policy");
             });
@@ -76,7 +84,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}"); // todo: refactor default route.
+                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}"); // todo: refactor default route (remove the {id?} ?).
                 endpoints.MapRazorPages();
             });
         }

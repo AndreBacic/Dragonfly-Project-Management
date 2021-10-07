@@ -192,12 +192,17 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return LoadRecordById<UserModel>(_userCollection, id);
         }
 
-        public UserModel GetUser(string emailAddress, string password)
+        public UserModel GetUser(string emailAddress)
         {
             IMongoCollection<UserModel> collection = _db.GetCollection<UserModel>(_userCollection);
             FilterDefinition<UserModel> filter = Builders<UserModel>.Filter.Eq("EmailAddress", emailAddress);
 
-            UserModel user = collection.Find(filter).First();
+           return collection.Find(filter).First();
+        }
+
+        public UserModel GetUser(string emailAddress, string password)
+        {
+            var user = GetUser(emailAddress);
 
             PasswordHashModel passwordHash = new();
             passwordHash.FromDbString(user.PasswordHash);

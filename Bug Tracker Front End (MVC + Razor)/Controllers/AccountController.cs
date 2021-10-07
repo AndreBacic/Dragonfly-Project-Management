@@ -44,7 +44,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
                     string t = HttpContext.User.Identity.Name;
 
-                    return RedirectToAction("Index", "Todo");
+                    return RedirectToAction("Index", "Account");
                 }
                 else
                 {
@@ -57,11 +57,15 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             }
         }
 
-        [Authorize("Auth_Policy")]
+        [Authorize("Logged_in_user_policy")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Account"); // todo: Make this an actual page, or just delete the associated view?
+        }
+        public IActionResult LoginFailed()
+        {
+            return View();
         }
         public IActionResult Register()
         {
@@ -96,17 +100,17 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             LogInUser(newDbUser);
 
-            return RedirectToAction("Index", "Todo");
+            return RedirectToAction("Index", "Account");
         }
 
-        [Authorize("Auth_Policy")]
+        [Authorize("Logged_in_user_policy")]
         public IActionResult EditAccount()
         {
             UserModel user = GetLoggedInUserByEmail();
 
-            return View(DbUserToEditView(user));
+            return View(user.DbUserToEditView());
         }
-        [Authorize("Auth_Policy")]
+        [Authorize("Logged_in_user_policy")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditAccount(EditUserViewModel updatedUser)
@@ -119,7 +123,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 allUsers.Any(x => x.EmailAddress == updatedUser.EmailAddress && updatedUser.EmailAddress != loggedInUser.EmailAddress))
             {
                 ViewData["EditMessage"] = "That email address is taken"; // todo: refactor this viewdata message system
-                return View(DbUserToEditView(loggedInUser));
+                return View(loggedInUser.DbUserToEditView());
             }
 
             if (string.IsNullOrWhiteSpace(updatedUser.NewPassword) == false)
@@ -142,11 +146,11 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
                     loggedInUser.EmailAddress = "";
                     loggedInUser.PasswordHash = "";
-                    return RedirectToAction("Index", "Todo");
+                    return RedirectToAction("Index", "Account");
                 }
                 else
                 {
-                    return View(DbUserToEditView(loggedInUser));
+                    return View(loggedInUser.DbUserToEditView());
                 }
             }
             else
@@ -159,7 +163,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
                 LogInUser(loggedInUser);
 
-                return RedirectToAction("Index", "Todo");
+                return RedirectToAction("Index", "Account");
             }
         }
 
@@ -173,7 +177,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             List<ClaimsIdentity> claimsIdentities = new List<ClaimsIdentity>()
                 {
-                    new ClaimsIdentity(personClaims, "TodoAuth.Identity")
+                    new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")
                 };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentities));
@@ -181,30 +185,20 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
         private UserModel GetLoggedInUserByEmail()
         {
-            string email = HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Email).First().Value;
-            return _db.GetAllUsers().Where(x => x.EmailAddress == email).First();
+            string email = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            return _db.GetUser(email);
         }
         private bool IsValidEmailAddress(string emailAddress)
         {
             try
             {
-                System.Net.Mail.MailAddress m = new System.Net.Mail.MailAddress(emailAddress);
+                System.Net.Mail.MailAddress m = new(emailAddress);
                 return true;
             }
             catch (FormatException)
             {
                 return false;
             }
-        }
-
-        private EditUserViewModel DbUserToEditView(UserModel user)
-        {
-            return new EditUserViewModel
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                EmailAddress = user.EmailAddress
-            };
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
@@ -145,5 +146,15 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         //        return View();
         //    }
         //}
+
+        /// <summary>
+        /// This just handles the error message page
+        /// </summary>
+        /// <returns>A web page displaying an error message</returns>
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
