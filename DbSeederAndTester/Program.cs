@@ -1,7 +1,9 @@
-﻿using Bug_Tracker_Library.DataAccess.MongoDB;
+﻿using Bug_Tracker_Library;
+using Bug_Tracker_Library.DataAccess.MongoDB;
 using Bug_Tracker_Library.Models;
 using Bug_Tracker_Library.Security;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DbSeederAndTester
@@ -16,8 +18,38 @@ namespace DbSeederAndTester
 
             //CreateOrgWithAFewUsers(mongodb);
 
-            System.Collections.Generic.Dictionary<Guid, UserModel> o = mongodb.GetAllOrganizationUsers(
-                mongodb.LoadRecords<OrganizationModel>("Organizations")[0].Id);
+            var user = mongodb.GetAllUsers()[5];
+            OrganizationModel org = mongodb.LoadRecords<OrganizationModel>("Organizations")[0];
+            //org = CreateProj(mongodb, org);
+            AssignUserToOrg1stProj(mongodb, user, org);
+
+            Dictionary<Guid, UserModel> o = mongodb.GetAllOrganizationUsers(org.Id);
+        }
+
+        private static OrganizationModel CreateProj(MongoDBDataAccessor mongodb, OrganizationModel org)
+        {
+            mongodb.CreateProject(new ProjectModel()
+            {
+                Name = "Auth work",
+                Status = ProjectStatus.IN_PROGRESS
+            }, org.Id);
+            org = mongodb.LoadRecords<OrganizationModel>("Organizations")[0];
+            return org;
+        }
+
+        private static void AssignUserToOrg1stProj(MongoDBDataAccessor mongodb, UserModel user, OrganizationModel org)
+        {
+            var p = org.Projects[0];
+
+            mongodb.CreateAssignment(new AssignmentModel()
+            {
+                AssigneeAccess = UserPosition.WORKER,
+                AssigneeId = user.Id,
+                OrganizationId = org.Id,
+                ProjectIdTreePath = new List<Guid>() { p.Id }
+            });
+            p.WorkerIds.Add(user.Id);
+            mongodb.UpdateProject(p, org.Id);
         }
 
         private static void CreateOrgWithAFewUsers(MongoDBDataAccessor mongodb)

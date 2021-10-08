@@ -19,6 +19,9 @@ namespace Bug_Tracker_Library.Models
     {
         [BsonId]
         public Guid Id { get; set; }
+        /// <summary>
+        /// Unique name of the organization
+        /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// Projects under the umbrella of this, not including these projects' sub-projects.
@@ -27,7 +30,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The ids of the users invited and assigned to work on this including the admin.
         /// </summary>
-        public List<Guid> WorkerIds { get; set; }
+        public List<Guid> WorkerIds { get; set; } = new();
 
         public string Description { get; set; }
 

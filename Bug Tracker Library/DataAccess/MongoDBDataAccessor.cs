@@ -130,7 +130,13 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         {
             OrganizationModel org = LoadRecordById<OrganizationModel>(_organizationCollection, organizationId);
             // this is ok because model.ParentIdTreePath is already filled out.
-            org.GetProjectByIdTree(model.ParentIdTreePath).SubProjects.Add(model);
+            if (model.ParentIdTreePath.Count > 0)
+            {
+                org.GetProjectByIdTree(model.ParentIdTreePath).SubProjects.Add(model);
+            } else
+            {
+                org.Projects.Add(model);
+            }
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
@@ -228,13 +234,20 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         public void UpdateProject(ProjectModel model, Guid organizationId)
         {
             OrganizationModel org = LoadRecordById<OrganizationModel>(_organizationCollection, organizationId);
-            ProjectModel parent = org.GetProjectByIdTree(model.ParentIdTreePath);
+            if (model.ParentIdTreePath.Count > 0)
+            {
+                ProjectModel parent = org.GetProjectByIdTree(model.ParentIdTreePath);
 
-            int i = parent.SubProjects.FindIndex(p => p.Id == model.Id);
-            if (i < 0)
-            { return; }
+                int i = parent.SubProjects.FindIndex(p => p.Id == model.Id);
+                if (i < 0)
+                { return; }
 
-            parent.SubProjects[i] = model;
+                parent.SubProjects[i] = model;
+            } 
+            else
+            {
+                org.Projects.Add(model);
+            }
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 
@@ -276,7 +289,14 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         public void DeleteProject(ProjectModel model, Guid organizationId)
         {
             OrganizationModel org = LoadRecordById<OrganizationModel>(_organizationCollection, organizationId);
-            org.GetProjectByIdTree(model.ParentIdTreePath).SubProjects.Remove(model);
+            if (model.ParentIdTreePath.Count > 0)
+            {
+                org.GetProjectByIdTree(model.ParentIdTreePath).SubProjects.Remove(model);
+            }
+            else
+            {
+                org.Projects.Remove(model);
+            }
             UpsertRecord(_organizationCollection, organizationId, org);
         }
 

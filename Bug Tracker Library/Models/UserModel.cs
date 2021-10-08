@@ -19,7 +19,7 @@ namespace Bug_Tracker_Library.Models
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }
-        public List<AssignmentModel> Assignments { get; set; }
+        public List<AssignmentModel> Assignments { get; set; } = new();
         [BsonIgnore]
         public string Name
         {

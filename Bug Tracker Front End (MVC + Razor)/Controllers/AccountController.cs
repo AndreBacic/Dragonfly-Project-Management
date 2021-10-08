@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Bug_Tracker_Library.Security;
@@ -175,9 +176,17 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             var r = Request.Cookies;
             var r2 = Response.Cookies;
             var u = User.Identity;
+            var user = GetLoggedInUserByEmail();
+            LogInUser(user, user.Assignments[0]);
             return View();
         }
-
+        [Authorize("Logged_in_user_policy")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Home(UserViewModel user)
+        {
+            return View();
+        }
         private async void LogInUser(UserModel user)
         {
             List<Claim> personClaims = new()
@@ -186,12 +195,30 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                     new Claim(ClaimTypes.Email, user.EmailAddress)
                 };
 
-            List<ClaimsIdentity> claimsIdentities = new()
-                {
-                    new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")
-                };
+            await HttpContext.SignInAsync(new ClaimsPrincipal(
+                new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")));
+        }
 
-            await HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentities));
+        private async void LogInUser(UserModel user, AssignmentModel assignment)
+        {
+            string projectIdPath = "";
+            foreach (Guid id in assignment.ProjectIdTreePath)
+            {
+                projectIdPath += $"{id},";
+            }
+            projectIdPath = projectIdPath.Remove(projectIdPath.Length - 1);
+
+            List<Claim> personClaims = new()
+            {
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(ClaimTypes.Role, assignment.AssigneeAccess.ToString()),
+                new Claim(nameof(OrganizationModel), assignment.OrganizationId.ToString()),
+                new Claim(nameof(ProjectModel), projectIdPath)
+            };
+
+            await HttpContext.SignInAsync(new ClaimsPrincipal(
+                new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")));
         }
 
         private UserModel GetLoggedInUserByEmail()

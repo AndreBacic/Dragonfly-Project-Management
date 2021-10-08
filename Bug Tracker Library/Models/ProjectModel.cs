@@ -34,7 +34,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// The ids of the users assigned to work on this.
         /// </summary>
-        public List<Guid> WorkerIds { get; set; }
+        public List<Guid> WorkerIds { get; set; } = new();
         /// <summary>
         /// The description of this, which may be just a short statement or a very long list of instructions to Workers.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Bug_Tracker_Library.Models
         /// Do not directly add comments to this list; use AddComment() so that
         /// the ParentIdTreePath is automatically added to the comment.
         /// </summary>
-        public List<CommentModel> Comments { get; set; }
+        public List<CommentModel> Comments { get; set; } = new();
         /// <summary>
         /// The date that all work on this must be done.
         /// </summary>

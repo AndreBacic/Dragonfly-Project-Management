@@ -1,12 +1,14 @@
 using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.DataAccess.MongoDB;
+using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Security.Claims;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor
@@ -28,11 +30,6 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
                 cookieConfig.LoginPath = "/Account/Login";
                 cookieConfig.Cookie.Name = "BugTracker.UserAuth.cookie"; // TODO: Have an "Our site uses cookies" label for this project and for the Blog.
                 cookieConfig.AccessDeniedPath = "/Account/Login";
-            }).AddCookie("OrgAuth", cookieConfig =>
-            {
-                cookieConfig.LoginPath = "/Account/Home";
-                cookieConfig.Cookie.Name = "BugTracker.OrgAuth.cookie";
-                cookieConfig.AccessDeniedPath = "/Account/Home";
             });
 
             services.AddAuthorization(authConfig =>
@@ -45,12 +42,13 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
                 authConfig.AddPolicy("Logged_into_organization_policy", policyBuilder =>
                 {
                     policyBuilder.Combine(authConfig.GetPolicy("Logged_in_user_policy"));
-                    //policyBuilder.RequireAssertion(a => HttpContext.Session.)
-                    policyBuilder.RequireClaim(ClaimTypes.Role); // TODO: Add cookie/something to verify user is logged in to organization
+                    policyBuilder.RequireClaim(nameof(OrganizationModel));
+                    policyBuilder.RequireClaim(nameof(ProjectModel));
+                    policyBuilder.RequireClaim(ClaimTypes.Role);
                 });
                 authConfig.AddPolicy("Organization_ADMIN_policy", policyBuilder =>
                 {
-                    policyBuilder.Combine(authConfig.GetPolicy("Logged_in_user_policy"));
+                    policyBuilder.Combine(authConfig.GetPolicy("Logged_into_organization_policy"));
                     string[] roles = { UserPosition.ADMIN.ToString() };
                     policyBuilder.RequireRole(roles); // TODO: Add cookie/something to verify user is logged in to organization as an admin
                 });
