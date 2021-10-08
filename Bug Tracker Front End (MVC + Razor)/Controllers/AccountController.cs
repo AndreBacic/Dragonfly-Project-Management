@@ -30,10 +30,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             try
             {
-                UserModel dbUser = _db.GetAllUsers()
-                    .Where(u => u.EmailAddress == user.EmailAddress).First();
+                UserModel dbUser = _db.GetUser(user.EmailAddress);
 
-                PasswordHashModel passwordHash = new PasswordHashModel();
+                PasswordHashModel passwordHash = new();
                 passwordHash.FromDbString(dbUser.PasswordHash);
 
                 (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(user.Password, passwordHash);
@@ -42,9 +41,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 {
                     LogInUser(dbUser);
 
-                    string t = HttpContext.User.Identity.Name;
-
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
                 }
                 else
                 {
@@ -61,7 +58,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account"); // todo: Make this an actual page, or just delete the associated view?
+            return RedirectToAction(nameof(Login), nameof(AccountController)); // todo: Make this an actual page, or just delete the associated view?
         }
         public IActionResult LoginFailed()
         {
@@ -89,7 +86,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 ViewData["RegisterMessage"] = "That email address is taken";
                 return View();
             }
-            UserModel newDbUser = new UserModel
+            UserModel newDbUser = new()
             {
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
@@ -100,7 +97,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             LogInUser(newDbUser);
 
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
         }
 
         [Authorize("Logged_in_user_policy")]
@@ -146,7 +143,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
                     loggedInUser.EmailAddress = "";
                     loggedInUser.PasswordHash = "";
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
                 }
                 else
                 {
@@ -163,19 +160,23 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
                 LogInUser(loggedInUser);
 
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
             }
+        }
+        public IActionResult Home()
+        {
+            return View();
         }
 
         private async void LogInUser(UserModel user)
         {
-            List<Claim> personClaims = new List<Claim>()
+            List<Claim> personClaims = new()
                 {
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Email, user.EmailAddress)
                 };
 
-            List<ClaimsIdentity> claimsIdentities = new List<ClaimsIdentity>()
+            List<ClaimsIdentity> claimsIdentities = new()
                 {
                     new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")
                 };

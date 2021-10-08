@@ -2,6 +2,7 @@
 using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Linq;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
+    [Authorize]
     public class OrganizationController : Controller
     {
         private readonly IDataAccessor _dataAccessor;
@@ -21,7 +23,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         }
 
         // GET: Organization/OrganizationHome page, including a search for projects by name
-        public IActionResult OrganizationHome(string searchString)
+        public IActionResult OrganizationHome(string searchString = null)
         {
             if (searchString != null)
             {
@@ -65,9 +67,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 projects = projectsUnfiltered;
             }
 
-            projects.OrderBy(x => x.Deadline); // order projects by deadline date
+            projects = projects.OrderBy(x => x.Deadline).ToList(); // order projects by deadline date
 
-            ProjectsListViewModel model = new ProjectsListViewModel
+            ProjectsListViewModel model = new()
             {
                 Projects = projects,
                 User = new UserModel { FirstName = "Andre", LastName = "Test" },

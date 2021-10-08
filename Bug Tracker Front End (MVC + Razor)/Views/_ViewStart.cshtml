@@ -1,3 +1,10 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using Bug_Tracker_Front_End__MVC_plus_Razor.Controllers;
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+
+    Layout = (controllerName) switch
+    {
+        nameof(AccountController) => "_AccountLayout",
+        _ => "_Layout"
+    };
 }

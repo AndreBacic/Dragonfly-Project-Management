@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         // GET: Project/ProjectHome page, with edit boxes and subproject links
@@ -45,36 +47,35 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProjectHome));
             }
             catch
             {
                 return View();
             }
         }
+                
+        // GET: Project/Delete/5
+        public IActionResult Delete(int id)
+        {
+            return View();
+        }
 
-        // Uncomment this stuff if you need to add a delete project page
-        //// GET: Project/Delete/5
-        //public IActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        // POST: Project/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
 
-        //// POST: Project/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+                return RedirectToAction(nameof(ProjectHome));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
