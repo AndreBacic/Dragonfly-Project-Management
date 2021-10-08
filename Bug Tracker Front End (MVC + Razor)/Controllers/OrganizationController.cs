@@ -15,11 +15,11 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
     [Authorize]
     public class OrganizationController : Controller
     {
-        private readonly IDataAccessor _dataAccessor;
+        private readonly IDataAccessor _db;
 
-        public OrganizationController(IDataAccessor dataAccessor)
+        public OrganizationController(IDataAccessor db)
         {
-            _dataAccessor = dataAccessor;
+            _db = db;
         }
 
         // GET: Organization/OrganizationHome page, including a search for projects by name
@@ -79,16 +79,16 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             return View(model);
         }
 
-        // GET: Organization/UserProfile/5
-        public IActionResult UserProfile(int id)
+        // GET: Organization/CreateOrganization
+        public IActionResult CreateOrganization()
         {
             return View();
         }
 
-        // POST: Organization/UserProfile (updates user profile)
+        // POST: Organization/CreateOrganization
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UserProfile(IFormCollection collection)
+        public IActionResult CreateOrganization(OrganizationViewModel model)
         {
             try
             {
@@ -102,8 +102,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             }
         }
 
+        [Authorize("Organization_ADMIN_policy")]
         // GET: Organization/CreateOrganization
-        public IActionResult CreateOrganization()
+        public IActionResult UpdateOrganization()
         {
             return View();
         }
@@ -111,7 +112,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         // POST: Organization/CreateOrganization
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrganization(IFormCollection collection)
+        [Authorize("Organization_ADMIN_policy")]
+        public IActionResult UpdateOrganization(OrganizationViewModel model)
         {
             try
             {

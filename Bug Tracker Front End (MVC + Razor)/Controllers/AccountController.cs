@@ -58,7 +58,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(Login), nameof(AccountController)); // todo: Make this an actual page, or just delete the associated view?
+            return RedirectToAction(nameof(Login), "Account"); // todo: Make this an actual page, or just delete the associated view?
         }
         public IActionResult LoginFailed()
         {
@@ -163,8 +163,18 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
             }
         }
+
+        /// <summary>
+        /// The Home page for the user, and where the user may select an assignment 
+        /// to work on, or to search for organizations or other users.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Home()
         {
+            var c = HttpContext.Request.Cookies;
+            var r = Request.Cookies;
+            var r2 = Response.Cookies;
+            var u = User.Identity;
             return View();
         }
 
