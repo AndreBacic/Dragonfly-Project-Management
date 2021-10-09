@@ -1,5 +1,4 @@
 ﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
-using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Bug_Tracker_Library.Security;
@@ -42,7 +41,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 {
                     LogInUser(dbUser);
 
-                    return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
+                    return RedirectToAction(nameof(Home));
                 }
                 else
                 {
@@ -170,16 +169,14 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         /// to work on, or to search for organizations or other users.
         /// </summary>
         /// <returns></returns>
+        [Authorize("Logged_in_user_policy")]
         public IActionResult Home()
         {
-            var c = HttpContext.Request.Cookies;
-            var r = Request.Cookies;
-            var r2 = Response.Cookies;
-            var u = User.Identity;
-            var user = GetLoggedInUserByEmail();
+            UserModel user = GetLoggedInUserByEmail();
             LogInUser(user, user.Assignments[0]);
             return View();
         }
+
         [Authorize("Logged_in_user_policy")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -223,7 +220,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
         private UserModel GetLoggedInUserByEmail()
         {
-            string email = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            string email = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
             return _db.GetUser(email);
         }
         private bool IsValidEmailAddress(string emailAddress)

@@ -18,7 +18,7 @@ namespace DbSeederAndTester
 
             //CreateOrgWithAFewUsers(mongodb);
 
-            var user = mongodb.GetAllUsers()[5];
+            UserModel user = mongodb.GetAllUsers()[5];
             OrganizationModel org = mongodb.LoadRecords<OrganizationModel>("Organizations")[0];
             //org = CreateProj(mongodb, org);
             AssignUserToOrg1stProj(mongodb, user, org);
@@ -39,7 +39,7 @@ namespace DbSeederAndTester
 
         private static void AssignUserToOrg1stProj(MongoDBDataAccessor mongodb, UserModel user, OrganizationModel org)
         {
-            var p = org.Projects[0];
+            ProjectModel p = org.Projects[0];
 
             mongodb.CreateAssignment(new AssignmentModel()
             {

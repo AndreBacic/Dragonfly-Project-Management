@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {

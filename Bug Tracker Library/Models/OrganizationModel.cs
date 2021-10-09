@@ -26,7 +26,7 @@ namespace Bug_Tracker_Library.Models
         /// <summary>
         /// Projects under the umbrella of this, not including these projects' sub-projects.
         /// </summary>
-        public List<ProjectModel> Projects { get; set; } = new List<ProjectModel>();
+        public List<ProjectModel> Projects { get; set; } = new();
         /// <summary>
         /// The ids of the users invited and assigned to work on this including the admin.
         /// </summary>

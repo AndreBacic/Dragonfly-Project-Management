@@ -4,11 +4,9 @@ using Bug_Tracker_Library.DataAccess.MongoDB;
 using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Security.Claims;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor

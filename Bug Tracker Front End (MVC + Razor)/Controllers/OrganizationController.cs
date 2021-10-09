@@ -41,7 +41,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             };
             ProjectModel p2 = new ProjectModel
             {
-                Name = "Video Game",
+                Name = "Happy Burgers",
                 Priority = ProjectPriority.HIGH,
                 Status = ProjectStatus.TODO,
                 Deadline = Convert.ToDateTime("4/29/2021")
@@ -50,7 +50,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             projectsUnfiltered.Add(p2);
 
             // Take the unfiltered projects and filter them by searched name
-            List<ProjectModel> projects = new List<ProjectModel>();
+            List<ProjectModel> projects = new();
 
             if (searchString != null)
             {
@@ -94,7 +94,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(OrganizationHome));
             }
             catch
             {
@@ -119,7 +119,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(OrganizationHome));
             }
             catch
             {
@@ -143,7 +143,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         //    {
         //        // TODO: Add delete logic here
 
-        //        return RedirectToAction(nameof(Index));
+        //        return RedirectToAction(nameof(OrganizationHome));
         //    }
         //    catch
         //    {

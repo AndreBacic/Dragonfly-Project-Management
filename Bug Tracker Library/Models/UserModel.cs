@@ -16,6 +16,9 @@ namespace Bug_Tracker_Library.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        /// <summary>
+        /// Unique email address of the user.
+        /// </summary>
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }

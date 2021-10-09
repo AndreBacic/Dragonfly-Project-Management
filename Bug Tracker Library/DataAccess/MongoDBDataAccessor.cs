@@ -208,7 +208,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
         public UserModel GetUser(string emailAddress, string password)
         {
-            var user = GetUser(emailAddress);
+            UserModel user = GetUser(emailAddress);
 
             PasswordHashModel passwordHash = new();
             passwordHash.FromDbString(user.PasswordHash);
