@@ -169,9 +169,14 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         /// to work on, or to search for organizations or other users.
         /// </summary>
         /// <returns></returns>
-        [Authorize("Logged_in_user_policy")]
         public IActionResult Home()
         {
+            // todo: replace manual redirect with better auth policies/schemes
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
             UserModel user = GetLoggedInUserByEmail();
             LogInUser(user, user.Assignments[0]);
             return View();

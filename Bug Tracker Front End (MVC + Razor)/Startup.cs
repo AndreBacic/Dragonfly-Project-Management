@@ -25,9 +25,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor
         {
             services.AddAuthentication("BugTrackerAuth").AddCookie("BugTrackerAuth", cookieConfig =>
             {
-                cookieConfig.LoginPath = "/Account/Login";
+                cookieConfig.LoginPath = "/Account/Home";
                 cookieConfig.Cookie.Name = "BugTracker.UserAuth.cookie"; // TODO: Have an "Our site uses cookies" label for this project and for the Blog.
-                cookieConfig.AccessDeniedPath = "/Account/Login";
+                cookieConfig.AccessDeniedPath = "/Account/Home";
             });
 
             services.AddAuthorization(authConfig =>

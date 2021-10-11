@@ -1,3 +1,11 @@
 ﻿@{// TODO: implement select organization home page
 }
 <h1>User Profile Home</h1>
+<ul>
+    <li>Name: @User.Claims.ToList()[0]</li>
+    <li>Email: @User.Claims.ToList()[1]</li>
+    @if (User.Claims.Count() > 2)
+            {
+                <li>Role: @User.Claims.ToList()[2]</li>
+            }
+</ul>
