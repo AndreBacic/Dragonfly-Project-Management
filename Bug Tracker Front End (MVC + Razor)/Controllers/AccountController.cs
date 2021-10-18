@@ -171,14 +171,12 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         /// <returns></returns>
         public IActionResult Home()
         {
-            // todo: replace manual redirect with better auth policies/schemes
+            // todo: replace manual redirect with better auth policies/schemes?
             if (User.Identity.IsAuthenticated == false)
             {
                 return RedirectToAction(nameof(Login));
             }
 
-            UserModel user = GetLoggedInUserByEmail();
-            LogInUser(user, user.Assignments[0]);
             return View();
         }
 
@@ -187,6 +185,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Home(UserViewModel user)
         {
+            UserModel u = GetLoggedInUserByEmail();
+            LogInUser(u, u.Assignments[0]);
             return View();
         }
         private async void LogInUser(UserModel user)

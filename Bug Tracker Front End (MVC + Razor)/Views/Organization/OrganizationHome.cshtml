@@ -1,5 +1,5 @@
 ﻿@using Bug_Tracker_Library;
-@model Bug_Tracker_Front_End__MVC_plus_Razor.Models.ProjectsListViewModel
+@model Bug_Tracker_Front_End__MVC_plus_Razor.Models.OrganizationHomeModel
 
 @{
     ViewData["Title"] = "Organization Home";
@@ -8,7 +8,8 @@
 <h1>Organization Home</h1>
 <h1>All projects belonging to @Model.User.Name</h1>
 
-@if (Model.UserPosition == UserPosition.ADMIN)
+@if (Model.UserAssignment.AssigneeAccess == UserPosition.ADMIN ||
+     Model.UserAssignment.AssigneeAccess == UserPosition.MANAGER)
 {
     <a class="text-info" asp-controller="Project" asp-action="CreateProject">Create new project</a>
 }
@@ -29,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Bug_Tracker_Library.Models.ProjectModel project in Model.Projects)
+        @foreach (Bug_Tracker_Library.Models.ProjectModel project in Model.Organization.Projects)
         {
             <tr>
                 <td><a class="text-success" asp-controller="Project" asp-action="ProjectHome" asp-route-id="@project.Id">@project.Name</a></td>

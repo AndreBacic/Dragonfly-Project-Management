@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Models
 {
-    public class ProjectsListViewModel
+    public class OrganizationHomeModel
     {
-        public List<ProjectModel> Projects { get; set; }
+        public OrganizationModel Organization { get; set; }
         public UserModel User { get; set; }
-        public UserPosition UserPosition { get; set; }
+        public AssignmentModel UserAssignment { get; set; }
     }
 }

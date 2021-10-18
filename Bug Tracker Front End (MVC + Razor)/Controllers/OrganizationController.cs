@@ -29,51 +29,18 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 searchString = searchString.ToLower(); // so comparisaons aren't case-sensitive
             }
-            List<ProjectModel> projectsUnfiltered = new List<ProjectModel>();
 
-            // TODO: Add data access logic here
-            ProjectModel p1 = new ProjectModel
-            {
-                Name = "JavaScript project",
-                Priority = ProjectPriority.MEDIUM,
-                Status = ProjectStatus.TODO,
-                Deadline = Convert.ToDateTime("6/5/2021")
-            };
-            ProjectModel p2 = new ProjectModel
-            {
-                Name = "Happy Burgers",
-                Priority = ProjectPriority.HIGH,
-                Status = ProjectStatus.TODO,
-                Deadline = Convert.ToDateTime("4/29/2021")
-            };
-            projectsUnfiltered.Add(p1);
-            projectsUnfiltered.Add(p2);
+            var org = _db.GetOrganization(
+                new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value));
 
-            // Take the unfiltered projects and filter them by searched name
-            List<ProjectModel> projects = new();
-
-            if (searchString != null)
+            org.Projects = org.Projects
+                .Where(p => p.Name.ToLower().Contains(searchString))
+                .OrderBy(x => x.Deadline)
+                .ToList();
+            
+            OrganizationHomeModel model = new()
             {
-                foreach (ProjectModel p in projectsUnfiltered)
-                {
-                    if (p.Name.ToLower().Contains(searchString))
-                    {
-                        projects.Add(p);
-                    }
-                }
-            }
-            else
-            {
-                projects = projectsUnfiltered;
-            }
-
-            projects = projects.OrderBy(x => x.Deadline).ToList(); // order projects by deadline date
-
-            ProjectsListViewModel model = new()
-            {
-                Projects = projects,
-                User = new UserModel { FirstName = "Andre", LastName = "Test" },
-                UserPosition = UserPosition.WORKER
+                Organization = org,
             };
 
             return View(model);

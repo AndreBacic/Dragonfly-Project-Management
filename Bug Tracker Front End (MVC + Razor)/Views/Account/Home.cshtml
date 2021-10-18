@@ -1,11 +1,12 @@
 ﻿@{// TODO: implement select organization home page
 }
+@using Bug_Tracker_Library
 <h1>User Profile Home</h1>
 <ul>
-    <li>Name: @User.Claims.ToList()[0]</li>
-    <li>Email: @User.Claims.ToList()[1]</li>
+    <li>Name: @User.Claims.ToList()[(int)UserClaimsIndex.Name]</li>
+    <li>Email: @User.Claims.ToList()[(int)UserClaimsIndex.Email]</li>
     @if (User.Claims.Count() > 2)
             {
-                <li>Role: @User.Claims.ToList()[2]</li>
+                <li>Role: @User.Claims.ToList()[(int)UserClaimsIndex.Role]</li>
             }
 </ul>

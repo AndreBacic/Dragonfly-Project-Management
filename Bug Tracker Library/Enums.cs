@@ -23,4 +23,13 @@
         HIGH,
         TOP
     }
+
+    public enum UserClaimsIndex
+    {
+        Name,
+        Email,
+        Role,
+        OrganizationModel,
+        ProjectModel
+    }
 }
