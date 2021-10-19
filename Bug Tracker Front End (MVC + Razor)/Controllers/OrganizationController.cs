@@ -60,7 +60,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         // POST: Organization/CreateOrganization
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrganization(OrganizationViewModel model)
+        public IActionResult CreateOrganization(CreateOrganizationModel model)
         {
             if (ModelState.IsValid == false)
             {
@@ -70,7 +70,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             OrganizationModel org = new() {
                 Name = model.Name,
                 Description = model.Description,
-                WorkerIds = new List<Guid>() { model.CreatorOrEditorId }
+                WorkerIds = new List<Guid>() { model.CreatorId }
             };
 
             bool didCreate = _db.CreateOrganization(org);
@@ -84,7 +84,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             _db.CreateAssignment(new AssignmentModel()
             {
-                AssigneeId = model.CreatorOrEditorId,
+                AssigneeId = model.CreatorId,
                 AssigneeAccess = UserPosition.ADMIN,
                 OrganizationId = org.Id
             });
@@ -94,27 +94,42 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
         [Authorize("Organization_ADMIN_policy")]
         // GET: Organization/CreateOrganization
-        public IActionResult UpdateOrganization()
+        public IActionResult ManageOrganization()
         {
-            return View();
+            var user = GetLoggedInUserByEmail();
+            ManageOrganizationModel mog = new()
+            {
+                Organization = GetLoggedInUsersOrganization(user),
+                LoggedInUser = user,
+                DidUpdateOrg = ""
+            };
+            return View(mog);
         }
 
         // POST: Organization/CreateOrganization
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize("Organization_ADMIN_policy")]
-        public IActionResult UpdateOrganization(OrganizationViewModel model)
+        public IActionResult ManageOrganization(EditOrganizationModel model)
         {
-            try
+            ManageOrganizationModel mog = new()
             {
-                // TODO: Add insert logic here
+                Organization = _db.GetOrganization(model.Id),
+                LoggedInUser = GetLoggedInUserByEmail()
+            };
 
-                return RedirectToAction(nameof(OrganizationHome));
-            }
-            catch
+            if (ModelState.IsValid == false)
             {
-                return View();
+                mog.DidUpdateOrg = "False";
+                return View(mog);
             }
+
+            mog.Organization.Description = model.Description;
+            mog.Organization.Name = model.Name;
+
+            mog.DidUpdateOrg = _db.UpdateOrganization(mog.Organization).ToString();
+
+            return View(mog);
         }
 
         //// Uncomment all of this if you need to make a delete organization page
@@ -145,6 +160,16 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             string email = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
             return _db.GetUser(email);
+        }
+
+        private OrganizationModel GetLoggedInUsersOrganization(UserModel user = null)
+        {
+            Guid id = new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value);
+            if (user is null)
+            {
+                user = GetLoggedInUserByEmail();
+            }
+            return _db.GetOrganization(id);
         }
 
         private AssignmentModel GetLoggedInUsersAssignment(UserModel user = null)

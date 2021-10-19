@@ -230,14 +230,30 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return user;
         }
 
-        public void UpdateOrganization(OrganizationModel model)
+        public bool UpdateOrganization(OrganizationModel model)
         {
+            List<OrganizationModel> organizations = LoadRecords<OrganizationModel>(_organizationCollection);
+
+            // Ensure that no organizations with that name already exist
+            if (organizations.Where(x => x.Name == model.Name && x.Id != model.Id).Any())
+            { return false; }
+
             UpsertRecord(_organizationCollection, model.Id, model);
+
+            return true;
         }
 
-        public void UpdateUser(UserModel model)
+        public bool UpdateUser(UserModel model)
         {
+            List<UserModel> users = GetAllUsers();
+
+            // do not update record if new email already used.
+            if (users.Any(x => x.EmailAddress == model.EmailAddress && x.Id != model.Id))
+            { return false; }
+
             UpsertRecord(_userCollection, model.Id, model);
+
+            return true;
         }
 
         public void UpdateProject(ProjectModel model, Guid organizationId)

@@ -1,0 +1,19 @@
+﻿@model Bug_Tracker_Front_End__MVC_plus_Razor.Models.ManageOrganizationModel
+
+@{
+    ViewData["Title"] = $"Manage {Model.Organization.Name}";
+}
+<form asp-action="ManageOrganization">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="DidUpdateOrg" class="control-label"></label>
+        <input asp-for="DidUpdateOrg" class="form-control" />
+        <span asp-validation-for="DidUpdateOrg" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+<div>
+    <a asp-action="OrganizationHome" asp-controller="Organization">Back to Organization Home</a>
+</div>

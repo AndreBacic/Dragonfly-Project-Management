@@ -71,8 +71,8 @@ namespace Bug_Tracker_Library.DataAccess
         /// <returns></returns>
         UserModel GetUser(string emailAddress, string password);
 
-        void UpdateOrganization(OrganizationModel model);
-        void UpdateUser(UserModel model);
+        bool UpdateOrganization(OrganizationModel model);
+        bool UpdateUser(UserModel model);
         void UpdateProject(ProjectModel model, Guid organizationId);
         void UpdateComment(CommentModel model, Guid organizationId);
         void UpdateAssignment(AssignmentModel model);
