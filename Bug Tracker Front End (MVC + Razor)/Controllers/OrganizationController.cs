@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Claims;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -39,13 +38,13 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 .OrderBy(x => x.Deadline)
                 .ToList();
 
-            UserModel user = GetLoggedInUserByEmail();
+            UserModel user = this.GetLoggedInUserByEmail(_db);
 
             OrganizationHomeModel model = new()
             {
                 Organization = org,
                 User = user,
-                UserAssignment = GetLoggedInUsersAssignment(user)
+                UserAssignment = this.GetLoggedInUsersAssignment(_db, user)
             };
 
             return View(model);
@@ -96,13 +95,14 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         // GET: Organization/CreateOrganization
         public IActionResult ManageOrganization()
         {
-            var user = GetLoggedInUserByEmail();
+            UserModel user = this.GetLoggedInUserByEmail(_db);
             ManageOrganizationModel mog = new()
             {
-                Organization = GetLoggedInUsersOrganization(user),
+                Organization = this.GetLoggedInUsersOrganization(_db, user),
                 LoggedInUser = user,
                 DidUpdateOrg = ""
             };
+            mog.Workers = _db.GetAllOrganizationUsers(mog.Organization.Id);
             return View(mog);
         }
 
@@ -115,8 +115,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             ManageOrganizationModel mog = new()
             {
                 Organization = _db.GetOrganization(model.Id),
-                LoggedInUser = GetLoggedInUserByEmail()
+                LoggedInUser = this.GetLoggedInUserByEmail(_db)
             };
+            mog.Workers = _db.GetAllOrganizationUsers(mog.Organization.Id);
 
             if (ModelState.IsValid == false)
             {
@@ -156,32 +157,6 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         //    }
         //}
 
-        private UserModel GetLoggedInUserByEmail()
-        {
-            string email = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-            return _db.GetUser(email);
-        }
-
-        private OrganizationModel GetLoggedInUsersOrganization(UserModel user = null)
-        {
-            Guid id = new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value);
-            if (user is null)
-            {
-                user = GetLoggedInUserByEmail();
-            }
-            return _db.GetOrganization(id);
-        }
-
-        private AssignmentModel GetLoggedInUsersAssignment(UserModel user = null)
-        {
-            string projectIdPath = User.Claims.ToList()[(int)UserClaimsIndex.ProjectModel].Value;
-            if (user is null)
-            {
-                user = GetLoggedInUserByEmail();
-            }
-            return user.Assignments.FirstOrDefault(a => 
-                string.Equals(a.ProjectIdTreePath.ListToString(), projectIdPath));
-        }
         /// <summary>
         /// This just handles the error message page
         /// </summary>

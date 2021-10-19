@@ -104,7 +104,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [Authorize("Logged_in_user_policy")]
         public IActionResult EditAccount()
         {
-            UserModel user = GetLoggedInUserByEmail();
+            UserModel user = this.GetLoggedInUserByEmail(_db);
 
             return View(user.DbUserToEditView());
         }
@@ -115,7 +115,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         {
             // 1) Make sure email isn't taken
             List<UserModel> allUsers = _db.GetAllUsers();
-            UserModel loggedInUser = GetLoggedInUserByEmail();
+            UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
 
             if (IsValidEmailAddress(updatedUser.EmailAddress) == false ||
                 allUsers.Any(x => x.EmailAddress == updatedUser.EmailAddress && updatedUser.EmailAddress != loggedInUser.EmailAddress))
@@ -127,7 +127,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             if (string.IsNullOrWhiteSpace(updatedUser.NewPassword) == false)
             {
                 // 2) Make sure old password is correct
-                PasswordHashModel passwordHash = new PasswordHashModel();
+                PasswordHashModel passwordHash = new();
                 passwordHash.FromDbString(loggedInUser.PasswordHash);
 
                 (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(updatedUser.OldPassword, passwordHash);
@@ -186,7 +186,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Home(UserViewModel user)
         {
-            UserModel u = GetLoggedInUserByEmail();
+            // TODO: Have user select assignment and direct them to either org home or project home
+            UserModel u = this.GetLoggedInUserByEmail(_db);
             LogInUser(u, u.Assignments[0]);
             return View();
         }
@@ -217,12 +218,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")));
         }
 
-        private UserModel GetLoggedInUserByEmail()
-        {
-            string email = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-            return _db.GetUser(email);
-        }
-        private bool IsValidEmailAddress(string emailAddress)
+        private static bool IsValidEmailAddress(string emailAddress) // todo: move to an email logic class
         {
             try
             {

@@ -1,7 +1,10 @@
-﻿using Bug_Tracker_Library.DataAccess;
+﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -15,20 +18,38 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             _db = db;
         }
         // GET: Project/ProjectHome page, with edit boxes and subproject links
-        public IActionResult ProjectHome()
+        public IActionResult ProjectHome(List<Guid> projectIdTreePath)
         {
-            // TODO: Finish this method
-            return View();
+            Bug_Tracker_Library.Models.OrganizationModel org = this.GetLoggedInUsersOrganization(_db);
+            Bug_Tracker_Library.Models.ProjectModel proj = org.GetProjectByIdTree(projectIdTreePath);
+            ProjectViewModel projV = new()
+            {
+                Id = proj.Id,
+                Name = proj.Name,
+                Description = proj.Description,
+                Deadline = proj.Deadline,
+                Comments = proj.Comments,
+                Priority = proj.Priority,
+                Status = proj.Status,
+                SubProjects = proj.SubProjects,
+                ParentIdTreePath = proj.ParentIdTreePath
+            };
+            Dictionary<Guid, Bug_Tracker_Library.Models.UserModel> workers = _db.GetAllOrganizationUsers(org.Id);
+            foreach (Guid id in proj.WorkerIds)
+            {
+                projV.Workers.Add(id, workers[id]);
+            }
+            return View(projV);
         }
 
         // POST: Project/ProjectHome
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ProjectHome(IFormCollection collection)
+        public IActionResult ProjectHome(ProjectViewModel model)
         {
             try
             {
-                // TODO: Add save edited project info here
+                // TODO: save edited project info here
 
                 return View();
             }

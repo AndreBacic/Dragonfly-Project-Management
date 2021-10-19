@@ -11,7 +11,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 {
     public class MongoDBDataAccessor : IDataAccessor
     {
-        private IMongoDatabase _db;
+        private readonly IMongoDatabase _db;
         /// <summary>
         /// Stores organizations, with their projects and comments
         /// </summary>
