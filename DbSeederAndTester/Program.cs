@@ -12,7 +12,7 @@ namespace DbSeederAndTester
     {
         private static void Main(string[] args)
         {
-            MongoDBDataAccessor mongodb = new MongoDBDataAccessor("BugTracker");
+            MongoDBDataAccessor mongodb = new("BugTracker");
 
             //CreateUserModel(mongodb);
 
@@ -21,9 +21,12 @@ namespace DbSeederAndTester
             UserModel user = mongodb.GetAllUsers()[5];
             OrganizationModel org = mongodb.LoadRecords<OrganizationModel>("Organizations")[0];
             //org = CreateProj(mongodb, org);
-            AssignUserToOrg1stProj(mongodb, user, org);
+            //AssignUserToOrg1stProj(mongodb, user, org);
 
             Dictionary<Guid, UserModel> o = mongodb.GetAllOrganizationUsers(org.Id);
+
+            string p = o.First().Value.Assignments[0].ProjectIdTreePath.ToString();
+            Console.WriteLine(p);
         }
 
         private static OrganizationModel CreateProj(MongoDBDataAccessor mongodb, OrganizationModel org)
@@ -69,7 +72,7 @@ namespace DbSeederAndTester
 
         private static void CreateUserModel(MongoDBDataAccessor mongodb)
         {
-            UserModel user = new UserModel()
+            UserModel user = new()
             {
                 EmailAddress = "jane@jane.com",
                 FirstName = "Jane",

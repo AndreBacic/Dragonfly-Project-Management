@@ -1,4 +1,5 @@
 ﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Bug_Tracker_Library.Security;
@@ -203,20 +204,13 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
         private async void LogInUser(UserModel user, AssignmentModel assignment)
         {
-            string projectIdPath = "";
-            foreach (Guid id in assignment.ProjectIdTreePath)
-            {
-                projectIdPath += $"{id},";
-            }
-            projectIdPath = projectIdPath.Remove(projectIdPath.Length - 1);
-
             List<Claim> personClaims = new()
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
                 new Claim(ClaimTypes.Role, assignment.AssigneeAccess.ToString()),
                 new Claim(nameof(OrganizationModel), assignment.OrganizationId.ToString()),
-                new Claim(nameof(ProjectModel), projectIdPath)
+                new Claim(nameof(ProjectModel), assignment.ProjectIdTreePath.ListToString())
             };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(

@@ -63,7 +63,7 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
         public T LoadRecordById<T>(string table, Guid id)
         {
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
-            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id);
 
             return collection.Find(filter).First();
         }
@@ -153,6 +153,16 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
             return LoadRecordById<OrganizationModel>(_organizationCollection, id);
         }
 
+        public OrganizationModel GetOrganization(string name)
+        {
+            IMongoCollection<OrganizationModel> collection = 
+                _db.GetCollection<OrganizationModel>(_organizationCollection);
+            FilterDefinition<OrganizationModel> filter = 
+                Builders<OrganizationModel>.Filter.Eq("Name", name);
+
+            return collection.Find(filter).First();
+        }
+
         public List<UserModel> GetAllUsers()
         {
             return LoadRecords<UserModel>(_userCollection);
@@ -165,14 +175,13 @@ namespace Bug_Tracker_Library.DataAccess.MongoDB
 
             BsonDocument let = new BsonDocument("ids", "$WorkerIds");
 
-            BsonArray subPipeline = new BsonArray();
-
-            subPipeline.Add(
+            BsonArray subPipeline = new()
+            {
                 new BsonDocument("$match", new BsonDocument(
                     "$expr", new BsonDocument(
-                    "$in", new BsonArray { "$_id", "$$ids"} ))
+                    "$in", new BsonArray { "$_id", "$$ids" }))
                 )
-            );
+            };
 
             BsonDocument lookup = new BsonDocument("$lookup",
                              new BsonDocument("from", _userCollection)

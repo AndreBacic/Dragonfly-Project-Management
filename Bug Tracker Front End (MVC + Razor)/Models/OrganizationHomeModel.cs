@@ -1,6 +1,4 @@
-﻿using Bug_Tracker_Library;
-using Bug_Tracker_Library.Models;
-using System.Collections.Generic;
+﻿using Bug_Tracker_Library.Models;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Models
 {

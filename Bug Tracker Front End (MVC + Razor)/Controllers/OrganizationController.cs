@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -30,17 +31,21 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
                 searchString = searchString.ToLower(); // so comparisaons aren't case-sensitive
             }
 
-            var org = _db.GetOrganization(
+            OrganizationModel org = _db.GetOrganization(
                 new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value));
 
             org.Projects = org.Projects
                 .Where(p => p.Name.ToLower().Contains(searchString))
                 .OrderBy(x => x.Deadline)
                 .ToList();
-            
+
+            UserModel user = GetLoggedInUserByEmail();
+
             OrganizationHomeModel model = new()
             {
                 Organization = org,
+                User = user,
+                UserAssignment = GetLoggedInUsersAssignment(user)
             };
 
             return View(model);
@@ -57,16 +62,34 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateOrganization(OrganizationViewModel model)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(OrganizationHome));
-            }
-            catch
+            if (ModelState.IsValid == false)
             {
                 return View();
             }
+
+            OrganizationModel org = new() {
+                Name = model.Name,
+                Description = model.Description,
+                WorkerIds = new List<Guid>() { model.CreatorOrEditorId }
+            };
+
+            bool didCreate = _db.CreateOrganization(org);
+
+            if (didCreate == false)
+            {
+                return View(); // TODO: Tell user that the name is taken.
+            }
+
+            org = _db.GetOrganization(model.Name); // fetch mongo generated id.
+
+            _db.CreateAssignment(new AssignmentModel()
+            {
+                AssigneeId = model.CreatorOrEditorId,
+                AssigneeAccess = UserPosition.ADMIN,
+                OrganizationId = org.Id
+            });
+
+            return RedirectToAction(nameof(OrganizationHome));
         }
 
         [Authorize("Organization_ADMIN_policy")]
@@ -118,6 +141,22 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         //    }
         //}
 
+        private UserModel GetLoggedInUserByEmail()
+        {
+            string email = User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            return _db.GetUser(email);
+        }
+
+        private AssignmentModel GetLoggedInUsersAssignment(UserModel user = null)
+        {
+            string projectIdPath = User.Claims.ToList()[(int)UserClaimsIndex.ProjectModel].Value;
+            if (user is null)
+            {
+                user = GetLoggedInUserByEmail();
+            }
+            return user.Assignments.FirstOrDefault(a => 
+                string.Equals(a.ProjectIdTreePath.ListToString(), projectIdPath));
+        }
         /// <summary>
         /// This just handles the error message page
         /// </summary>

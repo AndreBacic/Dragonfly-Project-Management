@@ -45,6 +45,11 @@ namespace Bug_Tracker_Library.DataAccess
         /// with all of the projects and comments in the organization.
         /// </summary>
         OrganizationModel GetOrganization(Guid id);
+        /// <summary>
+        /// Gets an OrganizationModel by its unique name,
+        /// with all of the projects and comments in the organization.
+        /// </summary>
+        OrganizationModel GetOrganization(string name);
 
         List<UserModel> GetAllUsers();
         Dictionary<Guid, UserModel> GetAllOrganizationUsers(Guid organizationId);
