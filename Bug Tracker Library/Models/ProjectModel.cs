@@ -23,6 +23,16 @@ namespace Bug_Tracker_Library.Models
         /// If this is a top level project, then ParentIdTreePath is empty.
         /// </summary>
         public List<Guid> ParentIdTreePath { get; set; } = new();
+        /// <summary>
+        /// A list of the IDs to navigate the project tree to this
+        /// </summary>
+        public List<Guid> IdTreePath
+        {
+            get
+            {
+                return new List<Guid>(ParentIdTreePath) { Id };
+            }
+        }
 
         /// <summary>
         /// Lesser projects under the umbrella of this.
@@ -59,11 +69,8 @@ namespace Bug_Tracker_Library.Models
             {
                 return;
             }
-            newProject.ParentIdTreePath = new List<Guid>(this.ParentIdTreePath)
-                {
-                    this.Id
-                };
-            this.SubProjects.Add(newProject);
+            newProject.ParentIdTreePath = IdTreePath;
+            SubProjects.Add(newProject);
         }
 
         public void AddComment(CommentModel model)
@@ -72,11 +79,8 @@ namespace Bug_Tracker_Library.Models
             {
                 return;
             }
-            model.ParentProjectIdTreePath = new List<Guid>(this.ParentIdTreePath)
-                {
-                    this.Id
-                };
-            this.Comments.Add(model);
+            model.ParentProjectIdTreePath = IdTreePath;
+            Comments.Add(model);
         }
     }
 }

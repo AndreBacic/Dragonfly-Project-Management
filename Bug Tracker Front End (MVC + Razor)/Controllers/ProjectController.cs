@@ -24,15 +24,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             Bug_Tracker_Library.Models.ProjectModel proj = org.GetProjectByIdTree(projectIdTreePath);
             ProjectViewModel projV = new()
             {
-                Id = proj.Id,
-                Name = proj.Name,
-                Description = proj.Description,
-                Deadline = proj.Deadline,
-                Comments = proj.Comments,
-                Priority = proj.Priority,
-                Status = proj.Status,
-                SubProjects = proj.SubProjects,
-                ParentIdTreePath = proj.ParentIdTreePath
+                Project = proj
             };
             Dictionary<Guid, Bug_Tracker_Library.Models.UserModel> workers = _db.GetAllOrganizationUsers(org.Id);
             foreach (Guid id in proj.WorkerIds)
@@ -47,16 +39,16 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ProjectHome(ProjectViewModel model)
         {
-            try
+            if (ModelState.IsValid == false)
             {
-                // TODO: save edited project info here
+                // todo: fix the ironic 'solution' of trying to fix a broken input based on a possibly broken input.
+                return ProjectHome(model.Project.IdTreePath);
+            }
 
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
+            //_db.UpdateProject(model.Project, ?); // TODO: Add update logic here
+            //_db.UpdateAssignment(change user assignments ?);
+
+            return ProjectHome(model.Project.IdTreePath);
         }
 
         // GET: Project/CreateProject

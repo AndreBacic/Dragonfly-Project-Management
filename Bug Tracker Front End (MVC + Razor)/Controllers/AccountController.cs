@@ -184,11 +184,11 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         [Authorize("Logged_in_user_policy")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Home(UserViewModel user)
+        public IActionResult Home(AssignmentModel assignment)
         {
             // TODO: Have user select assignment and direct them to either org home or project home
             UserModel u = this.GetLoggedInUserByEmail(_db);
-            LogInUser(u, u.Assignments[0]);
+            LogInUser(u, assignment);
             return View();
         }
         private async void LogInUser(UserModel user)

@@ -81,14 +81,18 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 
             org = _db.GetOrganization(model.Name); // fetch mongo generated id.
 
-            _db.CreateAssignment(new AssignmentModel()
+            AssignmentModel assignment = new()
             {
                 AssigneeId = model.CreatorId,
                 AssigneeAccess = UserPosition.ADMIN,
-                OrganizationId = org.Id
-            });
+                OrganizationId = org.Id,
+                ProjectIdTreePath = null,
+                HoursLogged = 0
+            };
 
-            return RedirectToAction(nameof(OrganizationHome));
+            _db.CreateAssignment(assignment);
+
+            return RedirectToAction(nameof(AccountController.Home), "Account", assignment);
         }
 
         [Authorize("Organization_ADMIN_policy")]
