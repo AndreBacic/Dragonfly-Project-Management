@@ -196,8 +196,9 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             List<Claim> personClaims = new()
                 {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Email, user.EmailAddress)
-                };
+                    new Claim(ClaimTypes.Email, user.EmailAddress),
+                    new Claim(nameof(user.Id), user.Id.ToString())
+            };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(
                 new ClaimsIdentity(personClaims, "BugTracker.Auth.Identity")));
@@ -209,6 +210,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(nameof(user.Id), user.Id.ToString()),
                 new Claim(ClaimTypes.Role, assignment.AssigneeAccess.ToString()),
                 new Claim(nameof(OrganizationModel), assignment.OrganizationId.ToString()),
                 new Claim(nameof(ProjectModel), assignment.ProjectIdTreePath.ListToString())

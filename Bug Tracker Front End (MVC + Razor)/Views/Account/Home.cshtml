@@ -3,10 +3,10 @@
 @using Bug_Tracker_Library
 <h1>User Profile Home</h1>
 <ul>
-    <li>Name: @User.Claims.ToList()[(int)UserClaimsIndex.Name]</li>
-    <li>Email: @User.Claims.ToList()[(int)UserClaimsIndex.Email]</li>
+    <li>Name: @User.ClaimValue(UserClaimsIndex.Name)</li>
+    <li>Email: @User.ClaimValue(UserClaimsIndex.Email)</li>
     @if (User.Claims.Count() > 2)
             {
-                <li>Role: @User.Claims.ToList()[(int)UserClaimsIndex.Role]</li>
+                <li>Role: @User.ClaimValue(UserClaimsIndex.Role)</li>
             }
 </ul>

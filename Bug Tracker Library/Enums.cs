@@ -28,6 +28,7 @@
     {
         Name,
         Email,
+        Id,
         Role,
         OrganizationModel,
         ProjectModel

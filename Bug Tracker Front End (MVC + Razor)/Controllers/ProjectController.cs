@@ -1,10 +1,13 @@
 ﻿using Bug_Tracker_Front_End__MVC_plus_Razor.Models;
+using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
+using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -20,8 +23,8 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         // GET: Project/ProjectHome page, with edit boxes and subproject links
         public IActionResult ProjectHome(List<Guid> projectIdTreePath)
         {
-            Bug_Tracker_Library.Models.OrganizationModel org = this.GetLoggedInUsersOrganization(_db);
-            Bug_Tracker_Library.Models.ProjectModel proj = org.GetProjectByIdTree(projectIdTreePath);
+            OrganizationModel org = this.GetLoggedInUsersOrganization(_db);
+            ProjectModel proj = org.GetProjectByIdTree(projectIdTreePath);
             ProjectViewModel projV = new()
             {
                 Project = proj
@@ -60,30 +63,40 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         // POST: Project/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProject(IFormCollection collection)
+        public IActionResult CreateProject(CreateProjectModel model)
         {
-            try
+            if (ModelState.IsValid == false)
             {
-                // TODO: Add insert logic here
+                return View(new CreateProjectModel()); // todo: tell user why the input is invalid.
+            }
 
-                return RedirectToAction(nameof(ProjectHome));
-            }
-            catch
+            Guid orgId = new(User.ClaimValue(UserClaimsIndex.OrganizationModel));
+
+            ProjectModel proj = new()
             {
-                return View();
-            }
+                Name = model.Name,
+                Deadline = model.Deadline,
+                Description = model.Description,
+                ParentIdTreePath = model.ParentIdTreePath,
+                Priority = model.Priority,
+                Status = model.Status
+            };
+            _db.CreateProject(proj, orgId);
+
+            _db.CreateAssignment(new AssignmentModel()
+            {
+                AssigneeAccess = UserPosition.ADMIN, // todo: no admins for projects? should the creator be a manager?
+                AssigneeId = new Guid(User.ClaimValue(UserClaimsIndex.Id)),
+                OrganizationId = orgId,
+                ProjectIdTreePath = proj.IdTreePath
+            });
+
+            return ProjectHome(proj.IdTreePath);
         }
                 
-        // GET: Project/Delete/5
-        public IActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Project/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeleteProject(List<Guid> projectIdTreePath)
         {
             try
             {
