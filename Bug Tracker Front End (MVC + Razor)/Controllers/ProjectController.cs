@@ -3,11 +3,9 @@ using Bug_Tracker_Library;
 using Bug_Tracker_Library.DataAccess;
 using Bug_Tracker_Library.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
 {
@@ -29,7 +27,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
             {
                 Project = proj
             };
-            Dictionary<Guid, Bug_Tracker_Library.Models.UserModel> workers = _db.GetAllOrganizationUsers(org.Id);
+            Dictionary<Guid, UserModel> workers = _db.GetAllOrganizationUsers(org.Id);
             foreach (Guid id in proj.WorkerIds)
             {
                 projV.Workers.Add(id, workers[id]);
