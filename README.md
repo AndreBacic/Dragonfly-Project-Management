@@ -16,6 +16,7 @@ This document is intended to be a reasonably comprehensive overview of the Bug T
 - Organization: A group of users in this app. Likely represents a company or team of employees.
 - Project: A task, job, or some kind of work that needs to be completed by at least one user by a specified deadline.
 - Comment: A chat message posted in a discussion board on a project.
+[//]TODO: define permissions or assignments?
 
 ## 2. Overall Description
 
@@ -32,32 +33,26 @@ The Bug Tracker lets its users:
 - Be assigned to projects they are supposed to work on and finish
 - Have permissions that define what they may do to and in their organizations and assigned projects
 - Be prevented from seeing, commenting on and editing projects that they do have permission to
-- If they have permission, to change or delete organizations and projects
+- Edit or delete their comments
 - To request to be added to an organization or project
-- If they have permission, to invite other users to join their organization or project or accept those who have requested to join
+
 If they have permission, to:
+- Invite other users to join their organization or project or accept those who have requested to join
+- Edit an organization's name or description
+- Change other users' permissions
 - Create projects within organizations
 - Log work to these projects
 - Have discussions about these projects by leaving comments
-- To define/change a project's deadline
-- To define/change a project's status and priority
-- To define/change a project's name or description
+- To define or change a project's deadline
+- To define or change a project's status and priority
+- To define or change a project's name or description
+- Close or delete projects
+- Delete other user's comments (ex. a manager removing an obscene comment)
 
 The Bug Tracker also:
-- Notifies users via email when they are invited/added/assigned to organizations or projects, when a deadline is soon, when one of their projects' status, deadline, or priority changes, or for other significant events.
+- Notifies users via email when they are invited (or added or assigned) to organizations or projects, when a deadline is soon, when one of their projects' status, deadline, or priority changes, or for other significant events.
 
-
-#### 2.3 Assumptions and Dependencies
-
-#### 2.4 Deployment Platform
+#### 2.3 Deployment Platform
 This app will be deployed as web application with a responsive UI friendly to mobile and desktop screen sizes.
 
-## 3. System Features and Requirements
-
-#### 3.1 Functional Requirements
-
-#### 3.2 External Interface Requirements
-
-#### 3.3 System Features
-
-#### 3.4 Nonfunctional Requirements
+[//]TODO: Finish this SRS and make it more professional
