@@ -16,7 +16,8 @@ This document is intended to be a reasonably comprehensive overview of the Bug T
 - Organization: A group of users in this app. Likely represents a company or team of employees.
 - Project: A task, job, or some kind of work that needs to be completed by at least one user by a specified deadline.
 - Comment: A chat message posted in a discussion board on a project.
-[//]TODO: define permissions or assignments?
+
+[//]: # (TODO: define permissions or assignments?)
 
 ## 2. Overall Description
 
@@ -55,4 +56,4 @@ The Bug Tracker also:
 #### 2.3 Deployment Platform
 This app will be deployed as web application with a responsive UI friendly to mobile and desktop screen sizes.
 
-[//]TODO: Finish this SRS and make it more professional
+[//]: # (TODO: Finish this SRS and make it more professional)
