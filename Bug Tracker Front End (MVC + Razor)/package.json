@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "buildcss:dev": "cross-env TAILWIND_MODE=build postcss ./Styles/app.css -o ./wwwroot/css/post_tailwind.css",
+    "buildcss:release": "cross-env NODE_ENV=production postcss ./Styles/app.css -o ./wwwroot/css/post_tailwind.css"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "autoprefixer": "^10.3.7",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.1",
+    "tailwindcss": "^2.2.17",
+    "tailwindcss-textshadow": "^2.1.3",
+    "cssnano": "^5.0.6"
+  },
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ]
+}
