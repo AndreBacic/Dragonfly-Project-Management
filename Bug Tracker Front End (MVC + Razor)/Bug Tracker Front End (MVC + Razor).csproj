@@ -17,23 +17,25 @@
   <ItemGroup>
     <ProjectReference Include="..\Bug Tracker Library\Bug Tracker Library.csproj" />
   </ItemGroup>
-  
 
-	<Target Name="CheckForNpm" BeforeTargets="NpmInstall">
-		<Exec Command="npm -v" ContinueOnError="true">
-			<Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-		</Exec>
-		<Error Condition="'$(ErrorCode)' != '0'" Text="You must install NPM to build this project" />
-	</Target>
 
-	<Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
-		<Exec Command="npm install" />
-		<Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
-	</Target>
+  <Target Name="CheckForNpm" BeforeTargets="NpmInstall">
+    <Exec Command="npm -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="You must install NPM to build this project" />
+  </Target>
 
-	<Target Name="BuildCSS" BeforeTargets="Compile">
-		<Exec Command="npm run buildcss:dev" Condition=" '$(Configuration)' == 'Debug' " />
-		<Exec Command="npm run buildcss:release" Condition=" '$(Configuration)' == 'Release' " />
-	</Target>
+  <Target Name="NpmInstall" BeforeTargets="BuildCSS" Inputs="package.json" Outputs="$(NpmLastInstall)">
+    <Exec Command="npm install" />
+    <Touch Files="$(NpmLastInstall)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="BuildCSS" BeforeTargets="Compile">
+    <!--Exec Command="npm run buildcss:release" Condition=" '$(Configuration)' == 'Release' " />
+       <Exec Command="npm run buildcss:dev" Condition=" '$(Configuration)' == 'Debug' " />-->
+    <Exec Command="npx tailwindcss --postcss -i ./Styles/app.css -o ./wwwroot/css/post_tailwind.css" Condition=" '$(Configuration)' == 'Debug' " />
+    <Exec Command="npx tailwindcss --postcss -i ./Styles/app.css -o ./wwwroot/css/post_tailwind.css --minify" Condition=" '$(Configuration)' == 'Release' " />
+  </Target>
 
 </Project>

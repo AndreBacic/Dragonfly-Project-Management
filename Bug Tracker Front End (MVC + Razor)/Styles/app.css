@@ -1,3 +1,7 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.test {
+    @apply m-4 border-2 border-emerald-400 text-center text-lime-900;
+}
