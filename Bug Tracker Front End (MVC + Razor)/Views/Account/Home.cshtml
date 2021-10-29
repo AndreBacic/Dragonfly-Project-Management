@@ -1,11 +1,13 @@
-﻿@{// TODO: implement select organization home page
+﻿@{ 
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = $"Welcome, {User.ClaimValue(UserClaimsIndex.Name)}";
 }
 @using Bug_Tracker_Library
 <h1>User Profile Home</h1>
 <ul>
     <li>Name: @User.ClaimValue(UserClaimsIndex.Name)</li>
     <li>Email: @User.ClaimValue(UserClaimsIndex.Email)</li>
-    @if (User.Claims.Count() > 2)
+    @if (User.Claims.Count() > 3)
             {
                 <li>Role: @User.ClaimValue(UserClaimsIndex.Role)</li>
             }

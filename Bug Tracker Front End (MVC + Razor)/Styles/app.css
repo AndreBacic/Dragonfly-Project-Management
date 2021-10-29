@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-.test {
-    @apply m-4 border-2 border-emerald-400 text-center text-lime-900;
+@layer components {
+    html {
+        width: 100%;
+        height: 100%;
+    }
+    .fixed-wfull-flexbox {
+        @apply fixed bottom-0 w-full h-10 bg-lime-400
+            flex justify-center items-center;
+    }
+    .text-w-3-4ths-grey {
+        @apply w-3/4 h-6 text-left text-coolGray-600;
+    }
+    .rounded-4xl {
+        border-radius: 2rem;
+    }
+    .rounded-5xl {
+        border-radius: 2.5rem;
+    }
+    .rounded-6xl {
+        border-radius: 3rem;
+    }
+    .rounded-7xl {
+        border-radius: 3.5rem;
+    }
+    .rounded-8xl {
+        border-radius: 4rem;
+    }
 }

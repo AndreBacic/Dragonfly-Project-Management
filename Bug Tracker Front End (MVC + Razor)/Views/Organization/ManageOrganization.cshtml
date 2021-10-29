@@ -4,11 +4,11 @@
     ViewData["Title"] = $"Manage {Model.Organization.Name}";
 }
 <form asp-action="ManageOrganization">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class=""></div>
     <div class="form-group">
         <label asp-for="DidUpdateOrg" class="control-label"></label>
         <input asp-for="DidUpdateOrg" class="form-control" />
-        <span asp-validation-for="DidUpdateOrg" class="text-danger"></span>
+        <span asp-validation-for="DidUpdateOrg" class=""></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />

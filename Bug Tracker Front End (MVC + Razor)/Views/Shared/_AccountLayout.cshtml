@@ -7,19 +7,24 @@
     <link rel="stylesheet" href="~/css/post_tailwind.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body class="grid grid-cols-5 grid-rows-5 gap-4">
-    <header class=""></header>
-    <div class="">
-        <main role="main" class="">
+<body class="h-full w-full">
+    <header class="fixed-wfull-flexbox top-0">
+        <div class="text-w-3-4ths-grey">
+            Bug Tracker Project Management
+        </div>
+    </header>
+    <div class="w-full h-full grid justify-center items-center bg-gradient-to-b from-lime-700 to-green-900">
+        <main role="main" class="p-20 rounded-4xl bg-gradient-to-br from-lime-500 to-lime-600">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="">
-        <div>
+    <footer class="fixed-wfull-flexbox bottom-0">
+        <div class="text-w-3-4ths-grey">
             &copy; 2021 Bug Tracker by Andre Bacic
         </div>
     </footer>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
-
