@@ -3,9 +3,8 @@ const colors = require("tailwindcss/colors")
 module.exports = {
     mode: 'jit',
     purge: [
-        '/wwwroot/*.html',
-        '/Views/**/*.cshtml',
-        '/Views/*.cshtml'
+        './**/*.cshtml',
+        './Views/*.*'
     ],
     darkMode: 'media', // false or 'media' or 'class'
     theme: {
@@ -21,7 +20,6 @@ module.exports = {
                 teal: colors.teal,
                 cyan: colors.cyan,
                 sky: colors.sky,
-                lightBlue: colors.lightBlue,
                 violet: colors.violet,
                 fuchsia: colors.fuchsia,
                 rose: colors.fuchsia
