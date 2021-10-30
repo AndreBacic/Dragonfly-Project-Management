@@ -8,7 +8,7 @@
     <li>Name: @User.ClaimValue(UserClaimsIndex.Name)</li>
     <li>Email: @User.ClaimValue(UserClaimsIndex.Email)</li>
     @if (User.Claims.Count() > 3)
-            {
-                <li>Role: @User.ClaimValue(UserClaimsIndex.Role)</li>
-            }
+        {
+            <li>Role: @User.ClaimValue(UserClaimsIndex.Role)</li>
+        }
 </ul>

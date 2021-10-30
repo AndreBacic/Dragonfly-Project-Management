@@ -14,6 +14,7 @@ module.exports = {
                 coolGray: colors.coolGray,
                 trueGray: colors.trueGray,
                 warmGrey: colors.warmGray,
+                orange: colors.orange,
                 amber: colors.amber,
                 lime: colors.lime,
                 emerald: colors.emerald,

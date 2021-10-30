@@ -596,6 +596,8 @@ video {
 }
 
 *, ::before, ::after {
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity));
   --tw-blur: var(--tw-empty,/*!*/ /*!*/);
   --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
   --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
@@ -667,8 +669,8 @@ html {
   color: rgba(75, 85, 99, var(--tw-text-opacity));
 }
 
-.rounded-4xl {
-  border-radius: 2rem;
+.rounded-5xl {
+  border-radius: 2.5rem;
 }
 
 .fixed {
@@ -723,12 +725,12 @@ html {
   display: none;
 }
 
-.h-full {
-  height: 100%;
-}
-
 .h-8 {
   height: 2rem;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .h-6 {
@@ -737,6 +739,14 @@ html {
 
 .w-full {
   width: 100%;
+}
+
+.w-3\/5 {
+  width: 60%;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .w-1\/3 {
@@ -755,12 +765,24 @@ html {
   grid-template-rows: repeat(5, minmax(0, 1fr));
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
 .items-center {
   align-items: center;
 }
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.gap-1 {
+  gap: 0.25rem;
 }
 
 .gap-4 {
@@ -775,12 +797,30 @@ html {
   overflow: hidden;
 }
 
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
 .rounded-2xl {
   border-radius: 1rem;
 }
 
 .rounded {
   border-radius: 0.25rem;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-lime-800 {
+  --tw-border-opacity: 1;
+  border-color: rgba(63, 98, 18, var(--tw-border-opacity));
+}
+
+.bg-lime-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(63, 98, 18, var(--tw-bg-opacity));
 }
 
 .bg-lime-400 {
@@ -814,8 +854,24 @@ html {
   --tw-gradient-to: #65a30d;
 }
 
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-10 {
+  padding: 2.5rem;
+}
+
 .p-20 {
   padding: 5rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .text-left {
@@ -826,16 +882,37 @@ html {
   text-align: center;
 }
 
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgba(239, 68, 68, var(--tw-text-opacity));
-}
-
 .text-coolGray-600 {
   --tw-text-opacity: 1;
   color: rgba(75, 85, 99, var(--tw-text-opacity));
 }
 
+.text-coolGray-300 {
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
 .filter {
   filter: var(--tw-filter);
+}
+
+.selection\:border-4 *::-moz-selection {
+  border-width: 4px;
+}
+
+.selection\:border-4 *::selection {
+  border-width: 4px;
+}
+
+.selection\:border-4::-moz-selection {
+  border-width: 4px;
+}
+
+.selection\:border-4::selection {
+  border-width: 4px;
 }

@@ -10,33 +10,33 @@
 <div>
     <form asp-action="EditAccount" asp-controller="Account" method="post">
         <div asp-validation-summary="ModelOnly" class=""></div>
-        <div class="form-group">
+        <div class="">
             <label asp-for="FirstName" class=""></label>
             <input asp-for="FirstName" class="" contenteditable="true" value="@Model.FirstName" />
-            <span asp-validation-for="FirstName" class=""></span>
+            <span asp-validation-for="FirstName" class="p-1 rounded-sm bg-red-400 text-red-700"></span>
         </div>
-        <div class="form-group">
+        <div class="">
             <label asp-for="LastName" class=""></label>
             <input asp-for="LastName" class="" contenteditable="true" value="@Model.LastName" />
-            <span asp-validation-for="LastName" class=""></span>
+            <span asp-validation-for="LastName" class="p-1 rounded-sm bg-red-400 text-red-700"></span>
         </div>
-        <div class="form-group">
+        <div class="">
             <label asp-for="EmailAddress" class=""></label>
             <input asp-for="EmailAddress" type="email" class="" contenteditable="true" value="@Model.EmailAddress" />
-            <span asp-validation-for="EmailAddress" class=""></span>
+            <span asp-validation-for="EmailAddress" class="p-1 rounded-sm bg-red-400 text-red-700"></span>
         </div>
-        <div class="form-group">
+        <div class="">
             <p>(Only use the fields below if you want to change your password)</p>
             <label asp-for="OldPassword" class=""></label>
             <input asp-for="OldPassword" type="password" class="" contenteditable="true" />
-            <span asp-validation-for="OldPassword" class=""></span>
+            <span asp-validation-for="OldPassword" class="p-1 rounded-sm bg-red-400 text-red-700"></span>
         </div>
-        <div class="form-group">
+        <div class="">
             <label asp-for="NewPassword" class=""></label>
             <input asp-for="NewPassword" type="password" class="" contenteditable="true" />
-            <span asp-validation-for="NewPassword" class=""></span>
+            <span asp-validation-for="NewPassword" class="p-1 rounded-sm bg-red-400 text-red-700"></span>
         </div>
-        <div class="form-group">
+        <div class="">
             <input type="submit" value="Save" class="" />
         </div>
     </form>
