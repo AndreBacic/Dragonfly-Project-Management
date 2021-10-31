@@ -68,7 +68,7 @@ namespace Bug_Tracker_Front_End__MVC_plus_Razor.Controllers
         public IActionResult Register()
         {
             ViewData["RegisterMessage"] = "";
-            return View();
+            return View(new RegisterViewModel());
         }
 
         [HttpPost]

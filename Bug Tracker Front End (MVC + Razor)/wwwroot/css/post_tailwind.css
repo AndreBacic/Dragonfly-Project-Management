@@ -737,12 +737,16 @@ html {
   height: 1.5rem;
 }
 
-.w-full {
-  width: 100%;
+.w-60 {
+  width: 15rem;
 }
 
 .w-3\/5 {
   width: 60%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .w-16 {
@@ -818,6 +822,11 @@ html {
   border-color: rgba(63, 98, 18, var(--tw-border-opacity));
 }
 
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+
 .bg-lime-800 {
   --tw-bg-opacity: 1;
   background-color: rgba(63, 98, 18, var(--tw-bg-opacity));
@@ -848,6 +857,10 @@ html {
 
 .to-green-900 {
   --tw-gradient-to: #064e3b;
+}
+
+.to-lime-700 {
+  --tw-gradient-to: #4d7c0f;
 }
 
 .to-lime-600 {
@@ -882,14 +895,27 @@ html {
   text-align: center;
 }
 
+.font-sans {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgba(185, 28, 28, var(--tw-text-opacity));
+}
+
 .text-coolGray-600 {
   --tw-text-opacity: 1;
   color: rgba(75, 85, 99, var(--tw-text-opacity));
 }
 
-.text-coolGray-300 {
+.text-coolGray-200 {
   --tw-text-opacity: 1;
-  color: rgba(209, 213, 219, var(--tw-text-opacity));
+  color: rgba(229, 231, 235, var(--tw-text-opacity));
 }
 
 .text-red-500 {

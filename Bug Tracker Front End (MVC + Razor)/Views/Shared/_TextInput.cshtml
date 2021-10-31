@@ -1,0 +1,7 @@
+@model string[]
+
+<div class="">
+    <label asp-for="@Model[0]" class="">@Model[0]</label>
+    <input asp-for="@Model[0]" class="" contenteditable="true" value="@Model[1]" />
+    <span asp-validation-for="@Model[0]" class=" bg-red-400 text-red-700"></span>
+</div>
