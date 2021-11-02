@@ -9,9 +9,8 @@
     <input type="password" asp-for="Password" placeholder="Password" class="input-text" contenteditable="true" />
     <input type="submit" value="Log in" class="w-3/5 h-8 text-center cursor-pointer rounded-sm bg-lime-800 text-coolGray-200" />
 </form>
-<div class="text-coolGrey-600 text-left w-full pt-1">
-    <p class="w-1/2 inline-block">No account?</p>
-    <a asp-area="" asp-controller="Account" asp-action="Register" class="w-1/2">
-        <div class="w-full inline-block h-8 text-center cursor-pointer rounded-sm bg-lime-800 text-coolGray-200">Sign Up</div>
-    </a>
+<div class="text-coolGrey-600 text-left w-full mt-2">
+    <p class="w-1/2 inline-block">No account?
+    </p><a asp-area="" asp-controller="Account" asp-action="Register"
+       class="w-1/2 inline-block h-8 text-center cursor-pointer rounded-sm bg-lime-800 text-coolGray-200">Sign Up</a>
 </div>

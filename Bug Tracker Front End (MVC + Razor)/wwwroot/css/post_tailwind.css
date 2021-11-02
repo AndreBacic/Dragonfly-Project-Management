@@ -649,6 +649,10 @@ html {
   height: 100%;
 }
 
+div > * {
+  width: 0px;
+}
+
 .fixed-wfull-flexbox {
   position: fixed;
   bottom: 0px;
@@ -671,6 +675,7 @@ html {
 
 .input-label {
   margin: auto;
+  display: inline-block;
   width: 40%;
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -679,6 +684,7 @@ html {
 }
 
 .input-text {
+  display: inline-block;
   width: 60%;
   border-radius: 0.125rem;
   border-width: 2px;
@@ -737,6 +743,18 @@ html {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mb-0\.5 {
+  margin-bottom: 0.125rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
 }
 
 .block {
@@ -927,10 +945,6 @@ html {
 
 .p-20 {
   padding: 5rem;
-}
-
-.pt-1 {
-  padding-top: 0.25rem;
 }
 
 .text-left {

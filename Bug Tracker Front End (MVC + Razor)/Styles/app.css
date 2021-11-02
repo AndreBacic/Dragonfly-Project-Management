@@ -16,10 +16,10 @@
     }
 
     .input-label {
-        @apply w-2/5 m-auto text-xl text-coolGray-800;
+        @apply w-2/5 m-auto inline-block text-xl text-coolGray-800;
     }
     .input-text {
-        @apply w-3/5 p-1 border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
+        @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
     }
     .validation-for {
         @apply rounded-sm text-lg bg-red-400 text-red-700;
