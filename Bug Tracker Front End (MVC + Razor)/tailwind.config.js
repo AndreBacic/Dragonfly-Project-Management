@@ -9,6 +9,13 @@ module.exports = {
     darkMode: 'media', // false or 'media' or 'class'
     theme: {
         extend: {
+            borderRadius: {
+                '4xl': '2rem',
+                '5xl': '2.5rem',
+                '6xl': '3rem',
+                '7xl': '3.5rem',
+                '8xl': '4rem',
+            },
             colors: {
                 blueGray: colors.blueGray,
                 coolGray: colors.coolGray,
@@ -28,7 +35,9 @@ module.exports = {
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            borderRadius: ['hover', 'focus'],
+        },
     },
     plugins: [
         require('tailwindcss-textshadow')

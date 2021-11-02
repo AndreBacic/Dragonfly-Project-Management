@@ -14,19 +14,14 @@
     .text-w-3-4ths-grey {
         @apply w-3/4 h-6 text-left text-coolGray-600;
     }
-    .rounded-4xl {
-        border-radius: 2rem;
+
+    .input-label {
+        @apply w-2/5 m-auto text-xl text-coolGray-800;
     }
-    .rounded-5xl {
-        border-radius: 2.5rem;
+    .input-text {
+        @apply w-3/5 p-1 border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
     }
-    .rounded-6xl {
-        border-radius: 3rem;
-    }
-    .rounded-7xl {
-        border-radius: 3.5rem;
-    }
-    .rounded-8xl {
-        border-radius: 4rem;
+    .validation-for {
+        @apply rounded-sm text-lg bg-red-400 text-red-700;
     }
 }
