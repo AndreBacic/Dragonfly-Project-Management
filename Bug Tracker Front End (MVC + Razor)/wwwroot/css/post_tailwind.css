@@ -649,10 +649,6 @@ html {
   height: 100%;
 }
 
-div > * {
-  width: 0px;
-}
-
 .fixed-wfull-flexbox {
   position: fixed;
   bottom: 0px;

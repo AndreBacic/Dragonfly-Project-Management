@@ -24,6 +24,10 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// When this organization was created.
+        /// </summary>
+        public DateTime DateFounded { get; set; }
+        /// <summary>
         /// Projects under the umbrella of this, not including these projects' sub-projects.
         /// </summary>
         public List<ProjectModel> Projects { get; set; } = new();
@@ -32,7 +36,15 @@ namespace Bug_Tracker_Library.Models
         /// </summary>
         public List<Guid> WorkerIds { get; set; } = new();
 
+        /// <summary>
+        /// Short(small paragraph) description of what this organization is, in summary.
+        /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Large (several paragraphs) description of what this organization is, in detail.<br/>
+        /// May be in markdown syntax that is rendered as html elements on the front end.
+        /// </summary>
+        public string About { get; set; }
 
         public ProjectModel GetProjectByIdTree(List<Guid> idTree)
         {
