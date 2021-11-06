@@ -7,55 +7,65 @@
     <link rel="stylesheet" href="~/css/post_tailwind.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body class="grid grid-cols-5 grid-rows-5 gap-4">
-    <header class=""><h1>Bug Tracker</h1><h2>Project Management</h2></header>
-    <div role="directory">
-        <button class="" id="userMenuButton" onclick="userMenuButtonOnClick()">
+<body class="">
+    <header class="w-1/2 min-h-[7rem] p-2 bg-lime-500 text-center text-lime-900 text-xl shadow rounded-br-2xl">
+        <h1 class="mb-8">Bug Tracker</h1>
+        <h2>Project Management</h2>
+    </header>
+    <div class="w-1/2 min-h-[8rem]" role="directory">
+        <button class="flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 
+                       hover:bg-gray-50 
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="userMenuButton" onclick="userMenuButtonOnClick()">
             Welcome, @User.ClaimValue(UserClaimsIndex.Name)
             <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
         </button>
-        <nav class="" id="userMenu" style="display:none">
-            <a asp-action="Home" asp-controller="Account">Upcoming Deadlines</a>
-            <a asp-action="Home" asp-controller="Account">My Projects</a>
-            <a asp-action="Home" asp-controller="Account">My Organizations</a>
-            <a asp-action="EditAccount" asp-controller="Account">Edit Account</a>
-            <a asp-action="Logout" asp-controller="Account">Logout</a>
+        <nav class="origin-top-right absolute right-0 mt-2 py-1 w-56 rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" id="userMenu" style="display:none">
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Upcoming Deadlines</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Projects</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Organizations</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="EditAccount" asp-controller="Account">Edit Account</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Logout" asp-controller="Account">Logout</a>
         </nav>
-        <button class="" id="orgMenuButton" onclick="orgMenuButtonOnClick()">
+        <button class="flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 
+                       hover:bg-gray-50 
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="orgMenuButton" onclick="orgMenuButtonOnClick()">
             Organization @{ //TODO:Add org name to user claims
             }
             <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
         </button>
-        <nav class="" id="orgMenu" style="display:none">
-            <a asp-action="OrganizationHome" asp-controller="Organization">Organization Home</a>
-            <a asp-action="" asp-controller="Organization">About</a>
-            <a asp-action="" asp-controller="Organization">Our Team</a>
-            <a asp-action="" asp-controller="Organization">Statistics</a>
+        <nav class="origin-top-right absolute right-0 mt-2 py-1 w-56 rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" id="orgMenu" style="display:none">
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="OrganizationHome" asp-controller="Organization">Organization Home</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="" asp-controller="Organization">About</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="" asp-controller="Organization">Our Team</a>
+            <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="" asp-controller="Organization">Statistics</a>
         </nav>
     </div>
 
-    <div>
-        <button class="" id="adminMenuButton" style="display:none" onclick="adminMenuButtonOnClick()">
-            @if (User.ClaimValue(UserClaimsIndex.Role) == UserPosition.ADMIN.ToString())
-            {
-                <script>document.getElementById("adminMenuButton").style.display = ""</script>
-            }
+    <div class="w-full min-h-[4rem]" id="adminMenuDiv" style="display:none">
+        @if (User.ClaimValue(UserClaimsIndex.Role) == UserPosition.ADMIN.ToString())
+        {
+            <script>document.getElementById("adminMenuDiv").style.display = ""</script>
+        }
+        <button class="inline-flex justify-center w-2/5 rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 
+                       hover:bg-gray-50 
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="adminMenuButton" onclick="adminMenuButtonOnClick()">
             Admin Menu
             <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
         </button>
-        <nav class="" id="adminMenu" style="display:none">
-            <a asp-action="ManageOrganization" asp-controller="Organization">Manage Organization</a>
-            <a asp-action="" asp-controller="Organization">Manage Workers</a>
-            <a asp-action="" asp-controller="Organization">Invite Workers</a>
-            <a asp-action="CreateProject" asp-controller="Organization">New Project</a>
+        <nav class="origin-top-left absolute left-0 mt-2 py-1 w-3/4 rounded-r-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" id="adminMenu" style="display:none">
+            <a class="text-gray-700 block px-4 py-8 border-b-2 border-cyan-500 text-sm" asp-action="ManageOrganization" asp-controller="Organization">Manage Organization</a>
+            <a class="text-gray-700 block px-4 py-8 border-b-2 border-cyan-500 text-sm" asp-action="" asp-controller="Organization">Manage Workers</a>
+            <a class="text-gray-700 block px-4 py-8 border-b-2 border-cyan-500 text-sm" asp-action="" asp-controller="Organization">Invite Workers</a>
+            <a class="text-gray-700 block px-4 py-8 text-sm" asp-action="CreateProject" asp-controller="Organization">New Project</a>
         </nav>
     </div>
+
     <main role="main" class="">
         @RenderBody()
     </main>
