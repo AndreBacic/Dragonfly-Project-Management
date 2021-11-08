@@ -12,11 +12,11 @@
             flex justify-center items-center;
     }
     .text-w-3-4ths-grey {
-        @apply w-3/4 h-6 text-left text-coolGray-600;
+        @apply w-3/4 h-6 text-left text-trueGrey-600;
     }
 
     .input-label {
-        @apply w-2/5 m-auto inline-block text-xl text-coolGray-800;
+        @apply w-2/5 m-auto inline-block text-xl text-trueGrey-800;
     }
     .input-text {
         @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
