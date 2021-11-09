@@ -1,7 +1,9 @@
 # Software Requirements Specification (SRS) for this app, the *Bug Tracker*
 
 [//]: # (//TODO: Add license to repo)
-[//]: # (//TODO: Rename The Bug Tracker/Bug Tracker to 'Dragonfly (Project Management))
+
+[//]: # (//TODO: Rename The Bug Tracker/Bug Tracker to 'Dragonfly [Project Management])
+
 ## 1. Introduction
 
 ### 1.1 Purpose
@@ -68,7 +70,7 @@ The Bug Tracker also:
 This app will be deployed as web application with a responsive UI friendly to mobile and desktop screen sizes.
 
 
-## 3 Description of Application Logic
+## 3. Description of Application Logic
 
 ### 3.1 Inviting Users to Join Organizations
 As mentioned in 3.3, this privilege is restricted to the Admins of the organization.
@@ -121,17 +123,17 @@ And a project's priority may be selected from:
 A project's priority is merely a label to tell users working on multiple projects which ones they should focus on.
 
 ### 3.6 Relationships Between Projects and Sub-projects
-An organization and its projects form a logical tree, with the organization being the root, and the projects branching into collections of sub-projects, which being projects can have their own sub-projects. This sub-project branching is recursive and has no depth limit *as of this writing*. When a worker is assigned to a project, the worker has permissions (as defined in section 3.4) to only that project and not to it's parent projects or sub-projects. However, when a managers are assigned to a project, their management permissions apply all the way down the sub-project branching (but not to any parent projects).
+An organization and its projects form a logical tree, with the organization being the root, and the projects branching into collections of sub-projects, which being projects can have their own sub-projects. This sub-project branching is recursive and has no depth limit (*as of 11/9/2021*). When a worker is assigned to a project, the worker has permissions (as defined in section 3.4) to only that project and not to it's parent projects or sub-projects. However, when a managers are assigned to a project, their management permissions apply all the way down the sub-project branching (but not to any parent projects).
 
 Projects have deadlines, statuses, and priorities in addition to other properties. To give flexibility to users, the properties of a project do not affect the properties of it's parent or sub-projects except in specific circumstances:
 - Marking a project's status as Abandoned automatically marks all of it's sub-projects as abandoned. These sub-projects can have their statuses changed back afterwards without affecting the parent.
 - Deleting a project prompts the user (an admin) to either move all of the sub-projects to a different project or to delete all of the sub-projects (and all of their sub-projects with them).
 
 
-## 4 Tech Stack and Implementation
+## 4. Tech Stack and Implementation
 
 ### 4.1 Programming Languages and Frameworks
-This full-stack app is built using C# .NET 5.0 MVC for handling both the front and back end, with MongoDB as a database and vanilla JavaScript and TailwindCSS for the front-end. DevOps tools *as of this writing* include git for version control, GitHub as a remote repository with a continuous integration pipeline, and the ability to deploy or share this app as a Docker container. Dependencies include the TailwindCSS framework, the C# MongoDB Driver, XUnit for C# unit testing, the built-in C# .NET Identity API for authentication and authorization, and the built-in C# .NET Dependency Injection library to implement the dependency inversion principle.
+This full-stack app is built using C# .NET 5.0 MVC for handling both the front and back end, with MongoDB as a database and vanilla JavaScript and TailwindCSS for the front-end. DevOps tools (*as of 11/9/2021*) include git for version control, GitHub as a remote repository with a continuous integration pipeline, and the ability to deploy or share this app as a Docker container. Dependencies include the TailwindCSS framework, the C# MongoDB Driver, XUnit for C# unit testing, the built-in C# .NET Identity API for authentication and authorization, and the built-in C# .NET Dependency Injection library to implement the dependency inversion principle.
 
 [//]: # (//TODO: mention emailing framework)
 
@@ -143,10 +145,17 @@ The codebase is divided into four projects (code projects, not the projects user
 - A temporary console application for seeding the database and other tests that can't be put in the unit tests.
 
 ### 4.3 Front-end Routing
-(Has yet to be fully decided)
+There are three logical sections to the front-end:
+- The logged-out pages, where users can login or register (which logs them in)
+- User account pages, where users are logged in but not into an organization, and can edit personal information, look at an overview of their assigned projects, app notifications, and organizations they are in charge of.
+- Organization pages, where each user has selected an organization and now is logged in to it (as well as their personal accounts) with a specific role and list of assigned projects in the organization.
+
+If a user has a session cookie where they are logged into an organization (authentication and authorization is handled with cookies), they are automatically directed to the organization home page.
+If the user has a session cookie where they are logged into their personal account but not into an organization, they are directed to a page displaying a list of their app notifications and some of their account information.
+If users without session cookies are directed to the login page.
 
 ### 4.4 Database Structure
-(Has yet to be fully decided)
+(Has yet to be fully planned)
 
 ### 4.5 App Hosting Services
 Has yet to be decided.
