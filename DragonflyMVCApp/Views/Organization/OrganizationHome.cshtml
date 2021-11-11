@@ -1,0 +1,43 @@
+﻿@using DragonflyDataLibrary;
+@model OrganizationHomeModel
+
+@{
+    ViewData["Title"] = "Organization Home";
+}
+
+<h1>Organization Home</h1>
+<h1>All projects belonging to @Model.User.Name</h1>
+
+@if (Model.UserAssignment.AssigneeAccess == UserPosition.ADMIN ||
+     Model.UserAssignment.AssigneeAccess == UserPosition.MANAGER)
+{
+    <a class="text-info" asp-controller="Project" asp-action="CreateProject">Create new project</a>
+}
+
+<form class="text-success" asp-controller="Organization" asp-action="OrganizationHome">
+    <p>
+        Search: <input type="text" name="searchString" />
+        <input type="submit" value="🔍" />
+    </p>
+</form>
+<table class="table-success">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Status</td>
+            <td>Priority</td>
+            <td>Deadline</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DragonflyDataLibrary.Models.ProjectModel project in Model.Organization.Projects)
+        {
+            <tr>
+                <td><a class="text-success" asp-controller="Project" asp-action="ProjectHome" asp-route-id="@project.Id">@project.Name</a></td>
+                <td>@project.Status</td>
+                <td>@project.Priority</td>
+                <td>@project.Deadline</td>
+            </tr>
+        }
+    </tbody>
+</table>

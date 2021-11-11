@@ -1,7 +1,7 @@
-﻿using Bug_Tracker_Library;
-using Bug_Tracker_Library.DataAccess.MongoDB;
-using Bug_Tracker_Library.Models;
-using Bug_Tracker_Library.Security;
+﻿using DragonflyDataLibrary;
+using DragonflyDataLibrary.DataAccess.MongoDB;
+using DragonflyDataLibrary.Models;
+using DragonflyDataLibrary.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace DbSeederAndTester
     {
         private static void Main(string[] args)
         {
-            MongoDBDataAccessor mongodb = new("BugTracker");
+            MongoDBDataAccessor mongodb = new("Dragonfly");
 
             //CreateUserModel(mongodb);
 

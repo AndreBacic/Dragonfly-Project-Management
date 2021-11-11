@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bug Tracker Library\Bug Tracker Library.csproj" />
+    <ProjectReference Include="..\DragonflyDataLibrary\DragonflyDataLibrary.csproj" />
   </ItemGroup>
 
 </Project>

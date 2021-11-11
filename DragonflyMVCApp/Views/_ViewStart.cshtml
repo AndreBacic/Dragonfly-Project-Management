@@ -1,0 +1,10 @@
+﻿@using DragonflyMVCApp.Controllers;
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString();
+
+    Layout = (controllerName) switch
+    {
+        "Account" => "_AccountLayout",
+        _ => "_Layout"
+    };
+}

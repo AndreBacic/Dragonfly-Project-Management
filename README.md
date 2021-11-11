@@ -1,8 +1,6 @@
-# Software Requirements Specification (SRS) for this app, the *Bug Tracker*
+# Software Requirements Specification (SRS) for this app, *Dragonfly Project Management*
 
 [//]: # (//TODO: Add license to repo)
-
-[//]: # (//TODO: Rename The Bug Tracker/Bug Tracker to 'Dragonfly [Project Management])
 
 ## 1. Introduction
 
@@ -19,8 +17,6 @@ This document is intended to be a reasonably comprehensive overview of the Bug T
 - User: A person who uses this app.
 - Organization: A group of users in this app. Likely represents a company or team of employees.
 - Project: A task, job, or some kind of work that needs to be completed by at least one user by a specified deadline.
-- Sub-project: A project that is nested inside another one. In this document sub-projects can refer to the projects nested within the sub-projects of a project, or as many project branches deep as the users of an organization desire to go.
-- Parent project: A project that has sub-projects. In this document, a parent project may refer to the parent of the parent of a project, or as many project generations higher as can be traversed.
 - Comment: A chat message posted in a discussion board on a project.
 - Role: A label given to a user in an organization that defines what they are allowed to do within that organization. Section 3.2 defines the different roles a User can have, and the following sections define what those permissions those roles give.
 - AKA: Also Known As
@@ -58,8 +54,6 @@ If they have permission, to:
 - Define or change a project's deadline, status, priority, name, or description
 - Delete projects
 - Delete other user's comments (ex. a manager removing an obscene comment)
-- Create sub-projects within projects
-- Move these sub-projects to be under the scope of other projects
 
 Section 3 defines which roles receive these permissions and under which scope they get them.
 
@@ -99,9 +93,9 @@ Admins have all permissions Managers have, but may change the roles of other use
 ### 3.4 Users' Permissions Given by Their Roles in a Project
 Workers may only view, comment on, and log work to projects they have been assigned to. They may remove themselves from projects they're assigned to, but of course can't assign themselves back to it once they've left.
 
-Managers have all permissions Workers have, but can view and comment on all projects in the organization. In projects they have been assigned to, they may define or change a project's deadline, status, priority, name, or description, create sub-projects within the project, assign workers in the project to the sub-projects, remove workers from the sub-projects or from the project, and delete comments left in the project or it's sub-projects by Workers (not by other managers or by admins). They may delete sub-projects, but not the project they're assigned to.
+Managers have all permissions Workers have, but can view and comment on all projects in the organization. In projects they have been assigned to, they may define or change a project's deadline, status, priority, name, or description, remove workers from the project, and delete comments left in the project by Workers (not by other managers or by admins).
 
-Admins have all permissions Managers have, but these permissions apply across all projects in the organization. Admins can assign themselves or each other to projects, but doing so doesn't give them any additional permissions as they have read and write access to all properties of all projects and their sub-projects. They have permission to rearrange the project/sub-project tree as they see fit, and to delete projects. Admins also can assign users to and remove users from all projects and sub-projects in the organization. Admins *cannot* change each other's roles, remove each other from projects or the organization, or delete each other's comments, but they may demote themselves to lower roles.
+Admins have all permissions Managers have, but these permissions apply across all projects in the organization. Admins can assign themselves or each other to projects, but doing so doesn't give them any additional permissions as they have read and write access to all properties of all projects. They have permission to delete projects, and can assign users to and remove users from any project in the organization. Admins *cannot* change each other's roles, remove each other from projects or the organization, or delete each other's comments, but they may demote themselves to lower roles.
 
 ### 3.5 Project Status and Priority Options
 A project's status may be selected from:
@@ -121,13 +115,6 @@ And a project's priority may be selected from:
 - Top
 
 A project's priority is merely a label to tell users working on multiple projects which ones they should focus on.
-
-### 3.6 Relationships Between Projects and Sub-projects
-An organization and its projects form a logical tree, with the organization being the root, and the projects branching into collections of sub-projects, which being projects can have their own sub-projects. This sub-project branching is recursive and has no depth limit (*as of 11/9/2021*). When a worker is assigned to a project, the worker has permissions (as defined in section 3.4) to only that project and not to it's parent projects or sub-projects. However, when a managers are assigned to a project, their management permissions apply all the way down the sub-project branching (but not to any parent projects).
-
-Projects have deadlines, statuses, and priorities in addition to other properties. To give flexibility to users, the properties of a project do not affect the properties of it's parent or sub-projects except in specific circumstances:
-- Marking a project's status as Abandoned automatically marks all of it's sub-projects as abandoned. These sub-projects can have their statuses changed back afterwards without affecting the parent.
-- Deleting a project prompts the user (an admin) to either move all of the sub-projects to a different project or to delete all of the sub-projects (and all of their sub-projects with them).
 
 
 ## 4. Tech Stack and Implementation
