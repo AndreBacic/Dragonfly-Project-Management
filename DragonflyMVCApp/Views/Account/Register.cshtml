@@ -16,22 +16,22 @@
     <div class="w-full">
         <label asp-for="FirstName" class="input-label"></label>
         <input asp-for="FirstName" class="input-text" contenteditable="true" />
-        <span asp-validation-for="FirstName" class="validation-for"></span>
+        <p asp-validation-for="FirstName" class="validation-for"></p>
     </div>
     <div class="w-full">
         <label asp-for="LastName" class="input-label">            
         </label><input asp-for="LastName" class="input-text" contenteditable="true" />
-        <span asp-validation-for="LastName" class="validation-for"></span>
+        <p asp-validation-for="LastName" class="validation-for"></p>
     </div>
     <div class="w-full">
         <label asp-for="EmailAddress" class="input-label"></label>
         <input asp-for="EmailAddress" type="email" class="input-text" contenteditable="true" />
-        <span asp-validation-for="EmailAddress" class="validation-for"></span>
+        <p asp-validation-for="EmailAddress" class="validation-for"></p>
     </div>
     <div class="w-full">
         <label asp-for="Password" class="input-label"></label>
         <input asp-for="Password" type="password" class="input-text" contenteditable="true" />
-        <span asp-validation-for="Password" class="validation-for"></span>
+        <p asp-validation-for="Password" class="validation-for"></p>
     </div>
     <input type="submit" value="Create" class="w-1/2 h-8 my-auto text-center cursor-pointer rounded-sm bg-lime-800 text-coolGray-200" />
 </form>
