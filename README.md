@@ -142,10 +142,12 @@ If the user has a session cookie where they are logged into their personal accou
 If users without session cookies are directed to the login page.
 
 ### 4.4 Database Structure
-(Has yet to be fully planned)
+The MongoDB database has two collections:
+- Users, where each document stores all of a user's account information and an array of assignments, each of which stores an organization the user is in, the user's role in the organization, the ids of the projects the user is assigned to work on, and other data relating the user to their projects.
+- Organizations, where each document is an organization with all of it's projects and all of the comments posted to those projects.
 
 ### 4.5 App Hosting Services
-Has yet to be decided.
+(Has yet to be decided.)
 
 
 [//]: # (//TODO: Finish this SRS and make it more professional)
