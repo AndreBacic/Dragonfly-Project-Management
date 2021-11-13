@@ -8,7 +8,7 @@
         height: 100%;
     }
     .fixed-wfull-flexbox {
-        @apply fixed w-full min-h-10 bg-lime-400
+        @apply fixed w-full min-h-[2.5rem] bg-lime-400
             flex justify-center items-center;
     }
     .text-w-3-4ths-grey {

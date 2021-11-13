@@ -8,29 +8,32 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="w-full h-full bg-gradient-to-b from-lime-700 to-green-900">
-    <header class="w-full flex gap-0 z-40 fixed">
-        <section class="w-1/2 min-h-[8rem] p-2 bg-lime-500 text-center text-black text-xl shadow rounded-br-2xl">
-            <h1 class="mb-8">Dragonfly</h1>
-            <h2>Project Management</h2>
+    <header class="fixed w-full h-32 z-40 top-0 left-0">
+        <section class="relative w-1/2 h-full z-40 top-0 left-0 p-2 bg-lime-500 text-center text-black text-xl shadow rounded-br-2xl">
+            <h1 class="mb-10">Dragonfly</h1>
+            <h2 class="text-lg">Project Management</h2>
         </section>
-        <div class="w-1/2 min-h-[6rem]" role="directory">
-            <button class="flex justify-center w-full min-h-[6rem] border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700
-                           hover:bg-gray-50 hover:bg-lime-200 focus:outline-none focus:bg-lime-300 group" 
-                    id="userMenuButton" onclick="userMenuButtonOnClick()">
+        <div class="absolute w-1/2 min-h-[6rem] z-30 top-0 right-0" role="directory">
+            <button class="flex justify-center items-center w-full min-h-[6rem] border border-trueGray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-trueGray-700
+                           hover:bg-trueGray-200 focus:outline-none" 
+                    id="userMenuButton" onclick="userMenuButtonOnClick()" onfocusout="menuButtonOnFocusOut(0)">
                 Welcome, @User.ClaimValue(UserClaimsIndex.Name)
-                <svg class="-mr-1 ml-2 h-5 w-5 -rotate-90 transition-all duration-150 ease-linear group-focus:rotate-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg id="userMenuArrow" class="-mr-1 ml-2 h-5 w-5 -rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
-            <nav class="origin-top-right absolute right-0 mt-2 py-1 w-56 rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" id="userMenu" style="display:none">
-                <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Upcoming Deadlines</a>
-                <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Projects</a>
-                <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Organizations</a>
-                <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="EditAccount" asp-controller="Account">Edit Account</a>
-                <a class="text-gray-700 block px-4 py-2 text-sm" asp-action="Logout" asp-controller="Account">Logout</a>
+            <nav class="relative z-30 right-0 pt-10 pb-2 w-[125%] rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none
+                        transition-all duration-150 ease-linear origin-top-right" id="userMenu" style="display:none">
+                <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Upcoming Deadlines</a>
+                <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Projects</a>
+                <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Organizations</a>
+                <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="EditAccount" asp-controller="Account">Edit Account</a>
+                <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Logout" asp-controller="Account">Logout</a>
             </nav>
         </div>
     </header>
+    <div id="translucentCover" class="fixed z-20 w-full h-full opacity-60 bg-trueGray-300" style="display:none;" onclick="this.style.display='none'"></div>
+
     <div class="w-full h-full px-[5%] z-0">
         <main role="main" class="h-full pt-40 pb-10 px-2 bg-lime-400">
             @RenderBody()
@@ -47,14 +50,29 @@
     <script>
         let userMenuIsOpen = false
         const userMenu = document.getElementById("userMenu")
+        const userMenuArrow = document.getElementById("userMenuArrow")
+
+        const translucentCover = document.getElementById("translucentCover")
+        const menus = [userMenu]
+        const arrows = [userMenuArrow]
 
         function userMenuButtonOnClick() {
             userMenuIsOpen = !userMenuIsOpen
             if (userMenuIsOpen) {
                 userMenu.style.display = ""
+                userMenuArrow.style.rotate = "0deg"
+                translucentCover.style.display = ""
             } else {
                 userMenu.style.display = "none"
+                userMenuArrow.style.rotate = "-90deg"
+                translucentCover.style.display = "none"
             }
+        }
+
+        /** param menuIndex: index of the menu in the array menus that is being toggled shut. */
+        function menuButtonOnFocusOut(menuIndex) {
+            menus[menuIndex].style.display = "none"
+            arrows[menuIndex].style.rotate = "-90deg"
         }
     </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
