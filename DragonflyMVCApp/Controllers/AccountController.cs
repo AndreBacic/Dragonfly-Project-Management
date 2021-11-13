@@ -61,10 +61,6 @@ namespace DragonflyMVCApp.Controllers
             HttpContext.SignOutAsync();
             return RedirectToAction(nameof(Login), "Account"); // todo: Make this an actual page, or just delete the associated view?
         }
-        public IActionResult LoginFailed()
-        {
-            return View();
-        }
         public IActionResult Register()
         {
             ViewData["RegisterMessage"] = "";
@@ -178,6 +174,18 @@ namespace DragonflyMVCApp.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            return View();
+        }
+
+        public IActionResult MyProjects()
+        {
+            LogInUser(this.GetLoggedInUserByEmail(_db),
+                new AssignmentModel()
+                { 
+                    AssigneeAccess = UserPosition.ADMIN,
+                    OrganizationId = Guid.NewGuid(), 
+                    ProjectIdTreePath = new List<Guid>() { new Guid() } 
+                });
             return View();
         }
 
