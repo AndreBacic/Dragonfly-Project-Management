@@ -775,16 +775,16 @@ html {
   z-index: 30;
 }
 
-.z-20 {
-  z-index: 20;
-}
-
 .z-0 {
   z-index: 0;
 }
 
 .z-10 {
   z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
 }
 
 .m-0 {
@@ -864,12 +864,12 @@ html {
   height: 8rem;
 }
 
-.h-5 {
-  height: 1.25rem;
-}
-
 .h-6 {
   height: 1.5rem;
+}
+
+.h-5 {
+  height: 1.25rem;
 }
 
 .min-h-\[6rem\] {
@@ -892,16 +892,16 @@ html {
   width: 50%;
 }
 
+.w-5\/6 {
+  width: 83.333333%;
+}
+
 .w-5 {
   width: 1.25rem;
 }
 
 .w-\[125\%\] {
   width: 125%;
-}
-
-.w-5\/6 {
-  width: 83.333333%;
 }
 
 .w-2\/5 {
@@ -1002,12 +1002,12 @@ html {
   border-width: 1px;
 }
 
-.border-b {
-  border-bottom-width: 1px;
-}
-
 .border-b-2 {
   border-bottom-width: 2px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
 }
 
 .border-black {
@@ -1045,14 +1045,18 @@ html {
   background-color: rgba(132, 204, 22, var(--tw-bg-opacity));
 }
 
+.bg-lime-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(163, 230, 53, var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
 }
 
-.bg-lime-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(163, 230, 53, var(--tw-bg-opacity));
+.bg-opacity-60 {
+  --tw-bg-opacity: 0.6;
 }
 
 .bg-gradient-to-b {
@@ -1097,16 +1101,6 @@ html {
   padding: 0.5rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
 .px-\[5\%\] {
   padding-left: 5%;
   padding-right: 5%;
@@ -1115,6 +1109,16 @@ html {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .py-1 {
@@ -1127,20 +1131,20 @@ html {
   padding-bottom: 2rem;
 }
 
-.pt-10 {
-  padding-top: 2.5rem;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .pt-40 {
   padding-top: 10rem;
 }
 
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
 }
 
 .text-left {
@@ -1211,10 +1215,6 @@ html {
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgba(55, 65, 81, var(--tw-text-opacity));
-}
-
-.opacity-60 {
-  opacity: 0.6;
 }
 
 .shadow {

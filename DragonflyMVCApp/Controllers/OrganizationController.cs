@@ -30,21 +30,26 @@ namespace DragonflyMVCApp.Controllers
                 searchString = searchString.ToLower(); // so comparisaons aren't case-sensitive
             }
 
-            OrganizationModel org = _db.GetOrganization(
-                new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value));
+            //OrganizationModel org = _db.GetOrganization(
+            //    new Guid(User.Claims.ToList()[(int)UserClaimsIndex.OrganizationModel].Value));
 
-            org.Projects = org.Projects
-                .Where(p => p.Name.ToLower().Contains(searchString))
-                .OrderBy(x => x.Deadline)
-                .ToList();
+            //org.Projects = org.Projects
+            //    .Where(p => p.Name.ToLower().Contains(searchString))
+            //    .OrderBy(x => x.Deadline)
+            //    .ToList();
 
             UserModel user = this.GetLoggedInUserByEmail(_db);
 
             OrganizationHomeModel model = new()
             {
-                Organization = org,
+                Organization = new OrganizationModel(),//org,
                 User = user,
-                UserAssignment = this.GetLoggedInUsersAssignment(_db, user)
+                UserAssignment = new AssignmentModel()
+                {
+                    AssigneeAccess = UserPosition.ADMIN,
+                    OrganizationId = Guid.NewGuid(),
+                    ProjectIdTreePath = new List<Guid>() { new Guid() }
+                } //this.GetLoggedInUsersAssignment(_db, user)
             };
 
             return View(model);
