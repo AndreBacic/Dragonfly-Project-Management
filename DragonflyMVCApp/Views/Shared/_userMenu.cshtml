@@ -1,4 +1,4 @@
-﻿<button class="flex justify-center items-center w-full min-h-[6rem] border-b border-b-trueGray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-trueGray-700
+﻿<button class="flex justify-center items-center w-full h-[4.5rem] border-b border-b-trueGray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-trueGray-700
                            hover:bg-trueGray-200 focus:outline-none"
         id="userMenuButton" onclick="userMenuButtonOnClick()">
     Welcome, @User.ClaimValue(UserClaimsIndex.Name)
@@ -6,7 +6,7 @@
         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
     </svg>
 </button>
-<nav class="relative z-30 left-[-25%] pt-10 pb-2 w-[125%] rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none
+<nav class="relative z-30 left-[-25%] pt-16 pb-2 w-[125%] rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none
                         transition-all duration-150 ease-linear origin-top-right" id="userMenu" style="display:none">
     <!--//TODO: Actually make the animation happen-->
     <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Notifications</a>
