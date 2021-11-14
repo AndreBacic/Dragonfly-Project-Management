@@ -10,8 +10,8 @@
 <body class="">
     <header class="fixed w-full h-32 z-40 top-0 left-0">
         <section class="relative w-1/2 h-full z-40 top-0 left-0 p-2 bg-lime-500 text-center text-black text-xl shadow rounded-br-3xl">
-            <h1 class="mb-10">Dragonfly</h1>
-            <h2 class="text-lg">Project Management</h2>
+            <h1 class="mb-6">Dragonfly</h1>
+            <h2 class="text-lg">Project<br/>Management</h2>
         </section>
         <div class="absolute w-1/2 z-30 top-0 right-0" role="directory">
             <partial name="_usermenu" />
@@ -21,7 +21,7 @@
                     id="orgMenuButton" onclick="menuButtonOnClick(1)">
                 Organization @{ //TODO:Add org name to user claims
                 }
-                <svg id="orgMenuArrow" class="-mr-1 ml-2 h-5 w-5 -rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg id="orgMenuArrow" class="-mr-1 ml-1 h-5 w-5 -rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
@@ -41,11 +41,11 @@
         {
             <script>document.getElementById("adminMenuDiv").style.display = ""</script>
         }
-        <button class="relative inline-flex justify-center z-30 w-[37.5%] h-10 rounded-br-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 
+        <button class="relative inline-flex justify-center z-30 w-[48%] h-10 rounded-br-lg border border-gray-300 shadow-sm px-1 py-2 bg-white text-sm font-medium text-gray-700 
                        hover:bg-sky-200 focus:outline-none" 
                 id="adminMenuButton" onclick="menuButtonOnClick(2)">
             Admin Menu
-            <svg id="adminMenuArrow" class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg id="adminMenuArrow" class="-mr-1 ml-1 h-5 w-5 -rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
         </button>
@@ -58,11 +58,11 @@
         </nav>
     </div>
 
-    <main role="main" class="">
+    <main role="main" class="pt-44 px-6 pb-10 bg-lime-400">
         @RenderBody()
     </main>
 
-    <footer class="">
+    <footer class="fixed-wfull-flexbox bottom-0">
         <div>
             &copy; 2021 Dragonfly by Andre Bacic
         </div>

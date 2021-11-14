@@ -820,12 +820,16 @@ html {
   margin-bottom: 2.5rem;
 }
 
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .-mr-1 {
   margin-right: -0.25rem;
 }
 
-.ml-2 {
-  margin-left: 0.5rem;
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .-mt-8 {
@@ -928,8 +932,8 @@ html {
   width: 125%;
 }
 
-.w-\[37\.5\%\] {
-  width: 37.5%;
+.w-\[48\%\] {
+  width: 48%;
 }
 
 .w-3\/4 {
@@ -942,6 +946,10 @@ html {
 
 .origin-top-right {
   transform-origin: top right;
+}
+
+.origin-top {
+  transform-origin: top;
 }
 
 .-rotate-90 {
@@ -1149,9 +1157,19 @@ html {
   padding-bottom: 0.5rem;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .pt-40 {
@@ -1172,6 +1190,10 @@ html {
 
 .pb-1 {
   padding-bottom: 0.25rem;
+}
+
+.pt-44 {
+  padding-top: 11rem;
 }
 
 .pt-16 {
