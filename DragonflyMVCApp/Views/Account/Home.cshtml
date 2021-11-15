@@ -1,5 +1,12 @@
 ﻿@{ 
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    if (User.Claims.Count() <= (int)UserClaimsIndex.Role)
+    {
+        Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
     ViewData["Title"] = $"Welcome, {User.ClaimValue(UserClaimsIndex.Name)}";
 }
 @using DragonflyDataLibrary
