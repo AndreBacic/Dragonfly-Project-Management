@@ -219,9 +219,7 @@ namespace DragonflyMVCApp.Controllers
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
                 new Claim(nameof(user.Id), user.Id.ToString()),
-                new Claim(ClaimTypes.Role, assignment.AssigneeAccess.ToString()),
-                new Claim(nameof(OrganizationModel), assignment.OrganizationId.ToString()),
-                new Claim(nameof(ProjectModel), assignment.ProjectIdTreePath.ListToString())
+                new Claim(ClaimTypes.Role, "User") // demo user has "Demo" role
             };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(

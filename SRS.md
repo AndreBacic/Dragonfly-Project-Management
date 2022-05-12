@@ -20,7 +20,7 @@ This document is intended to be used by the developers of this software as a gui
 ## 2. Overall Description
 
 ### 2.1 User Needs
-This software will provide a generic platform for users to track their work. The following user needs are expected:
+This software will provide a generic platform for users to track their work, providing the following features:
  - The software will have security measures to prevent unauthorized access to user data.
  - The software will allow users to create, edit, and delete projects and tasks to record their work.
  - The software will record the deadlines users have set for their tasks and projects.

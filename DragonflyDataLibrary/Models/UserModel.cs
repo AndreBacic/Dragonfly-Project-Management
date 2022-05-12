@@ -29,5 +29,6 @@ namespace DragonflyDataLibrary.Models
                 return FirstName + " " + LastName;
             }
         }
+        public List<ProjectModel> Projects { get; set; }
     }
 }
