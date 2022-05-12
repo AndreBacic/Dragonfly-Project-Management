@@ -1,18 +1,11 @@
 ﻿namespace DragonflyDataLibrary
 {
-    public enum UserPosition
-    {
-        ADMIN,
-        MANAGER,
-        WORKER
-    }
-
     public enum ProjectStatus
     {
         TODO,
         IN_PROGRESS,
-        ABANDONED,
-        FINISHED
+        COMPLETED,
+        ARCHIVED
     }
 
     public enum ProjectPriority

@@ -20,9 +20,7 @@ namespace DragonflyDataLibrary.Models
         /// Unique email address of the user.
         /// </summary>
         public string EmailAddress { get; set; }
-        public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }
-        public List<AssignmentModel> Assignments { get; set; } = new();
         [BsonIgnore]
         public string Name
         {

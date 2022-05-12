@@ -6,6 +6,6 @@ A full-stack web app built with:
 - C#
 - MongoDB
 
-Other technologies used include C# XUnit for testing, Azure for hosting, PostCSS for CSS preprocessing, and Visual Studio for editing.
+Other technologies used include C# XUnit for testing, Azure for hosting, and PostCSS for CSS preprocessing.
 
 [//]: # (//TODO: Add Three.js ?and TypeScript?)
