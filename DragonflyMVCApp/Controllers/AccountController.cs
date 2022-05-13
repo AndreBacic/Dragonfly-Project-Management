@@ -1,4 +1,5 @@
-﻿using DragonflyDataLibrary.DataAccess;
+﻿using DragonflyDataLibrary;
+using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
 using DragonflyMVCApp.Models;
@@ -54,7 +55,7 @@ namespace DragonflyMVCApp.Controllers
             return RedirectToAction(nameof(Home));
         }
 
-        [Authorize("Logged_in_user_policy")]
+        [Authorize]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
@@ -96,7 +97,7 @@ namespace DragonflyMVCApp.Controllers
             return Home();
         }
 
-        [Authorize("Logged_in_user_policy")]
+        [Authorize]
         public IActionResult EditAccount()
         {
             UserModel user = this.GetLoggedInUserByEmail(_db);
@@ -104,7 +105,7 @@ namespace DragonflyMVCApp.Controllers
             return View(user.DbUserToEditView());
         }
 
-        [Authorize("Logged_in_user_policy")]
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditAccount(EditUserViewModel updatedUser)
@@ -122,7 +123,7 @@ namespace DragonflyMVCApp.Controllers
         /// to work on, or to search for organizations or other users.
         /// </summary>
         /// <returns></returns>
-        [Authorize("Logged_in_user_policy")]
+        [Authorize]
         public IActionResult Home()
         {
             return View();
@@ -140,8 +141,7 @@ namespace DragonflyMVCApp.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(nameof(user.Id), user.Id.ToString()),
-                new Claim(ClaimTypes.Role, "User") // demo user has "Demo" role
+                new Claim(ClaimTypes.Role, UserRoles.USER) // demo user has "Demo user" role
             };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(

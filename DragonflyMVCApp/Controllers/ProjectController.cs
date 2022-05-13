@@ -20,10 +20,7 @@ namespace DragonflyMVCApp.Controllers
         // GET: Project/ProjectHome page, with edit boxes and subproject links
         public IActionResult ProjectHome(int projectId)
         {
-            ProjectViewModel projV = new()
-            {
-                Project = new ProjectModel()
-            };
+            ProjectViewModel projV = new();
             return View(projV);
         }
 
@@ -34,13 +31,13 @@ namespace DragonflyMVCApp.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                // todo: fix the ironic 'solution' of trying to fix a broken input based on a possibly broken input.
-                return ProjectHome(model.Project.Id);
+                // todo: get the project id and redirect
+                return ProjectHome(0);
             }
 
-            //_db.UpdateProject(model.Project, ?); // TODO: Add update logic here
+            // TODO: Add update logic here
 
-            return ProjectHome(model.Project.Id);
+            return ProjectHome(0);
         }
 
         // GET: Project/CreateProject
@@ -52,11 +49,11 @@ namespace DragonflyMVCApp.Controllers
         // POST: Project/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProject(CreateProjectModel model)
+        public IActionResult CreateProject(ProjectModel model)
         {
-            if (ModelState.IsValid == false)
+            if (ModelState.IsValid == false) // todo: use a view model to validate? Bind only desired properties?
             {
-                return View(new CreateProjectModel()); // todo: tell user why the input is invalid.
+                return View(); // todo: tell user why the input is invalid.
             }
             // todo: add project to database, get generated id and redirect to project home page with id.
             int projectId = 1; //_db.InsertRecord<ProjectModel>(something);

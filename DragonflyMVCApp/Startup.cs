@@ -1,6 +1,5 @@
+using DragonflyDataLibrary;
 using DragonflyDataLibrary.DataAccess;
-using DragonflyDataLibrary.DataAccess.MongoDB;
-using DragonflyDataLibrary.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,25 +30,18 @@ namespace DragonflyMVCApp
 
             services.AddAuthorization(authConfig =>
             {
-                authConfig.AddPolicy("Logged_in_user_policy", policyBuilder =>
+                authConfig.AddPolicy("Demo User", policyBuilder =>
                 {
                     policyBuilder.RequireClaim(ClaimTypes.Email);
                     policyBuilder.RequireClaim(ClaimTypes.Name);
+                    policyBuilder.RequireRole(UserRoles.DEMO_USER);
                 });
-                authConfig.AddPolicy("Logged_into_organization_policy", policyBuilder =>
+                authConfig.AddPolicy("Logged_in_user_policy", policyBuilder =>
                 {
-                    policyBuilder.Combine(authConfig.GetPolicy("Logged_in_user_policy"));
-                    policyBuilder.RequireClaim(nameof(OrganizationModel));
-                    policyBuilder.RequireClaim(nameof(ProjectModel));
-                    policyBuilder.RequireClaim(ClaimTypes.Role);
+                    policyBuilder.Combine(authConfig.GetPolicy("Demo User"));
+                    policyBuilder.RequireRole(UserRoles.USER); // TODO: make sure this policy doesn't allow demo user roles to pass auth
                 });
-                authConfig.AddPolicy("Organization_ADMIN_policy", policyBuilder =>
-                {
-                    policyBuilder.Combine(authConfig.GetPolicy("Logged_into_organization_policy"));
-                    string[] roles = { UserPosition.ADMIN.ToString() };
-                    policyBuilder.RequireRole(roles); // TODO: Add cookie/something to verify user is logged in to organization as an admin
-                });
-                authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_into_organization_policy");
+                authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_in_user_policy");
             });
 
             services.AddControllersWithViews();

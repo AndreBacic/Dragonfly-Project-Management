@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections.Generic;
 
 namespace DragonflyDataLibrary.Models
 {
@@ -10,21 +11,25 @@ namespace DragonflyDataLibrary.Models
     public class ProjectModel
     {
         /// <summary>
-        /// Unique identifier for the project. // TODO: Figure out how to do this manually? Use index?
+        /// Unique identifier for the project. // TODO: Figure out how to do this manually? Use index? Use random Guid?
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; set; } // = Guid.NewGuid();
         public string Title { get; set; }
 
         /// <summary>
-        /// The description of this, which may be just a short statement or a very long list of instructions to Workers.
-        /// </summary>
+        /// Short description of the project, typically less than 100 characters.
+        /// </summary> // TODO: Have view models restrict this to 100 characters
         public string Description { get; set; }
+        /// <summary>
+        /// Long description of project and any additional information the user wants to add.
+        /// </summary>
+        public string Notes { get; set; }
         public DateTime Created { get; set; }
         /// <summary>
         /// The date that all work on this must be done.
         /// </summary>
         public DateTime Deadline { get; set; }
-        public ProjectStatus Status { get; set; }
-        public ProjectPriority Priority { get; set; }
+        public decimal Budget { get; set; }
+        public List<TaskModel> Tasks { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using DragonflyDataLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
+
 namespace DragonflyMVCApp.Controllers
 {
     public static class ControllerExtensions

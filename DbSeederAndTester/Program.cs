@@ -1,8 +1,6 @@
 ﻿using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
-using System;
-using System.Collections.Generic;
 
 namespace DbSeederAndTester
 {

@@ -19,5 +19,9 @@ namespace DragonflyMVCApp.Models
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$",
             ErrorMessage = "Invalid Password. Password must have a lower and uppercase letter, a number, a special character and be 8 or more characters long.")]
         public string Password { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; }
     }
 }

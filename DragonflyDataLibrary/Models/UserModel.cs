@@ -16,13 +16,13 @@ namespace DragonflyDataLibrary.Models
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [BsonIgnore]
+        public string Name => $"{FirstName} {LastName}";
         /// <summary>
         /// Unique email address of the user.
         /// </summary>
         public string EmailAddress { get; set; }
         public string PasswordHash { get; set; }
-        [BsonIgnore]
-        public string Name => FirstName + " " + LastName;
-        public List<ProjectModel> Projects { get; set; }
+        public List<ProjectModel> Projects { get; set; } = new();
     }
 }

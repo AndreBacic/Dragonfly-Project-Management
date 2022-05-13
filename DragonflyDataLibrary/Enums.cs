@@ -1,6 +1,6 @@
 ﻿namespace DragonflyDataLibrary
 {
-    public enum ProjectStatus
+    public enum TaskStatus
     {
         TODO,
         IN_PROGRESS,
@@ -8,7 +8,7 @@
         ARCHIVED
     }
 
-    public enum ProjectPriority
+    public enum TaskPriority
     {
         BOTTOM,
         LOW,
@@ -17,13 +17,26 @@
         TOP
     }
 
+    public enum TaskType
+    {
+        Epic,
+        Story,
+        Test,
+        Expense,
+        Task,
+        Bug
+    }
+
     public enum UserClaimsIndex
     {
         Name,
         Email,
-        Id,
-        Role,
-        OrganizationModel,
-        ProjectModel
+        Role
+    }
+
+    public static class UserRoles
+    {
+        public const string DEMO_USER = "Demo User";
+        public const string USER = "User";
     }
 }
