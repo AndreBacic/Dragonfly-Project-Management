@@ -1,6 +1,4 @@
 ﻿using DragonflyDataLibrary.Models;
-using System;
-using System.Collections.Generic;
 
 namespace DragonflyDataLibrary.DataAccess
 {
@@ -12,6 +10,7 @@ namespace DragonflyDataLibrary.DataAccess
     /// </summary>
     public interface IDataAccessor
     {
-        
+        UserModel GetUser(string emailAddress);
+        void CreateUser(UserModel user);
     }
 }

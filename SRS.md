@@ -56,12 +56,11 @@ The front end will provide the following features:
 - Forms to create tasks and update their details.
 - When a user enters a project, a project home displaying project information and four tabs: backlog, board, notes, and analytics. The notes tab lets the user write text notes about the project, and the analytics tab shows diagrams of the project's statistics.
 
-The project backlog and board tabs both:
+While the project backlog and board tabs differ in that the backlog tab displays tasks in a list, while the board tab displays tasks on a kanban board where users can drag and drop tasks to different columns, they both:
 - Display a list of tasks for the user to view, edit, or open to view task details.
 - Allow the user to add new tasks to the project.
 - Let the user change the status of a task.
 - Display the tasks with their subtasks in the logical tree nested within or under them.
-They differ in that the backlog tab displays tasks in a list, while the board tab displays tasks on a kanban board where users can drag and drop tasks to different columns.
 
 The back end will provide the following features:
 - A database that stores all the data for the app.

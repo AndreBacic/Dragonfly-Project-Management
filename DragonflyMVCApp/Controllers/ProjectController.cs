@@ -1,7 +1,6 @@
-﻿using DragonflyMVCApp.Models;
-using DragonflyDataLibrary;
-using DragonflyDataLibrary.DataAccess;
+﻿using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
+using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,19 +18,12 @@ namespace DragonflyMVCApp.Controllers
             _db = db;
         }
         // GET: Project/ProjectHome page, with edit boxes and subproject links
-        public IActionResult ProjectHome(List<Guid> projectIdTreePath)
+        public IActionResult ProjectHome(int projectId)
         {
-            OrganizationModel org = this.GetLoggedInUsersOrganization(_db);
-            ProjectModel proj = org.GetProjectByIdTree(projectIdTreePath);
             ProjectViewModel projV = new()
             {
-                Project = proj
+                Project = new ProjectModel()
             };
-            Dictionary<Guid, UserModel> workers = _db.GetAllOrganizationUsers(org.Id);
-            foreach (Guid id in proj.WorkerIds)
-            {
-                projV.Workers.Add(id, workers[id]);
-            }
             return View(projV);
         }
 
@@ -43,13 +35,12 @@ namespace DragonflyMVCApp.Controllers
             if (ModelState.IsValid == false)
             {
                 // todo: fix the ironic 'solution' of trying to fix a broken input based on a possibly broken input.
-                return ProjectHome(model.Project.IdTreePath);
+                return ProjectHome(model.Project.Id);
             }
 
             //_db.UpdateProject(model.Project, ?); // TODO: Add update logic here
-            //_db.UpdateAssignment(change user assignments ?);
 
-            return ProjectHome(model.Project.IdTreePath);
+            return ProjectHome(model.Project.Id);
         }
 
         // GET: Project/CreateProject
@@ -67,31 +58,11 @@ namespace DragonflyMVCApp.Controllers
             {
                 return View(new CreateProjectModel()); // todo: tell user why the input is invalid.
             }
-
-            Guid orgId = new(User.ClaimValue(UserClaimsIndex.OrganizationModel));
-
-            ProjectModel proj = new()
-            {
-                Name = model.Name,
-                Deadline = model.Deadline,
-                Description = model.Description,
-                ParentIdTreePath = model.ParentIdTreePath,
-                Priority = model.Priority,
-                Status = model.Status
-            };
-            _db.CreateProject(proj, orgId);
-
-            _db.CreateAssignment(new AssignmentModel()
-            {
-                AssigneeAccess = UserPosition.ADMIN, // todo: no admins for projects? should the creator be a manager?
-                AssigneeId = new Guid(User.ClaimValue(UserClaimsIndex.Id)),
-                OrganizationId = orgId,
-                ProjectIdTreePath = proj.IdTreePath
-            });
-
-            return ProjectHome(proj.IdTreePath);
+            // todo: add project to database, get generated id and redirect to project home page with id.
+            int projectId = 1; //_db.InsertRecord<ProjectModel>(something);
+            return ProjectHome(projectId);
         }
-                
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteProject(List<Guid> projectIdTreePath)

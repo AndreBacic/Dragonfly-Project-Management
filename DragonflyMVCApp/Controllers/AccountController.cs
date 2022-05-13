@@ -1,14 +1,12 @@
-﻿using DragonflyMVCApp.Models;
-using DragonflyDataLibrary;
-using DragonflyDataLibrary.DataAccess;
+﻿using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
+using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 
 namespace DragonflyMVCApp.Controllers
@@ -21,38 +19,39 @@ namespace DragonflyMVCApp.Controllers
         {
             _db = db;
         }
+
         public IActionResult Login()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginModel user)
         {
+            UserModel dbUser;
             try
             {
-                UserModel dbUser = _db.GetUser(user.EmailAddress);
-
-                PasswordHashModel passwordHash = new();
-                passwordHash.FromDbString(dbUser.PasswordHash);
-
-                (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(user.Password, passwordHash);
-
-                if (IsPasswordCorrect)
-                {
-                    LogInUser(dbUser);
-
-                    return RedirectToAction(nameof(Home));
-                }
-                else
-                {
-                    return View();
-                }
+                dbUser = _db.GetUser(user.EmailAddress);
             }
             catch
             {
                 return View();
             }
+
+            PasswordHashModel passwordHash = new();
+            passwordHash.FromDbString(dbUser.PasswordHash);
+
+            (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(user.Password, passwordHash);
+
+            if (IsPasswordCorrect == false)
+            {
+                return View();
+            }
+
+            LogInUser(dbUser);
+
+            return RedirectToAction(nameof(Home));
         }
 
         [Authorize("Logged_in_user_policy")]
@@ -61,6 +60,7 @@ namespace DragonflyMVCApp.Controllers
             HttpContext.SignOutAsync();
             return RedirectToAction(nameof(Login), "Account"); // todo: Make this an actual page, or just delete the associated view?
         }
+
         public IActionResult Register()
         {
             ViewData["RegisterMessage"] = "";
@@ -77,8 +77,7 @@ namespace DragonflyMVCApp.Controllers
                 return View(newUser);
             }
 
-            List<UserModel> allUsers = _db.GetAllUsers();
-            if (allUsers.Any(x => x.EmailAddress == newUser.EmailAddress))
+            if (_db.GetUser(newUser.EmailAddress) is not null)
             {
                 ViewData["RegisterMessage"] = "That email address is taken";
                 return View();
@@ -94,7 +93,7 @@ namespace DragonflyMVCApp.Controllers
 
             LogInUser(newDbUser);
 
-            return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
+            return Home();
         }
 
         [Authorize("Logged_in_user_policy")]
@@ -104,61 +103,18 @@ namespace DragonflyMVCApp.Controllers
 
             return View(user.DbUserToEditView());
         }
+
         [Authorize("Logged_in_user_policy")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditAccount(EditUserViewModel updatedUser)
         {
-            // 1) Make sure email isn't taken
-            List<UserModel> allUsers = _db.GetAllUsers();
+            //bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
             UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
 
-            if (IsValidEmailAddress(updatedUser.EmailAddress) == false ||
-                allUsers.Any(x => x.EmailAddress == updatedUser.EmailAddress && updatedUser.EmailAddress != loggedInUser.EmailAddress))
-            {
-                ViewData["EditMessage"] = "That email address is taken"; // todo: refactor this viewdata message system
-                return View(loggedInUser.DbUserToEditView());
-            }
+            // TODO: Finish this edit account logic
 
-            if (string.IsNullOrWhiteSpace(updatedUser.NewPassword) == false)
-            {
-                // 2) Make sure old password is correct
-                PasswordHashModel passwordHash = new();
-                passwordHash.FromDbString(loggedInUser.PasswordHash);
-
-                (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(updatedUser.OldPassword, passwordHash);
-
-                if (IsPasswordCorrect)
-                {
-                    loggedInUser.FirstName = updatedUser.FirstName;
-                    loggedInUser.LastName = updatedUser.LastName;
-                    loggedInUser.EmailAddress = updatedUser.EmailAddress;
-                    loggedInUser.PasswordHash = HashAndSalter.HashAndSalt(updatedUser.NewPassword).ToDbString();
-                    _db.UpdateUser(loggedInUser);
-
-                    LogInUser(loggedInUser);
-
-                    loggedInUser.EmailAddress = "";
-                    loggedInUser.PasswordHash = "";
-                    return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
-                }
-                else
-                {
-                    return View(loggedInUser.DbUserToEditView());
-                }
-            }
-            else
-            {
-                // No password change
-                loggedInUser.FirstName = updatedUser.FirstName;
-                loggedInUser.LastName = updatedUser.LastName;
-                loggedInUser.EmailAddress = updatedUser.EmailAddress;
-                _db.UpdateUser(loggedInUser);
-
-                LogInUser(loggedInUser);
-
-                return RedirectToAction(nameof(OrganizationController.OrganizationHome), "Organization");
-            }
+            return View();
         }
 
         /// <summary>
@@ -166,53 +122,19 @@ namespace DragonflyMVCApp.Controllers
         /// to work on, or to search for organizations or other users.
         /// </summary>
         /// <returns></returns>
+        [Authorize("Logged_in_user_policy")]
         public IActionResult Home()
         {
-            // todo: replace manual redirect with better auth policies/schemes?
-            if (User.Identity.IsAuthenticated == false)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
             return View();
         }
 
         public IActionResult MyProjects()
         {
-            LogInUser(this.GetLoggedInUserByEmail(_db),
-                new AssignmentModel()
-                { 
-                    AssigneeAccess = UserPosition.ADMIN,
-                    OrganizationId = Guid.NewGuid(), 
-                    ProjectIdTreePath = new List<Guid>() { new Guid() } 
-                });
+            LogInUser(this.GetLoggedInUserByEmail(_db));
             return View();
         }
 
-        [Authorize("Logged_in_user_policy")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Home(AssignmentModel assignment)
-        {
-            // TODO: Have user select assignment and direct them to either org home or project home
-            UserModel u = this.GetLoggedInUserByEmail(_db);
-            LogInUser(u, assignment);
-            return View();
-        }
         private async void LogInUser(UserModel user)
-        {
-            List<Claim> personClaims = new()
-                {
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Email, user.EmailAddress),
-                    new Claim(nameof(user.Id), user.Id.ToString())
-            };
-
-            await HttpContext.SignInAsync(new ClaimsPrincipal(
-                new ClaimsIdentity(personClaims, "Dragonfly.Auth.Identity")));
-        }
-
-        private async void LogInUser(UserModel user, AssignmentModel assignment)
         {
             List<Claim> personClaims = new()
             {

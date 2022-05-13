@@ -1,10 +1,8 @@
-﻿using DragonflyDataLibrary;
-using DragonflyDataLibrary.DataAccess.MongoDB;
+﻿using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DbSeederAndTester
 {
@@ -16,14 +14,8 @@ namespace DbSeederAndTester
 
             //CreateUserModel(mongodb);
 
-            //CreateOrgWithAFewUsers(mongodb);
-
-            UserModel user = mongodb.GetAllUsers()[5];
+            //UserModel user = mongodb.GetAllUsers()[5];
             //org = CreateProj(mongodb, org);
-            //AssignUserToOrg1stProj(mongodb, user, org);
-
-            Dictionary<Guid, UserModel> o = mongodb.GetAllOrganizationUsers(org.Id);
-
         }
 
         private static void CreateUserModel(MongoDBDataAccessor mongodb)

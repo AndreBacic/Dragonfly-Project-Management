@@ -2,7 +2,8 @@
 
 namespace DragonflyMVCApp.Models
 {
-    public static class ViewModelExtensions { 
+    public static class ViewModelExtensions
+    {
         public static EditUserViewModel DbUserToEditView(this UserModel user)
         {
             return new EditUserViewModel

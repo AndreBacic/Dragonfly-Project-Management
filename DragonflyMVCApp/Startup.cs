@@ -1,4 +1,3 @@
-using DragonflyDataLibrary;
 using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.DataAccess.MongoDB;
 using DragonflyDataLibrary.Models;

@@ -1,5 +1,4 @@
 ﻿using DragonflyDataLibrary.Models;
-using DragonflyDataLibrary.Security;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -7,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DragonflyDataLibrary.DataAccess.MongoDB
+namespace DragonflyDataLibrary.DataAccess
 {
     public class MongoDBDataAccessor : IDataAccessor
     {
@@ -18,6 +17,7 @@ namespace DragonflyDataLibrary.DataAccess.MongoDB
         private const string _userCollection = "Users";
 
         private const string _modelIdName = "Id";
+        private const string _userUniqueEmailName = "EmailAddress";
 
         /// <summary>
         /// Initialize database using the configuration supplied by DependencyInjection.
@@ -40,9 +40,6 @@ namespace DragonflyDataLibrary.DataAccess.MongoDB
             _db = client.GetDatabase(database);
         }
 
-
-        //####################################### BASIC MONGOBD METHODS ##########################################
-
         public void InsertRecord<T>(string table, T record)
         {
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
@@ -52,7 +49,6 @@ namespace DragonflyDataLibrary.DataAccess.MongoDB
         public List<T> LoadRecords<T>(string table)
         {
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
-
             return collection.Find(new BsonDocument()).ToList();
         }
 
@@ -79,6 +75,23 @@ namespace DragonflyDataLibrary.DataAccess.MongoDB
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
             FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
             collection.DeleteOne(filter);
+        }
+
+
+
+        ///////////////////// INTERFACE IMPLEMENTATION /////////////////////
+
+        public void CreateUser(UserModel user)
+        {
+            InsertRecord<UserModel>(_userCollection, user);
+        }
+
+        public UserModel GetUser(string emailAddress)
+        {
+            IMongoCollection<UserModel> collection = _db.GetCollection<UserModel>(_userCollection);
+            FilterDefinition<UserModel> filter = Builders<UserModel>.Filter.Eq(_userUniqueEmailName, emailAddress);
+
+            return collection.Find(filter).First();
         }
     }
 }

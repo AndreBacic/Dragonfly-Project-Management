@@ -1,5 +1,4 @@
-﻿using DragonflyDataLibrary.Models;
-using System;
+﻿using System;
 
 namespace DragonflyMVCApp.Models
 {
@@ -14,12 +13,6 @@ namespace DragonflyMVCApp.Models
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
         public AssignmentModel WorkingAssignment { get; set; }
-        public string Name
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
+        public string Name => FirstName + " " + LastName;
     }
 }

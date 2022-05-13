@@ -22,13 +22,7 @@ namespace DragonflyDataLibrary.Models
         public string EmailAddress { get; set; }
         public string PasswordHash { get; set; }
         [BsonIgnore]
-        public string Name
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
+        public string Name => FirstName + " " + LastName;
         public List<ProjectModel> Projects { get; set; }
     }
 }
