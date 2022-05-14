@@ -1,5 +1,5 @@
-﻿<button class="flex justify-center items-center w-full h-[4.5rem] border-b border-b-trueGray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-trueGray-700
-                           hover:bg-trueGray-200 focus:outline-none"
+﻿<button class="flex justify-center items-center w-full h-[4.5rem] border-b border-b-neutral-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-neutral-700
+                           hover:bg-neutral-200 focus:outline-none"
         id="userMenuButton" onclick="userMenuButtonOnClick()">
     Welcome, @User.ClaimValue(UserClaimsIndex.Name)
     <svg id="userMenuArrow" class="-mr-1 ml-1 h-5 w-5 -rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -9,9 +9,9 @@
 <nav class="relative z-30 left-[-25%] pt-16 pb-2 w-[125%] rounded-bl-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none
                         transition-all duration-150 ease-linear origin-top" id="userMenu" style="display:none">
     <!--//TODO: Actually make the animation happen-->
-    <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Notifications</a>
-    <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="MyProjects" asp-controller="Account">My Projects</a>
-    <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Organizations</a>
-    <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="EditAccount" asp-controller="Account">Edit Account</a>
-    <a class="text-trueGray-700 block px-4 py-2 text-sm" asp-action="Logout" asp-controller="Account">Logout</a>
+    <a class="text-neutral-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">Notifications</a>
+    <a class="text-neutral-700 block px-4 py-2 text-sm" asp-action="MyProjects" asp-controller="Account">My Projects</a>
+    <a class="text-neutral-700 block px-4 py-2 text-sm" asp-action="Home" asp-controller="Account">My Organizations</a>
+    <a class="text-neutral-700 block px-4 py-2 text-sm" asp-action="EditAccount" asp-controller="Account">Edit Account</a>
+    <a class="text-neutral-700 block px-4 py-2 text-sm" asp-action="Logout" asp-controller="Account">Logout</a>
 </nav>

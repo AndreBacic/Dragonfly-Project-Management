@@ -9,22 +9,22 @@
 </head>
 <body class="h-full w-full">
     <header class="fixed-wfull-flexbox top-0">
-        <div class="text-w-3-4ths-grey">
+        <div class="text-w-3-4ths-gray">
             Dragonfly Project Management
         </div>
     </header>
-    <div class="w-full h-full grid justify-center items-center bg-gradient-to-b from-lime-700 to-green-900">
-        <main role="main" class="p-10 rounded-5xl bg-gradient-to-br from-lime-500 to-green-600">
+    <div class="w-full h-full grid justify-center items-center bg-gradient-to-b from-lime-700 to-lime-900">
+        <main role="main" class="p-10 rounded-5xl bg-gradient-to-br from-lime-500 to-lime-600">
             @RenderBody()
         </main>
     </div>
 
     <footer class="fixed-wfull-flexbox bottom-0">
-        <div class="text-w-3-4ths-grey">
+        <div class="text-w-3-4ths-gray">
             &copy; 2021 Dragonfly by Andre Bacic
         </div>
     </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    @*@RenderSection("Scripts", required: false)*@
 </body>
 </html>

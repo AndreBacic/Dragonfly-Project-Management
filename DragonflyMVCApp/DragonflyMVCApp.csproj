@@ -18,6 +18,10 @@
     <ProjectReference Include="..\DragonflyDataLibrary\DragonflyDataLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="node_modules\tailwindcss\dist\*.css" />
+    <None Include="node_modules\@tailwindcss\forms\dist\*.css" />
+  </ItemGroup>
 
   <Target Name="CheckForNpm" BeforeTargets="NpmInstall">
     <Exec Command="npm -v" ContinueOnError="true">
