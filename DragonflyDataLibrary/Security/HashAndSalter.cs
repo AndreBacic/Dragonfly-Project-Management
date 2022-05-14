@@ -7,7 +7,7 @@ namespace DragonflyDataLibrary.Security
 {
     /// <summary>
     /// The iterations, salt, and resulting hash must be stored in the database separated by a period in the form "iterations.salt.passwordHash"
-    /// For example: "10000.Dvsge98yPQCkqSyxgkKZZA==.DMxNfQFQxDgwX3tSIgNijOr7+uFkZqVlmdZJHBMejdM="
+    /// For example: "100000.Dvsge98yPQCkqSyxgkKZZA==.DMxNfQFQxDgwX3tSIgNijOr7+uFkZqVlmdZJHBMejdM="
     /// </summary>
     public static class HashAndSalter
     {
@@ -87,6 +87,6 @@ namespace DragonflyDataLibrary.Security
                 passwordHashModel.IterationsOnHash);
         }
 
-        public static int Iterations { get; set; } = 10000;
+        public static int Iterations { get; set; } = 100000;
     }
 }

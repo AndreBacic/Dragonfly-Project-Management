@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace DragonflyMVCApp.Controllers
 {
+    // TODO: Either finish this controller or figure out a way to use MVC controllers for task CRUD operations.
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
@@ -25,8 +26,10 @@ namespace DragonflyMVCApp.Controllers
 
         // POST api/<TaskApiController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] object value) // object should be TaskViewModel eventually
         {
+            //_db.CreateTask(value);
+            RedirectToAction("Home", "Account");
         }
 
         // PUT api/<TaskApiController>/5
