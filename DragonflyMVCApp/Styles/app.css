@@ -13,7 +13,7 @@
     }
 
     .text-w-3-4ths-gray {
-        @apply w-3/4 h-6 text-left text-neutral-700;
+        @apply w-3/4 h-6 text-left text-neutral-800;
     }
 
     .input-label {

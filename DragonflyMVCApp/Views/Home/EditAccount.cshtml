@@ -1,13 +1,5 @@
 ﻿@model EditUserViewModel
 @{
-    if (User.Claims.Count() > (int)UserClaimsIndex.Role)
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_HomeLayout.cshtml";
-    }
     ViewData["Title"] = "Edit Account";
 }
 
@@ -33,6 +25,7 @@
             <input asp-for="EmailAddress" type="email" class="" contenteditable="true" value="@Model.EmailAddress" />
             <p asp-validation-for="EmailAddress" class=" bg-red-400 text-red-700"></p>
         </div>
+        @* TODO: have separate form for password change *@
         <div class="">
             <p>(Only use the fields below if you want to change your password)</p>
             <label asp-for="OldPassword" class=""></label>
@@ -51,6 +44,6 @@
 </div>
 
 <div>
-    <a asp-controller="Organization" asp-action="OrganizationHome" class="">Back to Home</a>
+    <a asp-controller="Home" asp-action="UserHome" class="">Back to Home</a>
 </div>
 

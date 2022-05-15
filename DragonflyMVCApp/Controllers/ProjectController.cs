@@ -31,7 +31,7 @@ namespace DragonflyMVCApp.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                // todo: get the project id and redirect
+                // TODO: get the project id and redirect
                 return ProjectHome(0);
             }
 
@@ -51,11 +51,11 @@ namespace DragonflyMVCApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateProject(ProjectModel model)
         {
-            if (ModelState.IsValid == false) // todo: use a view model to validate? Bind only desired properties?
+            if (ModelState.IsValid == false) // TODO: use a view model to validate? Bind only desired properties?
             {
-                return View(); // todo: tell user why the input is invalid.
+                return View(); // TODO: tell user why the input is invalid.
             }
-            // todo: add project to database, get generated id and redirect to project home page with id.
+            // TODO: add project to database, get generated id and redirect to project home page with id.
             int projectId = 1; //_db.InsertRecord<ProjectModel>(something);
             return ProjectHome(projectId);
         }

@@ -60,7 +60,7 @@ namespace DragonflyMVCApp.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(Login), "Account"); // todo: Make this an actual page, or just delete the associated view?
+            return RedirectToAction(nameof(Login), "Account"); // TODO: Make this an actual page, or just delete the associated view?
         }
 
         public IActionResult Register()
@@ -149,7 +149,7 @@ namespace DragonflyMVCApp.Controllers
                 new ClaimsIdentity(personClaims, "Dragonfly.Auth.Identity")));
         }
 
-        private static bool IsValidEmailAddress(string emailAddress) // todo: move to an email logic class
+        private static bool IsValidEmailAddress(string emailAddress) // TODO: move to an email logic class
         {
             try
             {

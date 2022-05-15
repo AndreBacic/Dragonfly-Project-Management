@@ -4,7 +4,8 @@
 
     Layout = (controllerName) switch
     {
-        "Account" => "_AccountLayout",
-        _ => "_Layout"
+        "Account" => "_LoggedOutLayout",
+        "Home" => "_UserHomeLayout",
+        _ => "_ProjectHomeLayout" // ProjectController
     };
 }
