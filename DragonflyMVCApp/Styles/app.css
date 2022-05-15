@@ -7,10 +7,11 @@
         width: 100%;
         height: 100%;
     }
+
     .fixed-wfull-flexbox {
-        @apply fixed w-full min-h-[2.5rem] bg-lime-400
-            flex justify-center items-center;
+        @apply fixed w-full min-h-[2.5rem] bg-lime-400 flex justify-center items-center;
     }
+
     .text-w-3-4ths-gray {
         @apply w-3/4 h-6 text-left text-neutral-700;
     }
@@ -18,9 +19,11 @@
     .input-label {
         @apply w-2/5 m-auto inline-block text-xl text-neutral-800;
     }
+
     .input-text {
         @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
     }
+
     .validation-for {
         @apply rounded-sm text-lg bg-red-400 text-red-700;
     }

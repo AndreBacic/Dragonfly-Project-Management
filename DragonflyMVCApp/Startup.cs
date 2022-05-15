@@ -23,9 +23,9 @@ namespace DragonflyMVCApp
         {
             services.AddAuthentication("DragonflyAuth").AddCookie("DragonflyAuth", cookieConfig =>
             {
-                cookieConfig.LoginPath = "/Account/Home";
+                cookieConfig.LoginPath = "/Account/Login";
                 cookieConfig.Cookie.Name = "Dragonfly.UserAuth.cookie"; // TODO: Have an "Our site uses cookies" label for this project and for the Blog.
-                cookieConfig.AccessDeniedPath = "/Account/Home";
+                cookieConfig.AccessDeniedPath = "/Account/Login";
             });
 
             services.AddAuthorization(authConfig =>
@@ -60,7 +60,7 @@ namespace DragonflyMVCApp
             }
             else
             {
-                app.UseExceptionHandler("/Organization/Error");
+                app.UseExceptionHandler("Account/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -76,7 +76,7 @@ namespace DragonflyMVCApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Organization}/{action=OrganizationHome}/{id?}"); // todo: refactor default route (remove the {id?} ?).
+                    pattern: "{controller=Account}/{action=Home}");
                 endpoints.MapRazorPages();
             });
         }

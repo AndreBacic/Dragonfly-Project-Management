@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace DragonflyMVCApp.Controllers
@@ -159,6 +160,16 @@ namespace DragonflyMVCApp.Controllers
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// This just handles the error message page
+        /// </summary>
+        /// <returns>A web page displaying an error message</returns>
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

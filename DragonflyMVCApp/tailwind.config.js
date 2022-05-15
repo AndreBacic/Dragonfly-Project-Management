@@ -17,10 +17,10 @@ module.exports = {
                 '8xl': '4rem',
             },
             colors: {
-                slate: colors.slate,
+                slate: colors.blueGray,
                 gray: colors.gray,
-                neutral: colors.neutral,
-                stone: colors.stone,
+                neutral: colors.trueGray,
+                stone: colors.warmGray,
                 orange: colors.orange,
                 amber: colors.amber,
                 lime: colors.lime,
@@ -30,7 +30,7 @@ module.exports = {
                 sky: colors.sky,
                 violet: colors.violet,
                 fuchsia: colors.fuchsia,
-                rose: colors.fuchsia
+                rose: colors.rose
             }
         },
     },
