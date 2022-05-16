@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DragonflyDataLibrary.DataAccess;
+using DragonflyDataLibrary.Models;
+using DragonflyMVCApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,32 +10,33 @@ namespace DragonflyMVCApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IDataAccessor _db;
+
+        public HomeController(IDataAccessor db)
+        {
+            _db = db;
+        }
+
         // GET: HomeController
-        public ActionResult Index()
+        public ActionResult Home()
         {
             return View();
         }
 
-        // GET: HomeController/Details/5
-        public ActionResult Details(int id)
+        // GET: HomeController/CreateProject
+        public ActionResult CreateProject()
         {
             return View();
         }
 
-        // GET: HomeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: HomeController/Create
+        // POST: HomeController/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult CreateProject(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Home));
             }
             catch
             {
@@ -40,46 +44,34 @@ namespace DragonflyMVCApp.Controllers
             }
         }
 
-        // GET: HomeController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: HomeController/Deadlines/
+        public ActionResult Deadlines()
         {
             return View();
         }
 
-        // POST: HomeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Analytics()
         {
             return View();
         }
 
-        // POST: HomeController/Delete/5
+        public IActionResult EditAccount()
+        {
+            UserModel user = this.GetLoggedInUserByEmail(_db);
+
+            return View(user.DbUserToEditView());
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult EditAccount(EditUserViewModel updatedUser)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            //bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
+            UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
+
+            // TODO: Finish this edit account logic
+
+            return View();
         }
     }
 }

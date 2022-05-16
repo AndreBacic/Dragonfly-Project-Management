@@ -1,7 +1,7 @@
-﻿@{
+﻿@using DragonflyDataLibrary
+@{
     ViewData["Title"] = $"Welcome, {User.ClaimValue(UserClaimsIndex.Name)}";
 }
-@using DragonflyDataLibrary
 <h1>User Profile Home</h1>
 <ul>
     <li>Name: @User.ClaimValue(UserClaimsIndex.Name)</li>

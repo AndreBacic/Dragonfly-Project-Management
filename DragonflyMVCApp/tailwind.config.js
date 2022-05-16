@@ -19,6 +19,7 @@ module.exports = {
             colors: {
                 slate: colors.blueGray,
                 gray: colors.gray,
+                zinc: colors.zinc,
                 neutral: colors.trueGray,
                 stone: colors.warmGray,
                 orange: colors.orange,
@@ -28,9 +29,11 @@ module.exports = {
                 teal: colors.teal,
                 cyan: colors.cyan,
                 sky: colors.sky,
+                indigo: colors.indigo,
                 violet: colors.violet,
                 fuchsia: colors.fuchsia,
-                rose: colors.rose
+                pink: colors.pink,
+                rose: colors.rose,
             }
         },
     },

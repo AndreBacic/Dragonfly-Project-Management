@@ -18,7 +18,7 @@ namespace DragonflyMVCApp.Controllers
             _db = db;
         }
         // GET: Project/ProjectHome page, with edit boxes and subproject links
-        public IActionResult ProjectHome(int projectId)
+        public IActionResult Backlog(int projectId)
         {
             ProjectViewModel projV = new();
             return View(projV);
@@ -32,43 +32,30 @@ namespace DragonflyMVCApp.Controllers
             if (ModelState.IsValid == false)
             {
                 // TODO: get the project id and redirect
-                return ProjectHome(0);
+                return Backlog(0);
             }
 
             // TODO: Add update logic here
 
-            return ProjectHome(0);
+            return Backlog(0);
         }
 
         // GET: Project/CreateProject
-        public IActionResult CreateProject()
+        [HttpGet]
+        public IActionResult DeleteProject()
         {
             return View();
         }
 
-        // POST: Project/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProject(ProjectModel model)
-        {
-            if (ModelState.IsValid == false) // TODO: use a view model to validate? Bind only desired properties?
-            {
-                return View(); // TODO: tell user why the input is invalid.
-            }
-            // TODO: add project to database, get generated id and redirect to project home page with id.
-            int projectId = 1; //_db.InsertRecord<ProjectModel>(something);
-            return ProjectHome(projectId);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteProject(List<Guid> projectIdTreePath)
+        public IActionResult DeleteProject(int id)
         {
             try
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(ProjectHome));
+                return RedirectToAction(nameof(Backlog));
             }
             catch
             {

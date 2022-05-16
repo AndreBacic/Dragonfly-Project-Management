@@ -96,28 +96,7 @@ namespace DragonflyMVCApp.Controllers
             LogInUser(newDbUser);
 
             return Home();
-        }
-
-        [Authorize]
-        public IActionResult EditAccount()
-        {
-            UserModel user = this.GetLoggedInUserByEmail(_db);
-
-            return View(user.DbUserToEditView());
-        }
-
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult EditAccount(EditUserViewModel updatedUser)
-        {
-            //bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
-            UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
-
-            // TODO: Finish this edit account logic
-
-            return View();
-        }
+        }        
 
         /// <summary>
         /// The Home page for the user, and where the user may select an assignment 

@@ -13,11 +13,11 @@
     }
 
     .text-w-3-4ths-gray {
-        @apply w-3/4 h-6 text-left text-neutral-800;
+        @apply w-3/4 h-6 text-left text-black;
     }
 
     .input-label {
-        @apply w-2/5 m-auto inline-block text-xl text-neutral-800;
+        @apply w-2/5 m-auto inline-block text-xl text-black;
     }
 
     .input-text {

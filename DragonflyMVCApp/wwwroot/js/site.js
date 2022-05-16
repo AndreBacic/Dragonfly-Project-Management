@@ -5,8 +5,7 @@ function updateFooterDate() {
     footerDate.innerHTML = `&copy; ${currentYear} by Andre Bačić`;
 }
 
-
-function translucentCoverOnClick(t) { // TODO: Move this unused code to the graveyard
+function translucentCoverOnClick(t) {
     t.style.display = "none"
     for (m of menus) {
         m.style.display = "none"
