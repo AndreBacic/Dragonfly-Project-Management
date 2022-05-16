@@ -1,4 +1,9 @@
-﻿@*
+﻿@{
+    Layout = (User.Identity.IsAuthenticated) ? "~/Views/Shared/_Layout.cshtml" : "~/Views/Shared/_AccountLayout.cshtml";
+
+    ViewData["Title"] = "Privacy Policy";
+}
+@*
     // TODO: Write a privacy policy for this application.
 *@
 <h1>Privacy Policy</h1>

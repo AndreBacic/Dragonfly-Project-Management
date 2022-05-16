@@ -8,19 +8,19 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="h-full w-full">
-    <header class="fixed-wfull-flexbox top-0">
-        <div class="text-w-3-4ths-gray">
+    <header class="fixed w-full min-h-[2.5rem] bg-lime-800 grid place-items-center top-0 z-20">
+        <div class="w-3/4 h-6 text-left text-black">
             Dragonfly Project Management
         </div>
     </header>
-    <div class="w-full h-full grid justify-center items-center bg-gradient-to-b from-lime-700 to-lime-900">
-        <main role="main" class="p-10 rounded-5xl bg-gradient-to-br from-lime-500 to-lime-600">
-            @RenderBody()
-        </main>
-    </div>
+    
+    <canvas id="canvas" class="w-full h-full fixed z-0 bg-black"></canvas>
+    <main role="main" class="w-full min-h-full bg-transparent relative z-10 text-white">
+        @RenderBody()
+    </main>
 
-    <footer class="fixed-wfull-flexbox bottom-0">
-        <div id="footer-date" class="text-w-3-4ths-gray">
+    <footer class="fixed w-full min-h-[2.5rem] z-20 bg-lime-800 grid place-items-center bottom-0">
+        <div id="footer-date" class="w-3/4 h-6 text-left text-black">
             &copy; 2022 by Andre Bačić
         </div>
     </footer>

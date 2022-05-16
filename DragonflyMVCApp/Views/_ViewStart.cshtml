@@ -4,13 +4,13 @@
 
     Layout = (controllerName) switch
     {
-        "Account" => "_LoggedOutLayout",
-        "Project" => "_ProjectHomeLayout",
-        _ => "_UserHomeLayout" // HomeController or shared views.
+        "Account" => "_AccountLayout",
+        "Project" => "_ProjectLayout",
+        _ => "_HomeLayout" // HomeController or shared views.
     };
 }
 @*
-    _LoggedOutLayout = (3D bg) => Landing page, register, login
-    _UserHomeLayout = (menu + 3D bg) => AllProjects, Deadlines, EditAccount,etc
-    _ProjectHomeLayout = (menu + 1 color 2d bg) => Backlog, board, create task, delete task, etc
+    _AccountLayout = (3D bg) => Landing page, register, login
+    _HomeLayout = (menu + 3D bg) => AllProjects, Deadlines, EditAccount,etc
+    _ProjectLayout = (menu + 1 color 2d bg) => Backlog, board, create task, delete task, etc
 *@

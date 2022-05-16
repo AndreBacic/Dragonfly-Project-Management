@@ -83,7 +83,7 @@ namespace DragonflyDataLibrary.DataAccess
 
         public void CreateUser(UserModel user)
         {
-            InsertRecord<UserModel>(_userCollection, user);
+            InsertRecord(_userCollection, user);
         }
 
         public UserModel GetUser(string emailAddress)

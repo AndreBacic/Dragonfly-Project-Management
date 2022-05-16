@@ -35,6 +35,10 @@ namespace DragonflyMVCApp.Controllers
             try
             {
                 dbUser = _db.GetUser(user.EmailAddress);
+                if (dbUser is null)
+                {
+                    return View(); // TODO: Add bad login message to all of these 'return View();'s
+                }
             }
             catch
             {
@@ -53,14 +57,14 @@ namespace DragonflyMVCApp.Controllers
 
             LogInUser(dbUser);
 
-            return RedirectToAction(nameof(Home));
+            return RedirectToAction(nameof(HomeController.Home), "Home");
         }
 
         [Authorize]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(Login), "Account"); // TODO: Make this an actual page, or just delete the associated view?
+            return RedirectToAction(nameof(Login));
         }
 
         public IActionResult Register()
@@ -95,33 +99,24 @@ namespace DragonflyMVCApp.Controllers
 
             LogInUser(newDbUser);
 
-            return Home();
-        }        
-
-        /// <summary>
-        /// The Home page for the user, and where the user may select an assignment 
-        /// to work on, or to search for organizations or other users.
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        public IActionResult Home()
-        {
-            return View();
+            return RedirectToAction(nameof(HomeController.Home), "Home");
         }
 
-        public IActionResult MyProjects()
+        //redirect action that first logs user in as demo user
+        public IActionResult DemoLogin()
         {
-            LogInUser(this.GetLoggedInUserByEmail(_db));
-            return View();
+            UserModel demoUser = new();// = exampleUserSingleton ?
+            LogInUser(demoUser, UserRoles.DEMO_USER);
+            return RedirectToAction(nameof(HomeController.Home), "Home");
         }
 
-        private async void LogInUser(UserModel user)
+        private async void LogInUser(UserModel user, string role = UserRoles.USER)
         {
             List<Claim> personClaims = new()
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(ClaimTypes.Role, UserRoles.USER) // demo user has "Demo user" role
+                new Claim(ClaimTypes.Role, role) // demo user has "Demo user" role
             };
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(

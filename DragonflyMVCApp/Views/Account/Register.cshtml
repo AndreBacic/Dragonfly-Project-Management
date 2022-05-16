@@ -3,42 +3,44 @@
 @{
     ViewData["Title"] = "Register";
 }
-
-<h1 class="text-center font-sans font-bold text-xl text-neutral-600 p-1 mb-0.5">Register</h1>
-@{string message = ViewData["RegisterMessage"].ToString();}
-@if (String.IsNullOrWhiteSpace(message) == false)
-{
-    <h3 class="text-center font-bold text-lg text-red-700 p-1.5 bg-red-400">@ViewData["RegisterMessage"]</h3>
-}
-<hr class="border-black border-2"/>
-<form asp-action="Register" asp-controller="Account" method="post" class="flex flex-col gap-1 items-center justify-evenly">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div class="w-full">
-        <label asp-for="FirstName" class="input-label"></label>
-        <input asp-for="FirstName" class="input-text" contenteditable="true" />
-        <p asp-validation-for="FirstName" class="validation-for"></p>
+<div class="w-full min-h-[100vh] grid place-items-center">
+    <div class="rounded-lg bg-neutral-700 p-2">
+        <h1 class="text-center font-sans font-bold text-xl text-white p-1 mb-0.5">Register</h1>
+        @{string message = ViewData["RegisterMessage"].ToString();}
+        @if (String.IsNullOrWhiteSpace(message) == false)
+        {
+            <h3 class="text-center font-bold text-lg text-red-700 p-1.5 bg-red-400">@ViewData["RegisterMessage"]</h3>
+        }
+        <hr class="border-black border-2"/>
+        <form asp-action="Register" asp-controller="Account" method="post" class="flex flex-col gap-1 items-center justify-evenly">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="w-full">
+                <label asp-for="FirstName" class="input-label"></label>
+                <input asp-for="FirstName" class="input-text" contenteditable="true" />
+                <p asp-validation-for="FirstName" class="validation-for"></p>
+            </div>
+            <div class="w-full">
+                <label asp-for="LastName" class="input-label">            
+                </label><input asp-for="LastName" class="input-text" contenteditable="true" />
+                <p asp-validation-for="LastName" class="validation-for"></p>
+            </div>
+            <div class="w-full">
+                <label asp-for="EmailAddress" class="input-label"></label>
+                <input asp-for="EmailAddress" type="email" class="input-text" contenteditable="true" />
+                <p asp-validation-for="EmailAddress" class="validation-for"></p>
+            </div>
+            <div class="w-full">
+                <label asp-for="Password" class="input-label"></label>
+                <input asp-for="Password" type="password" class="input-text" contenteditable="true" />
+                <p asp-validation-for="Password" class="validation-for"></p>
+            </div>
+            <input type="submit" value="Create" class="w-1/2 h-8 my-auto text-center cursor-pointer rounded-sm bg-lime-500 text-black" />
+        </form>
+        <div class="w-full mt-2">
+            <p class="w-1/2 m-0 inline-block">Already registered?
+            </p><a asp-controller="Account" asp-action="Login" 
+            class="w-1/2 h-8 text-center inline-grid place-items-center
+                    cursor-pointer rounded-sm bg-lime-500 text-black">Log in</a>
+        </div>
     </div>
-    <div class="w-full">
-        <label asp-for="LastName" class="input-label">            
-        </label><input asp-for="LastName" class="input-text" contenteditable="true" />
-        <p asp-validation-for="LastName" class="validation-for"></p>
-    </div>
-    <div class="w-full">
-        <label asp-for="EmailAddress" class="input-label"></label>
-        <input asp-for="EmailAddress" type="email" class="input-text" contenteditable="true" />
-        <p asp-validation-for="EmailAddress" class="validation-for"></p>
-    </div>
-    <div class="w-full">
-        <label asp-for="Password" class="input-label"></label>
-        <input asp-for="Password" type="password" class="input-text" contenteditable="true" />
-        <p asp-validation-for="Password" class="validation-for"></p>
-    </div>
-    <input type="submit" value="Create" class="w-1/2 h-8 my-auto text-center cursor-pointer rounded-sm bg-lime-800 text-neutral-200" />
-</form>
-<div class="w-full mt-2">
-    <p class="w-1/2 m-0 inline-block">Already registered?
-    </p><a asp-area="" asp-controller="Account" asp-action="Login" 
-       class="w-1/2 h-8 text-center inline-grid place-items-center
-            cursor-pointer rounded-sm bg-lime-300 text-black">Log in</a>
 </div>
-
