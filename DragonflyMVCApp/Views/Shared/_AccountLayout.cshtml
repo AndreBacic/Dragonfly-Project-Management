@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,24 +8,26 @@
     <link rel="stylesheet" href="~/css/post_tailwind.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body class="h-full w-full">
-    <header class="fixed w-full min-h-[2.5rem] bg-lime-800 grid place-items-center top-0 z-20">
-        <div class="w-3/4 h-6 text-left text-black">
+    <header class="fixed w-full min-h-[2.5rem] bg-neutral-700 grid place-items-center top-0 z-20">
+        <div class="w-3/4 h-6 text-left text-lime-200">
             Dragonfly Project Management
         </div>
     </header>
-    
+
     <canvas id="canvas" class="w-full h-full fixed z-0 bg-black"></canvas>
     <main role="main" class="w-full min-h-full bg-transparent relative z-10 text-white">
         @RenderBody()
     </main>
 
-    <footer class="fixed w-full min-h-[2.5rem] z-20 bg-lime-800 grid place-items-center bottom-0">
-        <div id="footer-date" class="w-3/4 h-6 text-left text-black">
+    <footer class="fixed w-full min-h-[2.5rem] z-20 bg-neutral-700 grid place-items-center bottom-0">
+        <div id="footer-date" class="w-3/4 h-6 text-left text-lime-200">
             &copy; 2022 by Andre Bačić
         </div>
     </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @*@RenderSection("Scripts", required: false)*@
 </body>
+
 </html>

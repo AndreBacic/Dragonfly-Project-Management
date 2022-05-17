@@ -13,10 +13,10 @@
     }
 
     .input-text {
-        @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 focus:border-4 focus:p-0.5;
+        @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 bg-neutral-800 focus:border-4 focus:p-0.5;
     }
 
     .validation-for {
-        @apply rounded-sm text-lg bg-red-400 text-red-700;
+        @apply text-lg bg-red-300 text-red-700;
     }
 }

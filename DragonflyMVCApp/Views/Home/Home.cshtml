@@ -1,12 +1,8 @@
-﻿@{
+﻿@using DragonflyDataLibrary
+@using DragonflyMVCApp.Controllers
+@{
     ViewData["Title"] = $"Welcome, {User.ClaimValue(UserClaimsIndex.Name)}";
 }
-<h1>User Profile Home</h1>
-<ul>
-    <li>Name: @User.ClaimValue(UserClaimsIndex.Name)</li>
-    <li>Email: @User.ClaimValue(UserClaimsIndex.Email)</li>
-    @if (User.Claims.Count() > 3)
-        {
-            <li>Role: @User.ClaimValue(UserClaimsIndex.Role)</li>
-        }
-</ul>
+<div class="w-full min-h-full bg-transparent flex flex-col justify-center items-center">
+    <div class="w-5/6"></div>
+</div>

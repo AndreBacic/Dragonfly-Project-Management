@@ -694,6 +694,8 @@ html {
   border-width: 2px;
   --tw-border-opacity: 1;
   border-color: rgba(63, 98, 18, var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(38, 38, 38, var(--tw-bg-opacity));
   padding: 0.25rem;
 }
 
@@ -703,9 +705,8 @@ html {
 }
 
 .validation-for {
-  border-radius: 0.125rem;
   --tw-bg-opacity: 1;
-  background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+  background-color: rgba(252, 165, 165, var(--tw-bg-opacity));
   font-size: 1.125rem;
   line-height: 1.75rem;
   --tw-text-opacity: 1;
@@ -857,12 +858,12 @@ html {
   min-height: 100vh;
 }
 
-.min-h-\[2\.5rem\] {
-  min-height: 2.5rem;
-}
-
 .min-h-full {
   min-height: 100%;
+}
+
+.min-h-\[2\.5rem\] {
+  min-height: 2.5rem;
 }
 
 .min-h-\[6rem\] {
@@ -881,12 +882,12 @@ html {
   width: 50%;
 }
 
-.w-3\/4 {
-  width: 75%;
-}
-
 .w-5\/6 {
   width: 83.333333%;
+}
+
+.w-3\/4 {
+  width: 75%;
 }
 
 .w-5 {
@@ -1003,9 +1004,8 @@ html {
   background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
 }
 
-.bg-lime-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(63, 98, 18, var(--tw-bg-opacity));
+.bg-transparent {
+  background-color: transparent;
 }
 
 .bg-black {
@@ -1013,8 +1013,9 @@ html {
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
 
-.bg-transparent {
-  background-color: transparent;
+.bg-lime-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(63, 98, 18, var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -1109,6 +1110,11 @@ html {
 .text-red-700 {
   --tw-text-opacity: 1;
   color: rgba(185, 28, 28, var(--tw-text-opacity));
+}
+
+.text-lime-200 {
+  --tw-text-opacity: 1;
+  color: rgba(217, 249, 157, var(--tw-text-opacity));
 }
 
 .shadow {

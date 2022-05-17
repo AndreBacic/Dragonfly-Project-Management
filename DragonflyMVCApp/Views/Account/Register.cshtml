@@ -9,7 +9,7 @@
         @{string message = ViewData["RegisterMessage"].ToString();}
         @if (String.IsNullOrWhiteSpace(message) == false)
         {
-            <h3 class="text-center font-bold text-lg text-red-700 p-1.5 bg-red-400">@ViewData["RegisterMessage"]</h3>
+            <h3 class="validation-for text-center font-bold p-1.5">@ViewData["RegisterMessage"]</h3>
         }
         <hr class="border-black border-2"/>
         <form asp-action="Register" asp-controller="Account" method="post" class="flex flex-col gap-1 items-center justify-evenly">

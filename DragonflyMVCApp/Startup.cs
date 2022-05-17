@@ -18,7 +18,6 @@ namespace DragonflyMVCApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication("DragonflyAuth").AddCookie("DragonflyAuth", cookieConfig =>
@@ -47,11 +46,9 @@ namespace DragonflyMVCApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            // Adds globally used usermodel for user info and organization model for organization data.
-            services.AddSingleton<IDataAccessor, MongoDBDataAccessor>(); // Just change the implementation to a different DataAccessor as needed.
+            services.AddSingleton<IDataAccessor, MongoDBDataAccessor>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
