@@ -2,19 +2,22 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class="w-full min-h-[100vh] grid place-items-center">
+<div class="min-h-[100vh] w-full grid place-items-center">
     <div class="rounded-lg bg-neutral-700 p-2">
-        <h1 class="text-center font-sans font-bold text-xl p-1">Login</h1>
-        <form asp-action="Login" asp-controller="Account" method="post" class="flex flex-col gap-1 items-center justify-evenly">
-            <input type="email" asp-for="EmailAddress" placeholder="Email Address" class="input-text" contenteditable="true" />
-            <input type="password" asp-for="Password" placeholder="Password" class="input-text" contenteditable="true" />
-            <input type="submit" value="Log in" class="w-3/5 h-8 text-center cursor-pointer rounded-sm bg-lime-500 text-black" />
+        <h1 class="p-1 text-center font-sans font-bold text-xl">Login</h1>
+        <form asp-action="Login" asp-controller="Account" method="post"
+            class="flex flex-col gap-1 items-center justify-evenly">
+            <input type="email" asp-for="EmailAddress" placeholder="Email Address" class="input-text"
+                contenteditable="true" />
+            <input type="password" asp-for="Password" placeholder="Password" class="input-text"
+                contenteditable="true" />
+            <input type="submit" value="Log in"
+                class="h-8 w-3/5 cursor-pointer rounded-sm bg-lime-500 text-center text-black" />
         </form>
-        <div class="text-left w-full mt-2">
+        <div class="mt-2 w-full text-left">
             <p class="w-1/2 inline-block">No account?
-            </p><a asp-controller="Account" asp-action="Register"
-            class="w-1/2 h-8 text-center grid place-items-center
-                    cursor-pointer rounded-sm bg-lime-500 text-black">Sign Up</a>
+            </p><a asp-controller="Account" asp-action="Register" class="h-8 w-1/2 grid place-items-center
+                    cursor-pointer rounded-sm bg-lime-500 text-center text-black">Sign Up</a>
         </div>
     </div>
 </div>

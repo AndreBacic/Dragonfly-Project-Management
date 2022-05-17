@@ -10,19 +10,19 @@
 </head>
 
 <body class="h-full w-full">
-    <header class="fixed w-full min-h-[2.5rem] bg-neutral-700 grid place-items-center top-0 z-20">
-        <div class="w-3/4 h-6 text-left text-lime-200">
+    <header class="fixed top-0 z-20 min-h-[2.5rem] w-full bg-neutral-700 grid place-items-center">
+        <div class="h-6 w-3/4 text-left text-lime-200">
             Dragonfly Project Management
         </div>
     </header>
 
-    <canvas id="canvas" class="w-full h-full fixed z-0 bg-black"></canvas>
-    <main role="main" class="w-full min-h-full bg-transparent relative z-10 text-white">
+    <canvas id="canvas" class="fixed z-0 h-full w-full bg-black"></canvas>
+    <main role="main" class="relative z-10 min-h-full w-full bg-transparent text-white">
         @RenderBody()
     </main>
 
-    <footer class="fixed w-full min-h-[2.5rem] z-20 bg-neutral-700 grid place-items-center bottom-0">
-        <div id="footer-date" class="w-3/4 h-6 text-left text-lime-200">
+    <footer class="fixed bottom-0 z-20 min-h-[2.5rem] w-full grid place-items-center bg-neutral-700">
+        <div id="footer-date" class="h-6 w-3/4 text-left text-lime-200">
             &copy; 2022 by Andre Bačić
         </div>
     </footer>
