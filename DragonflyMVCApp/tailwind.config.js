@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors")
 
 module.exports = {
     mode: 'jit',
-    purge: [
+    content: [
         './**/*.{html,cshtml,razor}',
         './**/**/*.{html,cshtml,razor}',
     ],
@@ -17,11 +17,11 @@ module.exports = {
                 '8xl': '4rem',
             },
             colors: {
-                slate: colors.blueGray,
+                slate: colors.slate,
                 gray: colors.gray,
                 zinc: colors.zinc,
-                neutral: colors.trueGray,
-                stone: colors.warmGray,
+                neutral: colors.neutral,
+                stone: colors.stone,
                 orange: colors.orange,
                 amber: colors.amber,
                 lime: colors.lime,
