@@ -72,6 +72,9 @@ namespace DragonflyMVCApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
+                    pattern: "{controller=Account}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "authenticated",                    
                     pattern: "{controller=Home}/{action=Home}");
                 endpoints.MapRazorPages();
             });

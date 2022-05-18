@@ -25,6 +25,10 @@ namespace DragonflyMVCApp.Controllers
         // Landing page
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Home", "Home");
+            }
             return View();
         }
 
@@ -70,7 +74,7 @@ namespace DragonflyMVCApp.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Register()
@@ -113,9 +117,14 @@ namespace DragonflyMVCApp.Controllers
         //redirect action that first logs user in as demo user
         public IActionResult DemoLogin()
         {
-            UserModel demoUser = new();// = exampleUserSingleton ?
+            UserModel demoUser = UserRoles.DemoUserModel;
             this.LogInUser(demoUser, UserRoles.DEMO_USER);
             return RedirectToAction(nameof(HomeController.Home), "Home");
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
 
         /// <summary>
