@@ -13,7 +13,7 @@
                 + New</a>
         </h2>
         <form asp-action="Home" asp-controller="Home" method="post"
-            class="w-full grid grid-cols-[auto,2rem] border-b border-lime-500 pt-2">
+            class="w-full grid grid-cols-[auto,2rem] border-b border-lime-500">
             <input class="w-full bg-neutral-700 p-2 text-md" type="text" name="search"
                 placeholder="Search for project" />
             <button class="w-8 px-0.5 text-lg hover:bg-lime-300/75" type="submit">
@@ -25,7 +25,8 @@
         <div class="mt-8 w-4/6 max-w-3xl rounded-2xl bg-neutral-700 p-2">
             <h2 class="w-full border-b border-lime-700 py-1 text-xl text-center">
                 You don't have any projects yet.</h2>
-            <p class="text-center"><a asp-controller="Home" asp-action="CreateProject" class="text-lime-500 underline">
+            <p class="text-center"><a asp-controller="Home" asp-action="CreateProject"
+                class="text-lime-500 underline hover:text-lime-400">
                     Create a new project</a> to get started.</p>
         </div>
     }

@@ -27,7 +27,13 @@
         Bug
     }
 
-    public enum UserClaimsIndex
+    public enum ColorPrefference
+    {
+        Light,
+        Dark
+    }
+
+    public enum UserClaimsIndex // for the data in cookies
     {
         Name,
         Email,

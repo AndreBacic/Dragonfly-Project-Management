@@ -17,6 +17,6 @@
     }
 
     .validation-for {
-        @apply block bg-red-300 text-lg text-red-700;
+        @apply block text-lg text-red-500;
     }
 }

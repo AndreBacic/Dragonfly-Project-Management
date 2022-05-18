@@ -99,7 +99,9 @@ namespace DragonflyMVCApp.Controllers
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
                 EmailAddress = newUser.EmailAddress,
-                PasswordHash = HashAndSalter.HashAndSalt(newUser.Password).ToDbString()
+                PasswordHash = HashAndSalter.HashAndSalt(newUser.Password).ToDbString(),
+                // dark mode is default because it causes less eye strain
+                ColorPrefference = ColorPrefference.Dark 
             };
             _db.CreateUser(newDbUser);
 

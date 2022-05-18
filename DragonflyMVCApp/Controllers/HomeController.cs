@@ -1,11 +1,14 @@
 ﻿using DragonflyDataLibrary;
 using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
+using DragonflyDataLibrary.Security;
 using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+
+#nullable enable
 
 namespace DragonflyMVCApp.Controllers
 {
@@ -32,7 +35,7 @@ namespace DragonflyMVCApp.Controllers
         {
             var user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
             if (search is null) return View(user);
-            
+
             search = search.ToLower();
             user.Projects = user.Projects
                 .Where(p => p.Title.ToLower().Contains(search) ||
@@ -89,6 +92,33 @@ namespace DragonflyMVCApp.Controllers
             // TODO: Finish this edit account logic
 
             return View();
+        }
+
+        // Change password
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangePassword(ChangePasswordViewModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                // TODO: Show error messages
+                ViewData["ChangePasswordError"] = "Invalid inputs";
+                return EditAccount();
+            }
+            UserModel dbUser = this.GetLoggedInUserByEmail(_db);
+            PasswordHashModel passwordHash = new();
+            passwordHash.FromDbString(dbUser.PasswordHash);
+
+            (bool IsPasswordCorrect, _) = HashAndSalter.PasswordEqualsHash(data.OldPassword, passwordHash);
+            if (IsPasswordCorrect == false)
+            {
+                ModelState.AddModelError("OldPassword", "Old password is incorrect");
+            }
+            
+            dbUser.PasswordHash = HashAndSalter.HashAndSalt(data.NewPassword).ToDbString();
+            _db.UpdateUser(dbUser);
+
+            return EditAccount();
         }
     }
 }
