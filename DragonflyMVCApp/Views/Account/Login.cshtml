@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class="min-h-[100vh] w-full grid place-items-center">
+<div class="min-h-[calc(100vh-5rem)] w-full flex justify-center items-center">
     <div class="rounded-lg bg-neutral-700 p-2">
-        <h1 class="p-1 text-center font-sans font-bold text-xl">Login</h1>
+        <h1 class="mb-1 border-b-2 border-lime-500 p-1 text-center font-sans font-bold text-xl">Login</h1>
         <form asp-action="Login" asp-controller="Account" method="post"
             class="flex flex-col gap-1 items-center justify-evenly">
             <input type="email" asp-for="EmailAddress" placeholder="Email Address" class="input-text"
@@ -12,12 +12,12 @@
             <input type="password" asp-for="Password" placeholder="Password" class="input-text"
                 contenteditable="true" />
             <input type="submit" value="Log in"
-                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg font-semibold" />
+                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg" />
         </form>
-        <div class="mt-2 w-full grid grid-cols-2">
+        <div class="mt-4 w-full grid grid-cols-2">
             <p class="block my-auto w-full">No Account?</p>
             <a asp-controller="Account" asp-action="Register" class="w-full grid place-items-center
-                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black">Sign Up</a>
+                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg">Sign Up</a>
         </div>
     </div>
 </div>

@@ -24,6 +24,17 @@ namespace DragonflyMVCApp.Controllers
             var user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
             return View(user);
         }
+        // POST: HomeController search for project by title or description
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Home(string search)
+        {
+            search = search.ToLower();
+            var user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
+            user.Projects.RemoveAll(p => !p.Title.ToLower().Contains(search) &&
+                                         !p.Description.ToLower().Contains(search));
+            return View(user);
+        }
 
         // GET: HomeController/CreateProject
         public IActionResult CreateProject()

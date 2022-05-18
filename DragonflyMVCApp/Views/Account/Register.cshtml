@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Register";
 }
-<div class="min-h-[100vh] w-full grid place-items-center">
+<div class="min-h-[calc(100vh-5rem)] w-full flex flex-1 justify-center items-center">
     <div class="rounded-lg bg-neutral-700 p-2">
-        <h1 class="mb-0.5 p-1 text-center font-sans font-bold text-xl text-white">Register</h1>
+        <h1 class="mb-1 p-1 text-center font-sans font-bold text-xl text-white">Register</h1>
         @{
             string message = ViewData["RegisterMessage"].ToString();
         }
@@ -13,7 +13,7 @@
         {
             <h3 class="validation-for p-1.5 text-center font-bold">@ViewData["RegisterMessage"]</h3>
         }
-        <hr class="border-black border-2" />
+        <hr class="border-lime-500 border-2" />
         <form asp-action="Register" asp-controller="Account" method="post"
             class="flex flex-col gap-1 items-center justify-evenly">
             <div asp-validation-summary="ModelOnly"></div>
@@ -43,12 +43,12 @@
                 <span asp-validation-for="ConfirmPassword" class="validation-for"></span>
             </div>
             <input type="submit" value="Create"
-                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg font-semibold" />
+                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg" />
         </form>
-        <div class="mt-2 w-full grid grid-cols-2">
+        <div class="mt-4 w-full grid grid-cols-2">
             <p class="block my-auto w-full">Already registered?</p>
             <a asp-controller="Account" asp-action="Login" class="w-full grid place-items-center
-                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black">Log in</a>
+                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg">Log in</a>
         </div>
     </div>
 </div>

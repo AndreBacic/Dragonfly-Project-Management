@@ -23,15 +23,11 @@
     <partial name="_translucentCover" />
 
     <canvas id="canvas" class="fixed z-0 h-full w-full bg-black"></canvas>
-    <main role="main" class="relative z-10 min-h-full w-full flex flex-grow bg-transparent pt-32 text-white">
+    <main role="main" class="relative z-10 min-h-[calc(100vh-2.5rem)] w-full bg-transparent pt-32 text-white">
         @RenderBody()
-
-        <footer class="h-8 w-full bg-neutral-700 grid place-items-center">
-            <div id="footer-date" class="h-6 w-5/6 max-w-3xl text-left text-lime-200">
-                &copy; 2022 by Andre Bačić
-            </div>
-        </footer>
     </main>
+
+    <partial name="_footer" />
 
     <script>
         let userMenuIsOpen = false
