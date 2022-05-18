@@ -1,4 +1,5 @@
-﻿using DragonflyDataLibrary.DataAccess;
+﻿using DragonflyDataLibrary;
+using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +19,14 @@ namespace DragonflyMVCApp.Controllers
         }
 
         // GET: HomeController
-        public ActionResult Home()
+        public IActionResult Home()
         {
-            return View();
+            var user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
+            return View(user);
         }
 
         // GET: HomeController/CreateProject
-        public ActionResult CreateProject()
+        public IActionResult CreateProject()
         {
             return View();
         }
@@ -32,7 +34,7 @@ namespace DragonflyMVCApp.Controllers
         // POST: HomeController/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateProject(IFormCollection collection)
+        public IActionResult CreateProject(IFormCollection collection)
         {
             try
             {
@@ -45,12 +47,12 @@ namespace DragonflyMVCApp.Controllers
         }
 
         // GET: HomeController/Deadlines/
-        public ActionResult Deadlines()
+        public IActionResult Deadlines()
         {
             return View();
         }
 
-        public ActionResult Analytics()
+        public IActionResult Analytics()
         {
             return View();
         }

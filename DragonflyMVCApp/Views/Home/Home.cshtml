@@ -1,8 +1,28 @@
 ﻿@using DragonflyDataLibrary
 @using DragonflyMVCApp.Controllers
+@model UserModel
 @{
     ViewData["Title"] = $"Welcome, {User.ClaimValue(UserClaimsIndex.Name)}";
 }
 <div class="min-h-full w-full flex flex-col justify-center items-center bg-transparent">
-    <div class="w-5/6 rounded-3xl bg-neutral-700 p-2"></div>
+    <div class="w-5/6 rounded-3xl bg-neutral-700 p-2">
+        <h1 class="w-full border-b border-lime-700 text-2xl">
+            All Projects
+            <a asp-controller="Home" asp-action="CreateProject" class="rounded-lg bg-lime-400 p-1 text-lg text-white">
+                + New</a>
+        </h1>
+    </div>
+    @foreach (var project in Model.Projects)
+    {
+        <a asp-controller="Home" asp-action="Project" asp-route-id="@project.Id"
+        class="w-5/6 rounded-3xl bg-neutral-700 p-2">
+            <h1 class="w-full border-b border-lime-700 text-2xl">@project.Title</h1>
+            <p class="py-0.5">@project.Description</p>
+            <div class="w-full grid grid-cols-2 grid-rows-2">
+                <div class="w-full p-2 col-span-2">Due: @project.Deadline.ToString("dd-MM-yyyy")</div>
+                <div class="w-full p-2">$ @project.Tasks.Sum(t => t.Cost).ToString("0.##")</div>
+                <div class="w-full p-2">Tasks: @project.Tasks.Count</div>
+            </div>
+        </a>
+    }
 </div>

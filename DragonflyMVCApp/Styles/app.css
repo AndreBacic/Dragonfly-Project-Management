@@ -9,14 +9,14 @@
     }
 
     .input-label {
-        @apply w-2/5 m-auto inline-block text-xl text-white;
+        @apply inline-block w-full text-base text-white;
     }
 
     .input-text {
-        @apply w-3/5 p-1 inline-block border-2 rounded-sm border-lime-800 bg-neutral-800 focus:border-4 focus:p-0.5;
+        @apply inline-block w-full rounded-sm border-2 border-lime-800 p-1 bg-neutral-800 focus:border-4 focus:p-0.5;
     }
 
     .validation-for {
-        @apply text-lg bg-red-300 text-red-700;
+        @apply block bg-red-300 text-lg text-red-700;
     }
 }

@@ -90,8 +90,8 @@ namespace DragonflyDataLibrary.DataAccess
         {
             IMongoCollection<UserModel> collection = _db.GetCollection<UserModel>(_userCollection);
             FilterDefinition<UserModel> filter = Builders<UserModel>.Filter.Eq(_userUniqueEmailName, emailAddress);
-
-            return collection.Find(filter).First();
+            
+            return collection.Find(filter).FirstOrDefault();
         }
     }
 }

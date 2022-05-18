@@ -29,16 +29,15 @@ namespace DragonflyMVCApp
 
             services.AddAuthorization(authConfig =>
             {
-                authConfig.AddPolicy("Demo User", policyBuilder =>
+                authConfig.AddPolicy("Any_user_policy", policyBuilder =>
                 {
                     policyBuilder.RequireClaim(ClaimTypes.Email);
                     policyBuilder.RequireClaim(ClaimTypes.Name);
-                    policyBuilder.RequireRole(UserRoles.DEMO_USER);
                 });
                 authConfig.AddPolicy("Logged_in_user_policy", policyBuilder =>
                 {
-                    policyBuilder.Combine(authConfig.GetPolicy("Demo User"));
-                    policyBuilder.RequireRole(UserRoles.USER); // TODO: make sure this policy doesn't allow demo user roles to pass auth
+                    policyBuilder.Combine(authConfig.GetPolicy("Any_user_policy"));
+                    policyBuilder.RequireRole(UserRoles.USER);
                 });
                 authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_in_user_policy");
             });

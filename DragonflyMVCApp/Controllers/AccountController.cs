@@ -86,7 +86,7 @@ namespace DragonflyMVCApp.Controllers
             if (_db.GetUser(newUser.EmailAddress) is not null)
             {
                 ViewData["RegisterMessage"] = "That email address is taken";
-                return View();
+                return View(newUser);
             }
             UserModel newDbUser = new()
             {

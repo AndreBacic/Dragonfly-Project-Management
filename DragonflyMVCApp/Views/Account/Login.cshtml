@@ -12,12 +12,12 @@
             <input type="password" asp-for="Password" placeholder="Password" class="input-text"
                 contenteditable="true" />
             <input type="submit" value="Log in"
-                class="h-8 w-3/5 cursor-pointer rounded-sm bg-lime-500 text-center text-black" />
+                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg font-semibold" />
         </form>
-        <div class="mt-2 w-full text-left">
-            <p class="w-1/2 inline-block">No account?
-            </p><a asp-controller="Account" asp-action="Register" class="h-8 w-1/2 grid place-items-center
-                    cursor-pointer rounded-sm bg-lime-500 text-center text-black">Sign Up</a>
+        <div class="mt-2 w-full grid grid-cols-2">
+            <p class="block my-auto w-full">No Account?</p>
+            <a asp-controller="Account" asp-action="Register" class="w-full grid place-items-center
+                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black">Sign Up</a>
         </div>
     </div>
 </div>
