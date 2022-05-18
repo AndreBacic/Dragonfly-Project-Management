@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Dragonfly Project Management</title>
-    <link rel="stylesheet" href="~/css/post_tailwind.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/post_tailwind.css" />
 </head>
 
 <body class="h-full w-full">
@@ -17,7 +17,8 @@
     </header>
 
     <canvas id="canvas" class="fixed z-0 h-full w-full bg-black"></canvas>
-    <main role="main" class="relative z-10 min-h-[calc(100vh-2.5rem)] w-full bg-transparent pt-10 text-white">
+    <main role="main"
+        class="relative z-10 min-h-[calc(100vh-2.5rem)] w-full flex flex-col bg-transparent pt-10 text-white">
         @RenderBody()
     </main>
 

@@ -5,6 +5,7 @@ using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace DragonflyMVCApp.Controllers
 {
@@ -27,12 +28,15 @@ namespace DragonflyMVCApp.Controllers
         // POST: HomeController search for project by title or description
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Home(string search)
+        public IActionResult Home(string? search)
         {
-            search = search.ToLower();
             var user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
-            user.Projects.RemoveAll(p => !p.Title.ToLower().Contains(search) &&
-                                         !p.Description.ToLower().Contains(search));
+            if (search is null) return View(user);
+            
+            search = search.ToLower();
+            user.Projects = user.Projects
+                .Where(p => p.Title.ToLower().Contains(search) ||
+                            p.Description.ToLower().Contains(search)).ToList();
             return View(user);
         }
 

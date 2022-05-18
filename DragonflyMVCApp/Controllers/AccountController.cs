@@ -21,6 +21,12 @@ namespace DragonflyMVCApp.Controllers
         {
             _db = db;
         }
+        
+        // Landing page
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         public IActionResult Login()
         {

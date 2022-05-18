@@ -1,8 +1,7 @@
 ﻿
 function updateFooterDate() {
-    const footerDate = document.getElementById("footer-date");
-    const currentYear = new Date().getFullYear();
-    footerDate.innerHTML = `&copy; ${currentYear} by Andre Bačić`;
+    const footerDate = document.getElementById("footer-date")
+    footerDate.textContent = new Date().getFullYear()
 }
 
 function translucentCoverOnClick(t) {
@@ -15,5 +14,4 @@ function translucentCoverOnClick(t) {
     }
 }
 
-
-updateFooterDate();
+updateFooterDate()

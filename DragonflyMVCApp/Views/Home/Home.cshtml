@@ -6,19 +6,29 @@
 }
 <div class="min-h-full w-full flex flex-col justify-center items-center bg-transparent">
     <div class="mt-6 w-5/6 max-w-3xl rounded-xl bg-neutral-700 p-2">
-        <h1 class="w-full border-b-2 border-lime-700 py-1 pl-[1px] text-2xl">
+        <h2 class="w-full border-b-2 border-lime-700 py-1 pl-0.5 text-2xl">
             All Projects
             <a asp-controller="Home" asp-action="CreateProject"
-                class="float-right rounded-lg bg-lime-500 p-1 text-lg text-black">
+                class="float-right rounded-md bg-lime-500 p-1 text-lg text-black">
                 + New</a>
-        </h1>
-        <form asp-action="Home" asp-controller="Home" method="post" class="w-full border-b border-lime-500 p-2">
-            <input class="w-[calc(100%-4rem)] bg-neutral-700 p-2 text-md" type="text" name="search"
+        </h2>
+        <form asp-action="Home" asp-controller="Home" method="post"
+            class="w-full grid grid-cols-[auto,2rem] border-b border-lime-500 pt-2">
+            <input class="w-full bg-neutral-700 p-2 text-md" type="text" name="search"
                 placeholder="Search for project" />
-            <button class="w-16 rounded-xl bg-lime-500 p-1 text-lg text-black" type="submit">
-                Search</button>
+            <button class="w-8 px-0.5 text-lg hover:bg-lime-300/75" type="submit">
+                🔍</button>
         </form>
     </div>
+    @if (Model.Projects.Count == 0)
+    {
+        <div class="mt-8 w-4/6 max-w-3xl rounded-2xl bg-neutral-700 p-2">
+            <h2 class="w-full border-b border-lime-700 py-1 text-xl text-center">
+                You don't have any projects yet.</h2>
+            <p class="text-center"><a asp-controller="Home" asp-action="CreateProject" class="text-lime-500 underline">
+                    Create a new project</a> to get started.</p>
+        </div>
+    }
     @foreach (var project in Model.Projects)
     {
         <a asp-controller="Home" asp-action="Project" asp-route-id="@project.Id"
