@@ -11,9 +11,9 @@ namespace DragonflyDataLibrary.Models
     public class ProjectModel
     {
         /// <summary>
-        /// Unique identifier for the project. // TODO: Figure out how to do this manually? Use index? Use random Guid?
+        /// Unique identifier for the project. // TODO: decide if this is needed or should be an int.
         /// </summary>
-        public int Id { get; set; } // = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
 
         /// <summary>

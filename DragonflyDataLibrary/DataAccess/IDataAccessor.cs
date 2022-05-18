@@ -12,5 +12,6 @@ namespace DragonflyDataLibrary.DataAccess
     {
         UserModel GetUser(string emailAddress);
         void CreateUser(UserModel user);
+        void UpdateUser(UserModel user);
     }
 }

@@ -2,39 +2,36 @@
 @{
     ViewData["Title"] = "Update Account";
 }
-<div class="mx-auto my-2 max-w-3xl rounded-lg bg-neutral-700 p-2">
+<div class="mx-auto my-4 max-w-3xl rounded-lg bg-neutral-700 p-2">
     <h2 class="mb-1 border-b-2 border-lime-500 p-1 text-center text-xl">Update Account</h2>
 
     <form asp-action="EditAccount" asp-controller="Home" method="post">
         <div asp-validation-summary="ModelOnly" class=""></div>
-        <div class="">
+        <div class="w-full">
             <label asp-for="FirstName" class="input-label"></label>
             <input asp-for="FirstName" class="input-text" contenteditable="true" value="@Model.FirstName" />
             <span asp-validation-for="FirstName" class="validation-for"></span>
         </div>
-        <div class="">
+        <div class="w-full">
             <label asp-for="LastName" class="input-label"></label>
             <input asp-for="LastName" class="input-text" contenteditable="true" value="@Model.LastName" />
             <span asp-validation-for="LastName" class="validation-for"></span>
         </div>
-        <div class="">
+        <div class="w-full">
             <label asp-for="EmailAddress" class="input-label"></label>
             <input asp-for="EmailAddress" type="email" class="input-text" contenteditable="true"
                 value="@Model.EmailAddress" />
             <span asp-validation-for="EmailAddress" class="validation-for"></span>
         </div>
+        @* TODO: Add color preference toggle *@
         <input type="submit" value="Save"
-            class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg" />
+            class="my-auto mt-2 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 px-2 py-1 text-center text-black text-lg hover:bg-lime-300" />
     </form>
 
-    <details class="w-full rounded-sm border border-neutral-500 p-2">
-        <summary>
-            <h3 class="text-center text-xl">Change Password</h3>
-        </summary>
+    <details class="my-3 w-full rounded-lg border border-neutral-500 p-3">
+        <summary class="text-lg"> Change Password</summary>
         <partial name="_changePassword" model="@Model.ChangePasswordView" />
     </details>
-
-    @* TODO: Add color preference toggle *@
 
     <a asp-controller="Home" asp-action="Home" class="mt-2 text-lime-500 underline hover:text-lime-300">Back to Home</a>
 </div>

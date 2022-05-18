@@ -30,7 +30,7 @@
     public enum ColorPreference
     {
         Light,
-        Dark
+        Dark // default
     }
 
     public enum UserClaimsIndex // for the data in cookies

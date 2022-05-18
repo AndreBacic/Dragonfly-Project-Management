@@ -65,7 +65,7 @@ namespace DragonflyDataLibrary.DataAccess
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
 
             collection.ReplaceOne(
-                new BsonDocument("_id", new BsonBinaryData(id, GuidRepresentation.Standard)), // the BsonBinaryData with GuidRep is the not obsolete way
+                new BsonDocument("_id", new BsonBinaryData(id, GuidRepresentation.Standard)),
                 record,
                 new ReplaceOptions { IsUpsert = true });
         }
@@ -73,7 +73,7 @@ namespace DragonflyDataLibrary.DataAccess
         public void DeleteRecord<T>(string table, Guid id)
         {
             IMongoCollection<T> collection = _db.GetCollection<T>(table);
-            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq id for equals, ctrl+J to see other comparisons
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq(_modelIdName, id); // Eq = equals, ctrl+J to see other comparisons
             collection.DeleteOne(filter);
         }
 
@@ -92,6 +92,11 @@ namespace DragonflyDataLibrary.DataAccess
             FilterDefinition<UserModel> filter = Builders<UserModel>.Filter.Eq(_userUniqueEmailName, emailAddress);
             
             return collection.Find(filter).FirstOrDefault();
+        }
+
+        public void UpdateUser(UserModel user)
+        {
+            UpsertRecord(_userCollection, user.Id, user);
         }
     }
 }

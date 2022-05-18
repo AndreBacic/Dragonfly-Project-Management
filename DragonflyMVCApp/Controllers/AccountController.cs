@@ -61,7 +61,7 @@ namespace DragonflyMVCApp.Controllers
                 return View();
             }
 
-            LogInUser(dbUser);
+            this.LogInUser(dbUser);
 
             return RedirectToAction(nameof(HomeController.Home), "Home");
         }
@@ -105,7 +105,7 @@ namespace DragonflyMVCApp.Controllers
             };
             _db.CreateUser(newDbUser);
 
-            LogInUser(newDbUser);
+            this.LogInUser(newDbUser);
 
             return RedirectToAction(nameof(HomeController.Home), "Home");
         }
@@ -114,34 +114,8 @@ namespace DragonflyMVCApp.Controllers
         public IActionResult DemoLogin()
         {
             UserModel demoUser = new();// = exampleUserSingleton ?
-            LogInUser(demoUser, UserRoles.DEMO_USER);
+            this.LogInUser(demoUser, UserRoles.DEMO_USER);
             return RedirectToAction(nameof(HomeController.Home), "Home");
-        }
-
-        private async void LogInUser(UserModel user, string role = UserRoles.USER)
-        {
-            List<Claim> personClaims = new()
-            {
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(ClaimTypes.Role, role) // demo user has "Demo user" role
-            };
-
-            await HttpContext.SignInAsync(new ClaimsPrincipal(
-                new ClaimsIdentity(personClaims, "Dragonfly.Auth.Identity")));
-        }
-
-        private static bool IsValidEmailAddress(string emailAddress) // TODO: move to an email logic class
-        {
-            try
-            {
-                System.Net.Mail.MailAddress m = new(emailAddress);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
 using DragonflyMVCApp.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -117,7 +118,9 @@ namespace DragonflyMVCApp.Controllers
             //loggedInUser.ColorPreference = updatedUser.ColorPreference;
             _db.UpdateUser(loggedInUser);
 
-            return View(updatedUser); // TODO: Add success message
+            this.LogInUser(loggedInUser);
+
+            return RedirectToAction(nameof(EditAccount)); // TODO: Add success message
         }
 
         [HttpPost]
@@ -126,7 +129,7 @@ namespace DragonflyMVCApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return EditAccount();
+                return RedirectToAction(nameof(EditAccount), data);
             }
             UserModel dbUser = this.GetLoggedInUserByEmail(_db);
             PasswordHashModel passwordHash = new();
@@ -136,12 +139,15 @@ namespace DragonflyMVCApp.Controllers
             if (IsPasswordCorrect == false)
             {
                 ModelState.AddModelError("OldPassword", "Old password is incorrect");
+                return RedirectToAction(nameof(EditAccount), data);
             }
             
             dbUser.PasswordHash = HashAndSalter.HashAndSalt(data.NewPassword).ToDbString();
             _db.UpdateUser(dbUser);
+            
+            this.LogInUser(dbUser);
 
-            return EditAccount(data); // TODO: Add success message
+            return RedirectToAction(nameof(EditAccount), data); // TODO: Add success message
         }
     }
 }

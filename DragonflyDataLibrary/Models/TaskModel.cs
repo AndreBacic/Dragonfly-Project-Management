@@ -7,7 +7,7 @@ namespace DragonflyDataLibrary.Models
     [BsonIgnoreExtraElements]
     public class TaskModel
     {
-        public int Id { get; set; } // = Guid.NewGuid(); // TODO: choose to use Guid or int for project and task IDs
+        public Guid Id { get; set; } = Guid.NewGuid(); // TODO: choose to use Guid or int for project and task IDs
         public string Title { get; set; }
         public string Details { get; set; }
         public DateTime Created { get; set; }
@@ -16,6 +16,13 @@ namespace DragonflyDataLibrary.Models
         public TaskType Type { get; set; }
         public TaskStatus Status { get; set; }
         public TaskPriority Priority { get; set; }
-        public List<TaskModel> ChildTasks { get; set; }
+
+        /// <summary>
+        /// The ID of the parent task this task belongs to
+        /// </summary>
+        //public Guid? ParentId { get; set; }
+        public List<Guid> ChildTaskIds { get; set; }
+        //[BsonIgnore] // TODO: uncomment fields if needed; delete later if not
+        //public List<TaskModel> ChildTasks { get; set; }
     }
 }
