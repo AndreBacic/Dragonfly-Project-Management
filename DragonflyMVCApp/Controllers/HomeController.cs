@@ -75,34 +75,57 @@ namespace DragonflyMVCApp.Controllers
             return View();
         }
 
-        public IActionResult EditAccount()
+        public IActionResult EditAccount(ChangePasswordViewModel? data = null)
         {
             UserModel user = this.GetLoggedInUserByEmail(_db);
+            
+            if (data is null) data = new();
+            
+            var model = new EditUserViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                EmailAddress = user.EmailAddress,
+                ChangePasswordView = data
+            };
 
-            return View(user.DbUserToEditView());
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditAccount(EditUserViewModel updatedUser)
         {
-            //bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
+            if (ModelState.IsValid == false)
+            {
+                return View(updatedUser);
+            }
+            
+            bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
+            if (emailTaken)
+            {
+                ModelState.AddModelError("EmailAddress", "That email address is already taken.");
+                return View(updatedUser);
+            }
+            
             UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
 
-            // TODO: Finish this edit account logic
+            loggedInUser.FirstName = updatedUser.FirstName;
+            loggedInUser.LastName = updatedUser.LastName;
+            loggedInUser.EmailAddress = updatedUser.EmailAddress;
+            // TODO: Add color preference toggle
+            //loggedInUser.ColorPreference = updatedUser.ColorPreference;
+            _db.UpdateUser(loggedInUser);
 
-            return View();
+            return View(updatedUser); // TODO: Add success message
         }
 
-        // Change password
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ChangePassword(ChangePasswordViewModel data)
         {
             if (!ModelState.IsValid)
             {
-                // TODO: Show error messages
-                ViewData["ChangePasswordError"] = "Invalid inputs";
                 return EditAccount();
             }
             UserModel dbUser = this.GetLoggedInUserByEmail(_db);
@@ -118,7 +141,7 @@ namespace DragonflyMVCApp.Controllers
             dbUser.PasswordHash = HashAndSalter.HashAndSalt(data.NewPassword).ToDbString();
             _db.UpdateUser(dbUser);
 
-            return EditAccount();
+            return EditAccount(data); // TODO: Add success message
         }
     }
 }

@@ -24,6 +24,6 @@ namespace DragonflyDataLibrary.Models
         public string EmailAddress { get; set; }
         public string PasswordHash { get; set; }
         public List<ProjectModel> Projects { get; set; } = new();
-        public ColorPrefference ColorPrefference { get; set; }
+        public ColorPreference ColorPreference { get; set; }
     }
 }

@@ -27,7 +27,7 @@
         Bug
     }
 
-    public enum ColorPrefference
+    public enum ColorPreference
     {
         Light,
         Dark

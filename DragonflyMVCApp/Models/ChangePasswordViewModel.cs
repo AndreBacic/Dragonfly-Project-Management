@@ -5,6 +5,7 @@ namespace DragonflyMVCApp.Models
     public class ChangePasswordViewModel
     {
         [Required(ErrorMessage = "Old password is required")]
+        [DataType(DataType.Password)]
         public string OldPassword { get; set; }
         [Required]
         [DataType(DataType.Password)]
