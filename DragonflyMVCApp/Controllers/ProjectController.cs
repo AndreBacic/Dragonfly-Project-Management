@@ -1,10 +1,7 @@
 ﻿using DragonflyDataLibrary.DataAccess;
-using DragonflyDataLibrary.Models;
 using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace DragonflyMVCApp.Controllers
 {

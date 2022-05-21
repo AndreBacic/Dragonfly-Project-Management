@@ -37,7 +37,7 @@ namespace DragonflyMVCApp
                 authConfig.AddPolicy("Logged_in_user_policy", policyBuilder =>
                 {
                     policyBuilder.Combine(authConfig.GetPolicy("Any_user_policy"));
-                    policyBuilder.RequireRole(UserRoles.USER);
+                    policyBuilder.RequireRole(UserConstants.USER);
                 });
                 authConfig.DefaultPolicy = authConfig.GetPolicy("Logged_in_user_policy");
             });
@@ -74,7 +74,7 @@ namespace DragonflyMVCApp
                     name: "default",
                     pattern: "{controller=Account}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "authenticated",                    
+                    name: "authenticated",
                     pattern: "{controller=Home}/{action=Home}");
                 endpoints.MapRazorPages();
             });

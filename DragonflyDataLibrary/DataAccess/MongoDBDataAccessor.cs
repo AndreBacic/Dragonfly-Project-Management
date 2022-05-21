@@ -77,6 +77,30 @@ namespace DragonflyDataLibrary.DataAccess
             collection.DeleteOne(filter);
         }
 
+        /// <summary>
+        /// Performs a $lookup left join for a one to one relationship.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="localTable"></param>
+        /// <param name="foreignTable"></param>
+        /// <param name="id"></param>
+        /// <param name="localField"></param>
+        /// <param name="foreignField"></param>
+        /// <param name="asField"></param>
+        /// <returns></returns>
+        public T LookupRecord<T>(string localTable, string foreignTable, Guid id,
+            string localField, string foreignField, string asField)
+        {
+            var collection = _db.GetCollection<T>(localTable);
+            var filter = Builders<T>.Filter.Eq(_modelIdName, id);
+
+            var a = collection.Aggregate()
+                .Match(filter)
+                .Lookup(foreignTable, localField, foreignField, asField)
+                .Unwind(asField)
+                .As<T>().ToList();
+            return a.First();
+        }
 
 
         ///////////////////// INTERFACE IMPLEMENTATION /////////////////////
@@ -90,7 +114,7 @@ namespace DragonflyDataLibrary.DataAccess
         {
             IMongoCollection<UserModel> collection = _db.GetCollection<UserModel>(_userCollection);
             FilterDefinition<UserModel> filter = Builders<UserModel>.Filter.Eq(_userUniqueEmailName, emailAddress);
-            
+
             return collection.Find(filter).FirstOrDefault();
         }
 

@@ -6,10 +6,7 @@ using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Claims;
 
 namespace DragonflyMVCApp.Controllers
 {
@@ -21,7 +18,7 @@ namespace DragonflyMVCApp.Controllers
         {
             _db = db;
         }
-        
+
         // Landing page
         public IActionResult Index()
         {
@@ -105,7 +102,7 @@ namespace DragonflyMVCApp.Controllers
                 EmailAddress = newUser.EmailAddress,
                 PasswordHash = HashAndSalter.HashAndSalt(newUser.Password).ToDbString(),
                 // dark mode is default because it causes less eye strain
-                ColorPreference = ColorPreference.Dark 
+                ColorPreference = ColorPreference.Dark
             };
             _db.CreateUser(newDbUser);
 
@@ -117,8 +114,8 @@ namespace DragonflyMVCApp.Controllers
         //redirect action that first logs user in as demo user
         public IActionResult DemoLogin()
         {
-            UserModel demoUser = UserRoles.DemoUserModel;
-            this.LogInUser(demoUser, UserRoles.DEMO_USER);
+            UserModel demoUser = UserConstants.DEMO_USER_MODEL;
+            this.LogInUser(demoUser, UserConstants.DEMO_USER);
             return RedirectToAction(nameof(HomeController.Home), "Home");
         }
 

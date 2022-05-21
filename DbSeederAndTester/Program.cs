@@ -13,7 +13,6 @@ namespace DbSeederAndTester
             //CreateUserModel(mongodb);
 
             //UserModel user = mongodb.GetAllUsers()[5];
-            //org = CreateProj(mongodb, org);
         }
 
         private static void CreateUserModel(MongoDBDataAccessor mongodb)

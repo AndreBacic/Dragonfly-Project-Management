@@ -3,7 +3,6 @@ using DragonflyDataLibrary.DataAccess;
 using DragonflyDataLibrary.Models;
 using DragonflyDataLibrary.Security;
 using DragonflyMVCApp.Models;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,9 +78,9 @@ namespace DragonflyMVCApp.Controllers
         public IActionResult EditAccount(ChangePasswordViewModel? data = null)
         {
             UserModel user = this.GetLoggedInUserByEmail(_db);
-            
+
             if (data is null) data = new();
-            
+
             var model = new EditUserViewModel
             {
                 FirstName = user.FirstName,
@@ -101,14 +100,14 @@ namespace DragonflyMVCApp.Controllers
             {
                 return View(updatedUser);
             }
-            
+
             bool emailTaken = _db.GetUser(updatedUser.EmailAddress) is null;
             if (emailTaken)
             {
                 ModelState.AddModelError("EmailAddress", "That email address is already taken.");
                 return View(updatedUser);
             }
-            
+
             UserModel loggedInUser = this.GetLoggedInUserByEmail(_db);
 
             loggedInUser.FirstName = updatedUser.FirstName;
@@ -141,10 +140,10 @@ namespace DragonflyMVCApp.Controllers
                 ModelState.AddModelError("OldPassword", "Old password is incorrect");
                 return RedirectToAction(nameof(EditAccount), data);
             }
-            
+
             dbUser.PasswordHash = HashAndSalter.HashAndSalt(data.NewPassword).ToDbString();
             _db.UpdateUser(dbUser);
-            
+
             this.LogInUser(dbUser);
 
             return RedirectToAction(nameof(EditAccount), data); // TODO: Add success message

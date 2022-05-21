@@ -19,7 +19,7 @@ namespace DragonflyMVCApp.Controllers
         }
 
 
-        public static async void LogInUser(this Controller @this, UserModel user, string role = UserRoles.USER)
+        public static async void LogInUser(this Controller @this, UserModel user, string role = UserConstants.USER)
         {
             List<Claim> personClaims = new()
             {

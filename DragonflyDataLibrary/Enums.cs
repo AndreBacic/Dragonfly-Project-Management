@@ -43,25 +43,19 @@ namespace DragonflyDataLibrary
         Role
     }
 
-    public static class UserRoles
+    public static class UserConstants
     {
         public const string DEMO_USER = "Demo User";
         public const string USER = "User";
 
-        public static UserModel DemoUserModel
+        public static UserModel DEMO_USER_MODEL => new UserModel()
         {
-            get
-            {
-                return new UserModel()
-                {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    EmailAddress = "john12@demo.demonet",
-                    PasswordHash = HashAndSalter.HashAndSalt("Secret123!").ToDbString(),
-                    Projects = new System.Collections.Generic.List<ProjectModel>(),
-                    ColorPreference = ColorPreference.Dark
-                };
-            }
-        }
+            FirstName = "John",
+            LastName = "Doe",
+            EmailAddress = "john12@demo.demonet",
+            PasswordHash = HashAndSalter.HashAndSalt("Secret123!").ToDbString(),
+            Projects = new System.Collections.Generic.List<ProjectModel>(),
+            ColorPreference = ColorPreference.Dark
+        };
     }
 }

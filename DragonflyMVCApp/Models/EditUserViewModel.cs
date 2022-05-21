@@ -14,7 +14,7 @@ namespace DragonflyMVCApp.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
-        
+
         public ChangePasswordViewModel ChangePasswordView { get; set; } = null;
     }
 }
