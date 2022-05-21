@@ -1,7 +1,38 @@
-﻿@model ProjectModel
+﻿@model CreateProjectViewModel
 @{
-    ViewData["Title"] = "CreateProject";
+    ViewData["Title"] = "New Project";
 }
 
-<h1>CreateProject</h1>
+<div class="mx-auto my-4 max-w-3xl rounded-lg bg-neutral-700 p-2">
+    <h2 class="mb-1 border-b-2 border-lime-500 p-1 text-center text-xl">Create a New Project</h2>
 
+    <form asp-action="CreateProject" asp-controller="Home" method="post">
+        <div asp-validation-summary="ModelOnly" class=""></div>
+        <div class="w-full">
+            <label asp-for="Title" class="input-label">Title (max 60 characters)</label>
+            <input asp-for="Title" class="input-text" contenteditable="true" />
+            <span asp-validation-for="Title" class="validation-for"></span>
+        </div>
+        <div class="w-full">
+            <label asp-for="Description" class="input-label">Description (max 200 characters)</label>
+            <input asp-for="Description" class="input-text" contenteditable="true" />
+            <span asp-validation-for="Description" class="validation-for"></span>
+        </div>
+        <div class="w-full">
+            <label asp-for="Deadline" class="input-label"></label>
+            <input asp-for="Deadline" type="date" class="input-text" contenteditable="true" />
+            <span asp-validation-for="Deadline" class="validation-for"></span>
+        </div>
+        <div class="w-full">
+            <label asp-for="Budget" class="input-label">Budget (in US $)</label>
+            <input asp-for="Budget" type="number" class="input-text" contenteditable="true" value="@decimal.Zero" />
+            <span asp-validation-for="Budget" class="validation-for"></span>
+        </div>
+        <input type="submit" value="Create"
+            class="my-auto mt-2 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 px-2 py-1 text-center text-black text-lg hover:bg-lime-300" />
+    </form>
+    
+    <a asp-action="Home" asp-controller="Home" 
+        class="text-lime-500 underline hover:text-lime-300">Cancel</a>
+
+</div>

@@ -17,14 +17,14 @@ namespace DragonflyMVCApp.Controllers
         // GET: Project/ProjectHome page, with edit boxes and subproject links
         public IActionResult Backlog(int projectId)
         {
-            ProjectViewModel projV = new();
+            CreateProjectViewModel projV = new();
             return View(projV);
         }
 
         // POST: Project/ProjectHome
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ProjectHome(ProjectViewModel model)
+        public IActionResult ProjectHome(CreateProjectViewModel model)
         {
             if (ModelState.IsValid == false)
             {

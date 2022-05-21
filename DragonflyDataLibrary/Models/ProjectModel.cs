@@ -30,6 +30,6 @@ namespace DragonflyDataLibrary.Models
         /// </summary>
         public DateTime Deadline { get; set; }
         public decimal Budget { get; set; }
-        public List<TaskModel> Tasks { get; set; }
+        public List<TaskModel> Tasks { get; set; } = new();
     }
 }

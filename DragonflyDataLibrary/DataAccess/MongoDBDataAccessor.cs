@@ -69,6 +69,7 @@ namespace DragonflyDataLibrary.DataAccess
                 record,
                 new ReplaceOptions { IsUpsert = true });
         }
+        // TODO: Add an update method to replace only certain fields of a record.
 
         public void DeleteRecord<T>(string table, Guid id)
         {

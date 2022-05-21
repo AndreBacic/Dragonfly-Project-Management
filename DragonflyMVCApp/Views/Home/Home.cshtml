@@ -9,7 +9,7 @@
         <h2 class="w-full border-b-2 border-lime-700 py-1 pl-0.5 text-2xl">
             All Projects
             <a asp-controller="Home" asp-action="CreateProject"
-                class="float-right rounded-md bg-lime-500 p-1 text-lg text-black">
+                class="float-right bg-lime-500 p-1 text-lg text-semibold text-black hover:bg-lime-300">
                 + New</a>
         </h2>
         <form asp-action="Home" asp-controller="Home" method="post"
@@ -20,13 +20,13 @@
                 🔍</button>
         </form>
     </div>
-    @if (Model.Projects.Count == 0)
+    @if (Model.Projects.Count == 0) // TODO: When a search returns no results, display a message
     {
         <div class="mt-8 w-4/6 max-w-3xl rounded-2xl bg-neutral-700 p-2">
             <h2 class="w-full border-b border-lime-700 py-1 text-xl text-center">
                 You don't have any projects yet.</h2>
             <p class="text-center"><a asp-controller="Home" asp-action="CreateProject"
-                class="text-lime-500 underline hover:text-lime-400">
+                class="text-lime-500 underline hover:text-lime-300">
                     Create a new project</a> to get started.</p>
         </div>
     }

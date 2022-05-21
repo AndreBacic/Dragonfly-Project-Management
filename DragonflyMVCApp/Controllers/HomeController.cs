@@ -6,6 +6,7 @@ using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 #nullable enable
@@ -52,16 +53,24 @@ namespace DragonflyMVCApp.Controllers
         // POST: HomeController/CreateProject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateProject(IFormCollection collection)
+        public IActionResult CreateProject(CreateProjectViewModel proj)
         {
-            try
+            if (ModelState.IsValid == false)
             {
-                return RedirectToAction(nameof(Home));
+                return View(proj);
             }
-            catch
+            UserModel user = _db.GetUser(User.ClaimValue(UserClaimsIndex.Email));
+            var project = new ProjectModel
             {
-                return View();
-            }
+                Title = proj.Title,
+                Description = proj.Description,
+                Created = DateTime.UtcNow,
+                Deadline = proj.Deadline,
+                Budget = proj.Budget                
+            };
+            user.Projects.Add(project);
+            _db.UpdateUser(user);
+            return RedirectToAction(nameof(Home));
         }
 
         // GET: HomeController/Deadlines/
