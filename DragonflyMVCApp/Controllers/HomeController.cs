@@ -69,8 +69,8 @@ namespace DragonflyMVCApp.Controllers
                 Budget = proj.Budget                
             };
             user.Projects.Add(project);
-            _db.UpdateUser(user);
-            return RedirectToAction(nameof(Home));
+            _db.UpdateUser(user); // TODO: Make methods that use MongoDB queries to add a single project without upserting the whole user
+            return RedirectToAction(nameof(ProjectController.Backlog), "Project", new { id = project.Id });
         }
 
         // GET: HomeController/Deadlines/

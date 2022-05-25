@@ -14,11 +14,15 @@ namespace DragonflyMVCApp.Controllers
         {
             _db = db;
         }
+        public IActionResult Backlog()
+        {
+            var id = RouteData.Values["id"];
+            return View();
+        }
         // GET: Project/ProjectHome page, with edit boxes and subproject links
         public IActionResult Backlog(int projectId)
         {
-            CreateProjectViewModel projV = new();
-            return View(projV);
+            return View();
         }
 
         // POST: Project/ProjectHome

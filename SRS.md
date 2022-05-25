@@ -1,6 +1,6 @@
 # Software Requirements Specification (SRS) for this app, *Dragonfly Project Management*
 
-[//]: # (//TODO: Add license to repo)
+[//]: # (//TODO: Add license to this SRS, somewhere?)
 
 ## 1. Introduction
 

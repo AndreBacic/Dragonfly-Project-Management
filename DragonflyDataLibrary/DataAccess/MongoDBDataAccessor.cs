@@ -123,5 +123,7 @@ namespace DragonflyDataLibrary.DataAccess
         {
             UpsertRecord(_userCollection, user.Id, user);
         }
+
+        // TODO: Add methods to this class and the IDataAccessor interface for adding or changing projects and tasks without upserting the entire user
     }
 }
