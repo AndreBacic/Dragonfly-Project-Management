@@ -7,7 +7,7 @@ namespace DragonflyDataLibrary.Models
     [BsonIgnoreExtraElements]
     public class TaskModel
     {
-        public Guid Id { get; set; } = Guid.NewGuid(); // TODO: choose to use Guid or int for project and task IDs
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; } = "";
         public string Details { get; set; } = "";
         public DateTime Created { get; set; }

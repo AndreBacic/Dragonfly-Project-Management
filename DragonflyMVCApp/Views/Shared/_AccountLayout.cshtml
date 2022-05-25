@@ -5,9 +5,11 @@
 
 <body class="h-full w-full">
     <header class="fixed top-0 z-20 min-h-[2.5rem] w-full bg-neutral-700 grid place-items-center">
-        <div class="h-6 w-full px-1 text-left text-lime-500 font-semibold sm:px-4 sm:w-[32rem] md:w-[48rem]">
+        <div class="h-6 w-full px-1 text-left text-lime-500 font-semibold
+                hover:text-lime-300 sm:px-4 sm:w-[32rem] md:w-[48rem]">
             @* TODO: Add dragonfly icon here *@
-            Dragonfly Project Management
+            <a asp-action="Index" asp-controller="Account" class="no-underline">
+                Dragonfly Project Management</a>
         </div>
     </header>
 

@@ -1,16 +1,18 @@
 <header class="fixed top-0 left-0 z-40 h-32 w-full">
-    <section class="relative top-0 left-0 z-40 h-full min-w-fit w-48 rounded-br-3xl 
+    <section class="relative top-0 left-0 z-40 h-full w-40 rounded-br-3xl 
                 bg-lime-800 p-2 text-center text-white text-xl shadow-md 
-                md:w-[calc(50vw-12rem)] md:pl-[calc(50vw-24rem)]">
+                sm:w-48 md:w-[calc(50vw-12rem)] md:pl-[calc(50vw-24rem)]">
         <h1 class="mb-14 sm:mb-12">Dragonfly</h1>
         @* TODO: Drop an icon here and lose the margin bottom from the above h1 *@
         <h2 class="text-sm sm:text-lg">Project Management</h2>
     </section>
-    <div class="absolute top-0 right-0 z-30 min-h-[6rem] w-1/2" role="directory">
-        <button class="flex justify-center items-center min-h-[6rem] w-full 
-            bg-neutral-700 px-4 py-2 text-base font-medium text-white shadow-sm 
+    <div class="absolute top-0 right-0 z-30 min-h-[6rem] w-[calc(100vw-10rem)] sm:w-[calc(100vw-12rem)] md:w-[calc(50vw+12rem)]"
+        role="directory">
+        <button class="flex justify-end items-center min-h-[6rem] w-full 
+                bg-neutral-700 px-6 py-2 text-base font-medium text-white shadow-sm 
                 hover:bg-neutral-600 focus:outline-none" id="userMenuButton" onclick="userMenuButtonOnClick()">
             Welcome, @User.ClaimValue(UserClaimsIndex.Name)
+            @* TODO: Replace rotating arrow with hamburger lines that morph into down arrow *@
             <svg id="userMenuArrow" class="-mr-1 ml-1 h-8 w-8 -rotate-90" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd"
@@ -18,7 +20,7 @@
                     clip-rule="evenodd" />
             </svg>
         </button>
-        <nav class="relative left-[-25%] z-30 w-[125%] rounded-bl-lg 
+        <nav class="absolute right-0 z-30 w-[max(15rem,60%)] rounded-bl-lg 
         bg-neutral-700 pt-10 pb-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
           transition-all duration-150 ease-linear origin-top" id="userMenu" style="display:none">
             <!--//TODO: Actually make the animation happen-->

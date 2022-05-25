@@ -11,14 +11,14 @@ namespace DragonflyDataLibrary.Models
     public class ProjectModel
     {
         /// <summary>
-        /// Unique identifier for the project. // TODO: decide if this is needed or should be an int.
+        /// Unique identifier for the project.
         /// </summary>
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; } = "";
 
         /// <summary>
         /// Short description of the project, typically less than 100 characters.
-        /// </summary> // TODO: Have view models restrict this to 100 characters
+        /// </summary> // TODO: Have view models restrict this to 100ish characters
         public string Description { get; set; } = "";
         /// <summary>
         /// Long description of project and any additional information the user wants to add.
