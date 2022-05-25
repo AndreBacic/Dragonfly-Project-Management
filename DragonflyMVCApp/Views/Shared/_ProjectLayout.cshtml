@@ -3,5 +3,25 @@
     _HomeLayout = (menu + 3D bg) => AllProjects, Deadlines, EditAccount,etc
     _ProjectLayout = (menu + 1 color 2d bg) => Backlog, board, create task, delete task, etc
 *@
-@{
-}
+<!DOCTYPE html>
+<html lang="en">
+
+<partial name="_head" />
+
+<body class="h-full w-full">
+    <partial name="_menu" />
+
+    <main role="main"
+        class="relative z-10 min-h-[calc(100vh-2.5rem)] w-full flex flex-col border-0 border-black bg-neutral-700 px-0 pt-32 text-white md:mx-auto md:max-w-3xl">
+        <div class="min-h-full w-full flex flex-1 flex-col p-0 md:border-x">
+            @RenderBody()
+        </div>
+    </main>
+
+    <partial name="_footer" />
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*@RenderSection("Scripts", required: false)*@
+</body>
+
+</html>

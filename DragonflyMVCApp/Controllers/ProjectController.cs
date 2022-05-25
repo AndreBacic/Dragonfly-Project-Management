@@ -2,6 +2,7 @@
 using DragonflyMVCApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace DragonflyMVCApp.Controllers
 {
@@ -16,7 +17,7 @@ namespace DragonflyMVCApp.Controllers
         }
         public IActionResult Backlog()
         {
-            var id = RouteData.Values["id"];
+            Guid id = (Guid)RouteData.Values["id"];
             return View();
         }
         // GET: Project/ProjectHome page, with edit boxes and subproject links

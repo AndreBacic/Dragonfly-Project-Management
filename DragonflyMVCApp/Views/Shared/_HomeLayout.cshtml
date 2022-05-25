@@ -1,26 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dragonfly Project Management</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/post_tailwind.css" />
-</head>
+<partial name="_head" />
 
 <body class="h-full w-full">
-    <header class="fixed top-0 left-0 z-40 h-32 w-full">
-        <section
-            class="relative top-0 left-0 z-40 h-full w-1/2 rounded-br-3xl bg-lime-800 p-2 text-center text-white text-xl shadow">
-            <h1 class="mb-14 sm:mb-12">Dragonfly</h1>
-            <h2 class="text-sm sm:text-lg">Project Management</h2>
-        </section>
-        <div class="absolute top-0 right-0 z-30 min-h-[6rem] w-1/2" role="directory">
-            <partial name="_usermenu" />
-        </div>
-    </header>
-    <partial name="_translucentCover" />
+    <partial name="_menu" />
 
     <canvas id="canvas" class="fixed z-0 h-full w-full bg-black"></canvas>
 
@@ -30,28 +14,6 @@
 
     <partial name="_footer" />
 
-    <script>
-        let userMenuIsOpen = false
-        const userMenu = document.getElementById("userMenu")
-        const userMenuArrow = document.getElementById("userMenuArrow")
-
-        const translucentCover = document.getElementById("translucentCover")
-        const menus = [userMenu]
-        const arrows = [userMenuArrow]
-
-        function userMenuButtonOnClick() {
-            userMenuIsOpen = !userMenuIsOpen
-            if (userMenuIsOpen) {
-                userMenu.style.display = ""
-                userMenuArrow.style.transform = "rotateZ(0deg)"
-                translucentCover.style.display = ""
-            } else {
-                userMenu.style.display = "none"
-                userMenuArrow.style.transform = "rotateZ(-90deg)"
-                translucentCover.style.display = "none"
-            }
-        }
-    </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @*@RenderSection("Scripts", required: false)*@
 </body>
