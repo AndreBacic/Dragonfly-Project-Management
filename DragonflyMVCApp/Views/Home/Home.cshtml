@@ -23,7 +23,7 @@
     @if (Model.Projects.Count == 0) // TODO: When a search returns no results, display a message
     {
         <div class="mt-8 w-4/6 max-w-3xl rounded-2xl bg-neutral-700 p-2">
-            <h2 class="w-full border-b border-lime-700 py-1 text-xl text-center">
+            <h2 class="w-full border-b-2 border-lime-700 py-1 text-xl text-center">
                 You don't have any projects yet.</h2>
             <p class="text-center"><a asp-controller="Home" asp-action="CreateProject"
                 class="text-lime-500 underline hover:text-lime-300">
@@ -33,8 +33,8 @@
     @foreach (var project in Model.Projects)
     {
         <a asp-controller="Project" asp-action="Backlog" asp-route-id="@project.Id"
-        class="my-3 w-5/6 max-w-3xl rounded-2xl bg-neutral-700 p-2">
-            <h1 class="w-full border-b border-lime-700 text-2xl">@project.Title</h1>
+        class="my-3 w-5/6 max-w-3xl rounded-2xl bg-neutral-700 p-2 hover:bg-neutral-600">
+            <h1 class="w-full border-b-2 border-lime-700 text-2xl">@project.Title</h1>
             <p class="py-0.5">@project.Description</p>
             <div class="w-full grid grid-cols-2 grid-rows-2">
                 <div class="w-full p-2 col-span-2">Due: @project.Deadline.ToString("dd-MM-yyyy")</div>

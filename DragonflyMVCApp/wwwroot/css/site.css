@@ -1,3 +1,9 @@
 ﻿[contenteditable] {
     outline: 0px solid transparent;
 }
+
+@media (min-width: 768px) {
+    .md\:DPM-nav-cols {
+        grid-template-columns: 6fr repeat(4, 4fr) 3fr;
+    }
+}

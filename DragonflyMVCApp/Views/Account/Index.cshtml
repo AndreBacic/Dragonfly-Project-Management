@@ -1,20 +1,23 @@
 @{
     ViewData["Title"] = "Dragonfly Project Management";
 }
-<div class="min-h-full w-full flex-1 grid place-items-center grid-cols-2 grid-rows-6">
-    <div class="w-4/5 col-span-2 row-span-2 rounded-lg bg-neutral-700 p-6 md:col-span-1 md:row-span-3">
-        <p><a asp-controller="Account" asp-action="Login"
-                class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
-                Log In</a> to your existing account</p>
+<div class="mx-auto min-h-full max-w-3xl w-full flex-1 grid items-center justify-center grid-rows-3">
+    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+        <a asp-controller="Account" asp-action="Login"
+            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            Log In</a>
+        <p>to your existing account</p>
     </div>
-    <div class="w-4/5 col-span-2 row-span-2 rounded-lg bg-neutral-700 p-6 md:col-span-1 md:row-span-3">
-        <p><a asp-controller="Account" asp-action="Register"
-                class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
-                Sign Up</a> to start tracking your productivity</p>
+    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+        <a asp-controller="Account" asp-action="Register"
+            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            Sign Up</a>
+        <p>to start tracking your productivity</p>
     </div>
-    <div class="w-4/5 col-span-2 row-span-2 rounded-lg bg-neutral-700 p-6 md:w-2/5 md:col-span-2 md:row-span-3">
-        <p><a asp-controller="Account" asp-action="DemoLogin"
-                class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
-                Try It</a> as a demo user with example data</p>
+    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+        <a asp-controller="Account" asp-action="DemoLogin"
+            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            Try It</a>
+        <p>as a demo user with example data</p>
     </div>
 </div>

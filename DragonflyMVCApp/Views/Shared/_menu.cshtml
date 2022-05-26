@@ -9,12 +9,13 @@
     <div class="absolute top-0 right-0 z-30 min-h-[6rem] w-[calc(100vw-10rem)] sm:w-[calc(100vw-12rem)] md:w-[calc(50vw+12rem)]"
         role="directory">
         <button class="flex justify-end items-center min-h-[6rem] w-full 
-                bg-neutral-700 px-6 py-2 text-base font-medium text-white shadow-sm 
-                hover:bg-neutral-600 focus:outline-none" id="userMenuButton" onclick="userMenuButtonOnClick()">
+                bg-neutral-700 px-4 py-2 text-base font-medium text-white shadow-sm 
+                hover:bg-neutral-600 focus:outline-none sm:px-8 sm:text-lg md:hidden" id="userMenuButton"
+            onclick="userMenuButtonOnClick()">
             Welcome, @User.ClaimValue(UserClaimsIndex.Name)
             @* TODO: Replace rotating arrow with hamburger lines that morph into down arrow *@
-            <svg id="userMenuArrow" class="-mr-1 ml-1 h-8 w-8 -rotate-90" xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg id="userMenuArrow" class="-mr-1 ml-1 min-h-[1rem] h-8 min-w-[1rem] w-8 -rotate-90"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                 <path fill-rule="evenodd"
                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                     clip-rule="evenodd" />
@@ -22,22 +23,28 @@
         </button>
         <nav class="absolute right-0 z-30 w-[max(15rem,60%)] rounded-bl-lg 
         bg-neutral-700 pt-10 pb-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
-          transition-all duration-150 ease-linear origin-top" id="userMenu" style="display:none">
-            <!--//TODO: Actually make the animation happen-->
-            <a class="block px-4 py-2 text-white hover:bg-neutral-600" asp-action="Home" asp-controller="Home">
-                All Projects</a>
-            <a class="block px-4 py-2 text-white hover:bg-neutral-600" asp-action="Deadlines" asp-controller="Home">
-                Pressing Deadlines</a>
-            <a class="block px-4 py-2 text-white hover:bg-neutral-600" asp-action="Analytics" asp-controller="Home">
-                Cumulative Report</a>
-            <a class="block px-4 py-2 text-white hover:bg-neutral-600" asp-action="EditAccount" asp-controller="Home">
-                Update Account</a>
-            <a class="block px-4 py-2 text-white hover:bg-neutral-600" asp-action="Logout" asp-controller="Account">
-                Logout</a>
+          transition-all duration-150 ease-linear origin-top sm:pt-2 
+          md:min-h-[6rem] md:w-full md:!grid md:DPM-nav-cols md:rounded-none md:pl-0 md:py-0 md:pr-[calc(50vw-24rem)]"
+            id="userMenu" style="display:none">
+            <!--TODO: Actually make the animation happen-->
+            @* TODO: Delete this redundant link and just have the navbar. In fact, why not just delete the whole
+                displaying of the user's name, and save space for both the hamburger and regular menus? *@
+            <a class="min-h-[3rem] hidden items-center px-4 text-lg text-white hover:bg-neutral-600 md:!grid md:p-0 md:text-center"
+                asp-action="Home" asp-controller="Home">Welcome, @User.ClaimValue(UserClaimsIndex.Name)</a>
+            <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
+                asp-action="Home" asp-controller="Home">All Projects</a>
+            <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
+                asp-action="Deadlines" asp-controller="Home">Pressing Deadlines</a>
+            <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
+                asp-action="Analytics" asp-controller="Home">Cumulative Report</a>
+            <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
+                asp-action="EditAccount" asp-controller="Home">Update Account</a>
+            <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
+                asp-action="Logout" asp-controller="Account">Logout</a>
         </nav>
     </div>
 </header>
-<div id="translucentCover" class="fixed z-20 w-full h-full bg-opacity-40 backdrop-blur-sm bg-white"
+<div id="translucentCover" class="fixed z-20 w-full h-full bg-opacity-40 backdrop-blur-sm bg-white md:!hidden"
     style="display:none;" onclick="translucentCoverOnClick(this)"></div>
 
 <script>
