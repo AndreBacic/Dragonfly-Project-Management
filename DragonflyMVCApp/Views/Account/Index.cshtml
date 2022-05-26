@@ -1,23 +1,23 @@
 @{
     ViewData["Title"] = "Dragonfly Project Management";
 }
-<div class="mx-auto min-h-full max-w-3xl w-full flex-1 grid items-center justify-center grid-rows-3">
-    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+<div class="mx-auto min-h-full max-w-3xl w-full flex-1 grid gap-4 DPM-index-rows items-center justify-center">
+    <div class="max-w-[20rem] w-full grid gap-4 DPM-index-cols rounded-lg bg-neutral-700 p-6">
         <a asp-controller="Account" asp-action="Login"
-            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            class="mb-auto inline-block rounded-md bg-lime-500 px-3 py-2 text-lg text-black">
             Log In</a>
-        <p>to your existing account</p>
+        <p class="-mt-0.5">to your existing account</p>
     </div>
-    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+    <div class="max-w-[20rem] w-full grid gap-4 DPM-index-cols rounded-lg bg-neutral-700 p-6">
         <a asp-controller="Account" asp-action="Register"
-            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            class="mb-auto inline-block rounded-md bg-lime-500 px-3 py-2 text-lg text-black">
             Sign Up</a>
-        <p>to start tracking your productivity</p>
+        <p class="-mt-0.5">to start tracking your productivity</p>
     </div>
-    <div class="w-4/5 rounded-lg bg-neutral-700 p-6">
+    <div class="max-w-[20rem] w-full grid gap-4 DPM-index-cols rounded-lg bg-neutral-700 p-6">
         <a asp-controller="Account" asp-action="DemoLogin"
-            class="mr-0.5 rounded-md bg-lime-500 px-2 py-1 text-lg text-black">
+            class="mb-auto inline-block rounded-md bg-lime-500 px-3 py-2 text-lg text-black">
             Try It</a>
-        <p>as a demo user with example data</p>
+        <p class="-mt-0.5">as a demo user with example data</p>
     </div>
 </div>
