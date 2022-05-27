@@ -29,7 +29,7 @@
             <!--TODO: Actually make the animation happen-->
             @* TODO: Delete this redundant link and just have the navbar. In fact, why not just delete the whole
                 displaying of the user's name, and save space for both the hamburger and regular menus? *@
-            <a class="min-h-[3rem] hidden items-center px-4 text-lg text-white hover:bg-neutral-600 md:!grid md:p-0 md:text-center"
+            <a class="min-h-[3rem] hidden items-center px-4 text-lg text-white hover:bg-neutral-600 md:!grid md:text-center"
                 asp-action="Home" asp-controller="Home">Welcome, @User.ClaimValue(UserClaimsIndex.Name)</a>
             <a class="min-h-[3rem] grid items-center px-4 text-white hover:bg-neutral-600 md:p-0 md:text-center"
                 asp-action="Home" asp-controller="Home">All Projects</a>
@@ -44,7 +44,7 @@
         </nav>
     </div>
 </header>
-<div id="translucentCover" class="fixed z-20 w-full h-full bg-opacity-40 backdrop-blur-sm bg-white md:!hidden"
+<div id="translucentCover" class="fixed z-20 w-full h-full bg-white bg-opacity-40 backdrop-blur-sm md:!hidden"
     style="display:none;" onclick="translucentCoverOnClick(this)"></div>
 
 <script>

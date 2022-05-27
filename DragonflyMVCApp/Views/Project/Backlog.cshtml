@@ -5,15 +5,49 @@
 }
 <partial name="_editProject" model="@Model" />
 
-<h2 class="border-b-2 border-lime-700">Backlog</h2>
+<h2 class="border-b-2 border-lime-700 p-1 pl-4">Backlog</h2>
 
-@foreach (TaskModel task in Model.Tasks)
-{
-    <div class="w-full flex">
-        <p>@task.Id.ToString("N").Substring(0, 4)</p>
-        <p>@task.Type</p>
-        <p>@task.Title</p>
-        <p>@task.Status</p>
-        <p>@task.Deadline</p>
+<div class="w-full flex justify-evenly">
+    <a onclick="openCreateTaskModal()"
+        class="float-right bg-lime-500 p-1 text-lg text-semibold text-black hover:bg-lime-300">
+        + New</a>
+    <h3>Id</h3>
+    <h3></h3>
+    <h3>Title</h3>
+    <h3>Status</h3>
+    <h3>Deadline</h3>
+</div>
+<div id="createTaskModal"
+    class="fixed top-0 left-0 z-50 w-screen min-h-screen grid place-content-center bg-neutral-600 bg-opacity-40 backdrop-blur-sm"
+    style="display: none;">
+    @* TODO: Complete this *@
+    <div class="max-w-3xl rounded-sm bg-neutral-700 p-4">
+        <h2 class="w-full border-b-2 border-lime-700 text-xl">Create New Task</h2>
+        <button onclick="closeCreateTaskModal()"
+            class="rounded-md bg-lime-500 p-1 text-black hover:bg-lime-300">Cancel</button>
     </div>
-}
+</div>
+<script>
+    let modal = document.getElementById("createTaskModal")
+    function openCreateTaskModal() {
+        modal.style.display = "grid"
+    }
+
+    function closeCreateTaskModal() {
+        modal.style.display = "none"
+    }
+</script>
+
+<div class="w-full flex flex-col gap-1 p-1">
+    @foreach (TaskModel task in Model.Tasks)
+    {
+        <div class="w-full flex bg-lime-700 p-0.5 text-white">
+            <p class="bold">></p> @* TODO: Add toggle to view subtasks *@
+            <p>@task.Id.ToString("N").Substring(0, 4)</p>
+            <p>@task.Type</p>
+            <p>@task.Title</p>
+            <p>@task.Status</p>
+            <p>@task.Deadline</p>
+        </div>
+    }
+</div>
