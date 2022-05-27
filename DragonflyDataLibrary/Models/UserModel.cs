@@ -14,6 +14,7 @@ namespace DragonflyDataLibrary.Models
     {
         [BsonId]
         public Guid Id { get; set; }
+        // TODO: Decide if this app will one day allow for social networking, or if the unnecessary name fields should be deleted.
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [BsonIgnore]

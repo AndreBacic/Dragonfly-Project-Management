@@ -1,0 +1,28 @@
+@model ProjectModel
+<form class="w-full p-2 md:p-4" asp-action="ProjectHome" asp-controller="Project" method="post">
+    <div asp-validation-summary="ModelOnly" class=""></div>
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="w-full grid grid-rows-2 sm:grid-cols-2 sm:grid-rows-1">
+        <div class="w-full">
+            <label asp-for="Deadline" class="input-label"></label>
+            <input asp-for="Deadline" class="outline-none border-0 input-text" type="date" contenteditable="true"
+                value="@Model.Deadline" />
+            <span asp-validation-for="Deadline" class="validation-for"></span>
+        </div>
+        <div class="w-full">Created @Model.Created</div>
+    </div>
+    <div class="w-full">
+        <div class="w-full">
+            <label asp-for="Title" class="input-label"></label>
+            <input asp-for="Title" class="outline-none border-0 input-text" type="text" contenteditable="true"
+                value="@Model.Title" />
+            <span asp-validation-for="Title" class="validation-for"></span>
+        </div>
+        <div class="w-full">
+            <label asp-for="Description" class="input-label"></label>
+            <textarea asp-for="Description" class="outline-none border-0 input-text" contenteditable="true"
+                value="@Model.Description"></textarea>
+            <span asp-validation-for="Description" class="validation-for"></span>
+        </div>
+    </div>
+</form>

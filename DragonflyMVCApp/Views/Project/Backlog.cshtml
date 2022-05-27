@@ -3,5 +3,17 @@
 @{
     ViewData["Title"] = "Project Backlog";
 }
-<h1>@Model.Title</h1>
-<h2>Backlog</h2>
+<partial name="_editProject" model="@Model" />
+
+<h2 class="border-b-2 border-lime-700">Backlog</h2>
+
+@foreach (TaskModel task in Model.Tasks)
+{
+    <div class="w-full flex">
+        <p>@task.Id.ToString("N").Substring(0, 4)</p>
+        <p>@task.Type</p>
+        <p>@task.Title</p>
+        <p>@task.Status</p>
+        <p>@task.Deadline</p>
+    </div>
+}
