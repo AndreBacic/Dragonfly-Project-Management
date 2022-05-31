@@ -9,6 +9,9 @@ module.exports = {
     darkMode: 'media', // false or 'media' or 'class'
     theme: {
         extend: {
+            backdropBlur: {
+                'xs': '2px',
+            },
             borderRadius: {
                 '4xl': '2rem',
                 '5xl': '2.5rem',

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Update Account";
 }
-<div class="mx-auto my-4 max-w-3xl rounded-lg bg-neutral-700 p-2">
+<div class="mx-auto my-4 max-w-3xl bg-neutral-700 p-2">
     <h2 class="mb-1 border-b-2 border-lime-500 p-1 text-center text-xl">Update Account</h2>
 
     <form asp-action="EditAccount" asp-controller="Home" method="post">
@@ -25,10 +25,10 @@
         </div>
         @* TODO: Add color preference toggle *@
         <input type="submit" value="Save"
-            class="my-auto mt-2 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 px-2 py-1 text-center text-black text-lg hover:bg-lime-300" />
+            class="my-auto mt-2 min-w-[8rem] cursor-pointer bg-lime-500 px-2 py-1 text-center text-black text-lg hover:bg-lime-300" />
     </form>
 
-    <details class="my-3 w-full rounded-lg border border-neutral-500 p-3">
+    <details class="my-3 w-full border border-neutral-500 p-3">
         <summary class="text-lg"> Change Password</summary>
         <partial name="_changePassword" model="@Model.ChangePasswordView" />
     </details>

@@ -13,7 +13,7 @@
     }
 
     .input-text {
-        @apply inline-block w-full rounded-sm border-2 border-lime-800 p-1 bg-neutral-800 focus:border-4 focus:p-0.5;
+        @apply inline-block w-full border-2 border-lime-800 p-1 bg-neutral-800 focus:border-4 focus:p-0.5;
     }
 
     .validation-for {

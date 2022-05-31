@@ -21,10 +21,10 @@
                     clip-rule="evenodd" />
             </svg>
         </button>
-        <nav class="absolute right-0 z-30 w-[max(15rem,60%)] rounded-bl-lg 
+        <nav class="absolute right-0 z-30 w-[max(15rem,60%)] rounded-bl-lg border-b border-l border-lime-500 
         bg-neutral-700 pt-10 pb-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
           transition-all duration-150 ease-linear origin-top sm:pt-2 
-          md:min-h-[6rem] md:w-full md:!grid md:DPM-nav-cols md:rounded-none md:pl-0 md:py-0 md:pr-[calc(50vw-24rem)]"
+          md:min-h-[6rem] md:w-full md:!grid md:DPM-nav-cols md:rounded-none md:border-0 md:pl-0 md:py-0 md:pr-[calc(50vw-24rem)]"
             id="userMenu" style="display:none">
             <!--TODO: Actually make the animation happen-->
             @* TODO: Delete this redundant link and just have the navbar. In fact, why not just delete the whole
@@ -44,7 +44,7 @@
         </nav>
     </div>
 </header>
-<div id="translucentCover" class="fixed z-20 w-full h-full bg-white bg-opacity-40 backdrop-blur-sm md:!hidden"
+<div id="translucentCover" class="fixed z-20 w-full h-full bg-white bg-opacity-20 backdrop-blur-xs md:!hidden"
     style="display:none;" onclick="translucentCoverOnClick(this)"></div>
 
 <script>

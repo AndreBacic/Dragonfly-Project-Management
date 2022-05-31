@@ -3,7 +3,7 @@
     ViewData["Title"] = "Login";
 }
 <div class="min-h-full w-full flex flex-1 items-center justify-center">
-    <div class="rounded-lg bg-neutral-700 p-4">
+    <div class="bg-neutral-700 p-4">
         <h2 class="mb-1 border-b-2 border-lime-500 p-1 text-center text-xl">Login</h2>
         <form asp-action="Login" asp-controller="Account" method="post"
             class="flex flex-col gap-1 items-center justify-evenly">
@@ -12,12 +12,12 @@
             <input type="password" asp-for="Password" placeholder="Password" class="input-text"
                 contenteditable="true" />
             <input type="submit" value="Log in"
-                class="my-auto mt-1 min-w-[8rem] cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg hover:bg-lime-300" />
+                class="my-auto mt-1 min-w-[8rem] cursor-pointer bg-lime-500 p-1 text-center text-black text-lg hover:bg-lime-300" />
         </form>
         <div class="mt-4 w-full grid grid-cols-2">
             <p class="block my-auto w-full">No Account?</p>
             <a asp-controller="Account" asp-action="Register" class="w-full grid place-items-center
-                    cursor-pointer rounded-lg bg-lime-500 p-1 text-center text-black text-lg hover:bg-lime-300">
+                    cursor-pointer bg-lime-500 p-1 text-center text-black text-lg hover:bg-lime-300">
                 Sign Up</a>
         </div>
     </div>
